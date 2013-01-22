@@ -18,8 +18,48 @@
         "sensio/generator-bundle": "2.1.*",
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
-        "kriswallsmith/assetic": "1.1.*@dev"
+        "kriswallsmith/assetic": "1.1.*@dev",
+        "twitter/bootstrap": "2.2.2",
+        "jquery/jquery": "1.9.0",
+        "angular/angularJS":"1.0.3"
     },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "twitter/bootstrap",
+                "version": "2.2.2",
+                "dist": {
+                    "url": "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
+                    "type": "zip"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "jquery/jquery",
+                "version": "1.9.0",
+                "dist": {
+                    "url": "http://code.jquery.com/jquery.min.js",
+                    "type": "file"
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package":{
+                "name":"angular/angularJS",
+                "version":"1.0.3",
+                "dist":{
+                    "url":"http://code.angularjs.org/1.0.3/angular-1.0.3.zip",
+                    "type":"zip"
+                }
+
+            }
+        }
+        
+    ],
     "scripts": {
         "post-install-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
