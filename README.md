@@ -15,6 +15,7 @@
 Upload files, then run ```composer update``` (if you don't have composer take a look [here](http://getcomposer.org) - you can just download the .phar archive)
 
 ### 2) Configuration
+Set proper permissions : http://symfony.com/doc/current/book/installation.html#configuration-and-setup
 
 Copy ```app/config/parameters.yml.dist``` to ```app/config/parameters.yml```, then edit with your values.
 
