@@ -7,6 +7,7 @@ vendor/*
 */cache/*
 web/uploads/*
 web/bundles/*
+web/vendor
 
 # Configuration files
 app/config/parameters.ini
@@ -16,3 +17,5 @@ app/config/parameters.yml
 .buildpath
 .project
 .settings/
+
+composer.phar
