@@ -1,7 +1,14 @@
-courses_maker:
-    resource: "@CoursesMakerBundle/Controller/"
-    type:     annotation
+rotis_course_maker:
+    resource: "@RotisCourseMakerBundle/Resources/config/routing.yml"
     prefix:   /
+
+coursemaker_inscription:
+    resource: "@CoursemakerInscriptionBundle/Resources/config/routing.yml"
+    prefix:   /
+
+sdz_blog:
+    resource: "@SdzBlogBundle/Resources/config/routing.yml"
+    prefix:   /blog_de_seedy
 
 # Internal routing configuration to handle ESI
 # ****** WARNING ******
