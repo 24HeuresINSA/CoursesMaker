@@ -1,0 +1,20 @@
+Rotis\CourseMakerBundle\Entity\Categorie:
+  type: entity
+  table: null
+  repositoryClass: Rotis\CourseMakerBundle\Entity\CategorieRepository
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nom:
+      type: string
+      length: 255
+    nb_max_coureurs:
+      type: integer
+  manyToOne:
+    courses:
+      targetEntity: Course
+      inversedBy: categories
+  lifecycleCallbacks: {  }

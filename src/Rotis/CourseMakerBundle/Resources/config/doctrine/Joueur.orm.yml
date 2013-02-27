@@ -1,0 +1,36 @@
+Rotis\CourseMakerBundle\Entity\Joueur:
+  type: entity
+  table: null
+  repositoryClass: Rotis\CourseMakerBundle\Entity\JoueurRepository
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nom:
+      type: string
+      length: 255
+    prenom:
+      type: string
+      length: 255
+    email:
+      type: string
+      length: 255
+    telephone:
+      type: string
+      length: '20'
+    etudiant:
+      type: boolean
+    taille_tshirt:
+      type: string
+      length: '5'
+    papiers_ok:
+      type: boolean
+    paiement_ok:
+      type: boolean
+  manyToOne:
+    equipe:
+      targetEntity: Equipe
+      inversedBy: joueurs
+  lifecycleCallbacks: {  }

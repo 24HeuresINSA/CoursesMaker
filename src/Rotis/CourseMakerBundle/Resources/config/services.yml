@@ -1,0 +1,7 @@
+parameters:
+#    rotis_course_maker.example.class: Rotis\CourseMakerBundle\Example
+
+services:
+#    rotis_course_maker.example:
+#        class: %rotis_course_maker.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
