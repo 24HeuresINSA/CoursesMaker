@@ -1,0 +1,33 @@
+Rotis\CourseMakerBundle\Entity\Course:
+  type: entity
+  table: null
+  repositoryClass: Rotis\CourseMakerBundle\Entity\CourseRepository
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nom:
+      type: string
+      length: 255
+    inscriptions_ouvertes:
+      type: boolean
+    datetime_debut:
+      type: datetime
+    datetime_fin:
+      type: datetime
+  manyToOne:
+    edition:
+      targetEntity: Edition
+      inversedBy: courses
+    type:
+      targetEntity: Type
+  oneToMany:
+    categories:
+      targetEntity: Categorie
+      mappedBy: course
+    equipes:
+      targetEntity: Equipe
+      mappedBy: course
+  lifecycleCallbacks: {  }

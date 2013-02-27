@@ -1,0 +1,20 @@
+Rotis\CourseMakerBundle\Entity\Tarif:
+  type: entity
+  table: null
+  repositoryClass: Rotis\CourseMakerBundle\Entity\TarifRepository
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    prix:
+      type: integer
+    etudiant:
+      type: boolean
+  manyToOne:
+    course:
+      targetEntity: Course
+    categorie:
+      targetEntity: Categorie
+  lifecycleCallbacks: {  }

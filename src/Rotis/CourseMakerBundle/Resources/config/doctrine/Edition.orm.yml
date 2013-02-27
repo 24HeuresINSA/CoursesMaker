@@ -1,0 +1,22 @@
+Rotis\CourseMakerBundle\Entity\Edition:
+  type: entity
+  table: null
+  repositoryClass: Rotis\CourseMakerBundle\Entity\EditionRepository
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    numero:
+      type: string
+      length: 255
+    date_1:
+      type: date
+    date_2:
+      type: date
+  oneToMany:
+    courses:
+      targetEntity: Course
+      mappedBy: edition
+  lifecycleCallbacks: {  }

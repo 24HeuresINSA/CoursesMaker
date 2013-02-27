@@ -1,0 +1,27 @@
+Rotis\CourseMakerBundle\Entity\Equipe:
+  type: entity
+  table: null
+  repositoryClass: Rotis\CourseMakerBundle\Entity\EquipeRepository
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    mot_passe:
+      type: string
+      length: 255
+    nom:
+      type: string
+      length: 255
+    valide:
+      type: boolean
+  manyToOne:
+    course:
+      targetEntity: Course
+      inversedBy: equipes
+  oneToMany:
+    joueurs:
+      targetEntity: Joueur
+      mappedBy: equipe
+  lifecycleCallbacks: {  }

@@ -1,0 +1,83 @@
+<?php
+
+namespace Rotis\CourseMakerBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Tarif
+ */
+class Tarif
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var integer
+     */
+    private $prix;
+
+    /**
+     * @var boolean
+     */
+    private $etudiant;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set prix
+     *
+     * @param integer $prix
+     * @return Tarif
+     */
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+    
+        return $this;
+    }
+
+    /**
+     * Get prix
+     *
+     * @return integer 
+     */
+    public function getPrix()
+    {
+        return $this->prix;
+    }
+
+    /**
+     * Set etudiant
+     *
+     * @param boolean $etudiant
+     * @return Tarif
+     */
+    public function setEtudiant($etudiant)
+    {
+        $this->etudiant = $etudiant;
+    
+        return $this;
+    }
+
+    /**
+     * Get etudiant
+     *
+     * @return boolean 
+     */
+    public function getEtudiant()
+    {
+        return $this->etudiant;
+    }
+}
