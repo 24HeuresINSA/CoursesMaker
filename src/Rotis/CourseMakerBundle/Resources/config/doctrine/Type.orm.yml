@@ -1,0 +1,14 @@
+Rotis\CourseMakerBundle\Entity\Type:
+  type: entity
+  table: null
+  repositoryClass: Rotis\CourseMakerBundle\Entity\TypeRepository
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nom:
+      type: string
+      length: 255
+  lifecycleCallbacks: {  }

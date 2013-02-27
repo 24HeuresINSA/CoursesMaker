@@ -1,0 +1,251 @@
+<?php
+
+namespace Rotis\CourseMakerBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Joueur
+ */
+class Joueur
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $nom;
+
+    /**
+     * @var string
+     */
+    private $prenom;
+
+    /**
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @var string
+     */
+    private $telephone;
+
+    /**
+     * @var boolean
+     */
+    private $etudiant;
+
+    /**
+     * @var string
+     */
+    private $taille_tshirt;
+
+    /**
+     * @var boolean
+     */
+    private $papiers_ok;
+
+    /**
+     * @var boolean
+     */
+    private $paiement_ok;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     * @return Joueur
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+    
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string 
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * Set prenom
+     *
+     * @param string $prenom
+     * @return Joueur
+     */
+    public function setPrenom($prenom)
+    {
+        $this->prenom = $prenom;
+    
+        return $this;
+    }
+
+    /**
+     * Get prenom
+     *
+     * @return string 
+     */
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Joueur
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set telephone
+     *
+     * @param string $telephone
+     * @return Joueur
+     */
+    public function setTelephone($telephone)
+    {
+        $this->telephone = $telephone;
+    
+        return $this;
+    }
+
+    /**
+     * Get telephone
+     *
+     * @return string 
+     */
+    public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    /**
+     * Set etudiant
+     *
+     * @param boolean $etudiant
+     * @return Joueur
+     */
+    public function setEtudiant($etudiant)
+    {
+        $this->etudiant = $etudiant;
+    
+        return $this;
+    }
+
+    /**
+     * Get etudiant
+     *
+     * @return boolean 
+     */
+    public function getEtudiant()
+    {
+        return $this->etudiant;
+    }
+
+    /**
+     * Set taille_tshirt
+     *
+     * @param string $tailleTshirt
+     * @return Joueur
+     */
+    public function setTailleTshirt($tailleTshirt)
+    {
+        $this->taille_tshirt = $tailleTshirt;
+    
+        return $this;
+    }
+
+    /**
+     * Get taille_tshirt
+     *
+     * @return string 
+     */
+    public function getTailleTshirt()
+    {
+        return $this->taille_tshirt;
+    }
+
+    /**
+     * Set papiers_ok
+     *
+     * @param boolean $papiersOk
+     * @return Joueur
+     */
+    public function setPapiersOk($papiersOk)
+    {
+        $this->papiers_ok = $papiersOk;
+    
+        return $this;
+    }
+
+    /**
+     * Get papiers_ok
+     *
+     * @return boolean 
+     */
+    public function getPapiersOk()
+    {
+        return $this->papiers_ok;
+    }
+
+    /**
+     * Set paiement_ok
+     *
+     * @param boolean $paiementOk
+     * @return Joueur
+     */
+    public function setPaiementOk($paiementOk)
+    {
+        $this->paiement_ok = $paiementOk;
+    
+        return $this;
+    }
+
+    /**
+     * Get paiement_ok
+     *
+     * @return boolean 
+     */
+    public function getPaiementOk()
+    {
+        return $this->paiement_ok;
+    }
+}
