@@ -1,0 +1,11 @@
+Rotis\CourseMakerBundle\Entity\User:
+  type: entity
+  table: fos_user
+  repositoryClass: Rotis\CourseMakerBundle\Entity\UserRepository
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+  lifecycleCallbacks: {  }

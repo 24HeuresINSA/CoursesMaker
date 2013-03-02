@@ -1,0 +1,19 @@
+{% extends "::layout.html.twig" %}
+ 
+{% block title %}
+  Parent 
+{% endblock %}
+ 
+{% block body %}
+ 
+  {# On définit un sous-titre commun à toutes les pages du bundle, par exemple #}
+  <h5>Inscriptions aux courses</h6>
+  <h6>24 Heures de l'INSA</h6>
+  <hr>
+  
+  {% block content %}
+  {% endblock %}
+  {# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
+  {% block rotiscoursemaker_body %}
+  {% endblock %}
+{% endblock %}

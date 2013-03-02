@@ -1,0 +1,13 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+
+{% block title %}CourseMaker Application{% endblock %}
+
+{% block content %}
+
+    {% block fos_user_content %}
+    {% endblock %}
+
+<a href="{{ path('fos_user_register')}}">{{ 'Inscrivez-vous' }}</a>
+<h1>inscrivez</h1>
+
+{% endblock %}

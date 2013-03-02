@@ -1,0 +1,6 @@
+{% extends "RotisCourseMakerBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Index{% endblock %}
+{% block rotiscoursemaker_body %}
+<a href="{{ path('fos_user_register')}}">{{ 'Inscrivez-vous' }}</a>
+{% endblock %}
