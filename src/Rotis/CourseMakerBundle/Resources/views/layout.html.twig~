@@ -11,8 +11,7 @@
   <h6>24 Heures de l'INSA</h6>
   <hr>
   
-  {% block content %}
-  {% endblock %}
+
   {# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
   {% block rotiscoursemaker_body %}
   {% endblock %}
