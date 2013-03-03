@@ -1,6 +1,6 @@
 Rotis\CourseMakerBundle\Entity\User:
   type: entity
-  table: fos_user
+  table: null
   repositoryClass: Rotis\CourseMakerBundle\Entity\UserRepository
   fields:
     id:
@@ -8,4 +8,12 @@ Rotis\CourseMakerBundle\Entity\User:
       id: true
       generator:
         strategy: AUTO
+    categorie:
+      type: object
+    moyen:
+      type: string
+      length: 255
+    competition:
+      type: string
+      length: 255
   lifecycleCallbacks: {  }
