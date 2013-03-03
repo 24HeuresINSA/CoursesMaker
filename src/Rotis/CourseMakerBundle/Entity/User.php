@@ -15,6 +15,26 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @var \stdClass
+     */
+    protected $categorie;
+
+    /**
+     * @var string
+     */
+    protected $moyen;
+
+    /**
+     * @var string
+     */
+    protected $competition;
+
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * Get id
@@ -25,10 +45,73 @@ class User extends BaseUser
     {
         return $this->id;
     }
-    
-     public function __construct()
+
+    /**
+     * Set categorie
+     *
+     * @param \stdClass $categorie
+     * @return User
+     */
+    public function setCategorie($categorie)
     {
-        parent::__construct();
-        // your own logic
+        $this->categorie = $categorie;
+    
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \stdClass 
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
+
+    /**
+     * Set moyen
+     *
+     * @param string $moyen
+     * @return User
+     */
+    public function setMoyen($moyen)
+    {
+        $this->moyen = $moyen;
+    
+        return $this;
+    }
+
+    /**
+     * Get moyen
+     *
+     * @return string 
+     */
+    public function getMoyen()
+    {
+        return $this->moyen;
+    }
+
+    /**
+     * Set compétition
+     *
+     * @param string $compétition
+     * @return User
+     */
+    public function setCompétition($compétition)
+    {
+        $this->compétition = $compétition;
+    
+        return $this;
+    }
+
+    /**
+     * Get compétition
+     *
+     * @return string 
+     */
+    public function getCompétition()
+    {
+        return $this->compétition;
     }
 }
