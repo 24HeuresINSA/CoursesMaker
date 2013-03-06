@@ -2,39 +2,31 @@
 
 namespace Rotis\CourseMakerBundle\Entity;
 
+
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Entity\User as BaseUser;
 
 /**
  * User
  */
-class User extends BaseUser
+class User implements UserInterface, EquatableInterface
 {
     /**
      * @var integer
      */
-    protected $id;
-
-    /**
-     * @var \stdClass
-     */
-    protected $categorie;
+    private $id;
 
     /**
      * @var string
      */
-    protected $moyen;
+    protected $username;
 
     /**
      * @var string
      */
-    protected $competition;
+    protected $password;
 
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Get id
@@ -47,71 +39,50 @@ class User extends BaseUser
     }
 
     /**
-     * Set categorie
+     * Set username
      *
-     * @param \stdClass $categorie
+     * @param string $username
      * @return User
      */
-    public function setCategorie($categorie)
+    public function setUsername($username)
     {
-        $this->categorie = $categorie;
+        $this->username = $username;
     
         return $this;
     }
 
     /**
-     * Get categorie
-     *
-     * @return \stdClass 
-     */
-    public function getCategorie()
-    {
-        return $this->categorie;
-    }
-
-    /**
-     * Set moyen
-     *
-     * @param string $moyen
-     * @return User
-     */
-    public function setMoyen($moyen)
-    {
-        $this->moyen = $moyen;
-    
-        return $this;
-    }
-
-    /**
-     * Get moyen
+     * Get username
      *
      * @return string 
      */
-    public function getMoyen()
+    public function getUsername()
     {
-        return $this->moyen;
+        return $this->username;
     }
 
     /**
-     * Set compétition
+     * Set password
      *
-     * @param string $compétition
+     * @param string $password
      * @return User
      */
-    public function setCompétition($compétition)
+    public function setPassword($password)
     {
-        $this->compétition = $compétition;
+        $this->password = $password;
     
         return $this;
     }
 
     /**
-     * Get compétition
+     * Get password
      *
      * @return string 
      */
-    public function getCompétition()
+    public function getPassword()
     {
-        return $this->compétition;
+        return $this->password;
     }
+
+    
 }
