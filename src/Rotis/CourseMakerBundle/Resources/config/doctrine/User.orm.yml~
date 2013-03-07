@@ -8,12 +8,16 @@ Rotis\CourseMakerBundle\Entity\User:
       id: true
       generator:
         strategy: AUTO
-    categorie:
-      type: object
-    moyen:
+    username:
       type: string
-      length: 255
-    compétition:
+      length: 25
+      unique: true
+    password:
       type: string
-      length: 255
+      length: 60
+    isActive:
+      type: boolean
+    salt:
+      type: string
+      length: 32
   lifecycleCallbacks: {  }

@@ -8,12 +8,18 @@ Rotis\CourseMakerBundle\Entity\Equipe:
       id: true
       generator:
         strategy: AUTO
-    mot_passe:
+    password:
       type: string
-      length: 255
-    nom:
+      length: 60
+    username:
       type: string
-      length: 255
+      length: 25
+      unique: true
+    isActive:
+      type: boolean
+    salt:
+      type: string
+      length: 32
     valide:
       type: boolean
   manyToOne:

@@ -2,12 +2,15 @@
 
 namespace Rotis\CourseMakerBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Equipe
  */
-class Equipe
+class Equipe implements AdvancedUserInterface, \Serializable
 {
     /**
      * @var integer
@@ -17,19 +20,28 @@ class Equipe
     /**
      * @var string
      */
-    private $mot_passe;
+    private $password;
 
     /**
      * @var string
      */
-    private $nom;
+    private $username;
 
     /**
      * @var boolean
      */
     private $valide;
 
+    /**
+     * @var string
+     */
+    protected $salt;
 
+    /**
+     * @var boolean
+     */
+    protected $isActive;
+    
     /**
      * Get id
      *
@@ -40,51 +52,7 @@ class Equipe
         return $this->id;
     }
 
-    /**
-     * Set mot_passe
-     *
-     * @param string $motPasse
-     * @return Equipe
-     */
-    public function setMotPasse($motPasse)
-    {
-        $this->mot_passe = $motPasse;
-    
-        return $this;
-    }
 
-    /**
-     * Get mot_passe
-     *
-     * @return string 
-     */
-    public function getMotPasse()
-    {
-        return $this->mot_passe;
-    }
-
-    /**
-     * Set nom
-     *
-     * @param string $nom
-     * @return Equipe
-     */
-    public function setNom($nom)
-    {
-        $this->nom = $nom;
-    
-        return $this;
-    }
-
-    /**
-     * Get nom
-     *
-     * @return string 
-     */
-    public function getNom()
-    {
-        return $this->nom;
-    }
 
     /**
      * Set valide
@@ -124,6 +92,7 @@ class Equipe
     public function __construct()
     {
         $this->joueurs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->isActive = true;
     }
     
     /**
@@ -180,5 +149,89 @@ class Equipe
     public function getCourse()
     {
         return $this->course;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
+    }
+
+    public function isEqualTo(UserInterface $user)
+    {
+    return $this->id === $user->getId();
+    }
+
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
     }
 }
