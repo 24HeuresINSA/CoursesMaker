@@ -21,7 +21,7 @@
         "kriswallsmith/assetic": "1.1.*@dev",
 	"doctrine/data-fixtures": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
-        "friendsofsymfony/user-bundle":"*"
+        
     },
     "scripts": {
         "post-install-cmd": [
