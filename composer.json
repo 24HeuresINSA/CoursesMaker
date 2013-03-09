@@ -21,7 +21,8 @@
         "kriswallsmith/assetic": "1.1.*@dev",
 	"doctrine/data-fixtures": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
-        
+        "twitter/bootstrap": "v2.2.3",
+        "leafo/lessphp": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
@@ -40,5 +41,18 @@
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web"
-    }
+    },
+"repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "twitter/bootstrap",
+                "version": "2.2.3",
+                "dist": {
+                    "url": "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
+                    "type": "zip"
+                }
+            }
+        }
+]
 }
