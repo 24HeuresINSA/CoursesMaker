@@ -10,7 +10,7 @@ Rotis\CourseMakerBundle\Entity\Equipe:
         strategy: AUTO
     password:
       type: string
-      length: 60
+      length: 125
     username:
       type: string
       length: 25
@@ -29,5 +29,9 @@ Rotis\CourseMakerBundle\Entity\Equipe:
   oneToMany:
     joueurs:
       targetEntity: Joueur
+      mappedBy: equipe
+  oneToOne:
+    categorie:
+      targetEntity: Categorie
       mappedBy: equipe
   lifecycleCallbacks: {  }

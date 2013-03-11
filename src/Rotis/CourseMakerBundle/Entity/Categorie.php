@@ -19,6 +19,7 @@ class Categorie
      */
     private $nom;
 
+    private $equipe;
 
     /**
      * Get id

@@ -1,2 +1,5 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+{% block title %}Accueil page{% endblock %}
+{% block body %}
 Hello page primitive
-
+{% endblock %}

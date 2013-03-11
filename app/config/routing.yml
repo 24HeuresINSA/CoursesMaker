@@ -7,6 +7,18 @@ login:
     defaults: { _controller: RotisCourseMakerBundle:Security:login }
 login_check:
     pattern: /login_check
+logout:
+    pattern:   /logout
+register:
+    pattern: /register
+    defaults: { _controller: RotisCourseMakerBundle:Security:register }
+create:
+    pattern: /create
+    defaults: { _controller: RotisCourseMakerBundle:Security:create }
+contact:
+    pattern: /contact
+    defaults: { _controller: RotisCourseMakerBundle:CourseMaker:contact }
+
 accueil:
     pattern: /accueil
     defaults: { _controller: RotisCourseMakerBundle:CourseMaker:dispatcher }

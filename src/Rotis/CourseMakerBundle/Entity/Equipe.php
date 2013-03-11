@@ -43,6 +43,11 @@ class Equipe implements AdvancedUserInterface, \Serializable
     protected $isActive;
     
     /**
+     * @var
+     */
+    private $categorie;
+   
+    /**
      * Get id
      *
      * @return integer 
@@ -52,8 +57,26 @@ class Equipe implements AdvancedUserInterface, \Serializable
         return $this->id;
     }
 
+    /**
+     * Set categorie
+     *
+     * @param string $nom
+     * @return Equipe
+     */
+    public function setCategorie($nom)
+    {
+        return $this->categorie->setNom($nom);
+    }
 
-
+    /**
+     * Get categorie
+     *
+     * @return Categorie
+     */
+    public function getCategorie()
+    {
+        return $this->categorie->getNom();
+    }
     /**
      * Set valide
      *
@@ -160,6 +183,18 @@ class Equipe implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * Set username
+     *
+     * @param string $username
+     * @return Equipe
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    /**
      * @inheritDoc
      */
     public function getSalt()
@@ -173,6 +208,18 @@ class Equipe implements AdvancedUserInterface, \Serializable
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return Equipe
+     */
+    public function setPassword($password)
+    {
+        $this->passwors = $password;
+        return $this;
     }
 
     /**

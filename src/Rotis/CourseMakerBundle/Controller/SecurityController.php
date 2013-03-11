@@ -5,6 +5,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 
 
+use Rotis\CourseMakerBundle\Form\Type\RegistrationType;
+use Rotis\CourseMakerBundle\Form\Model\Registration;
+
 class SecurityController extends Controller
 {
     public function loginAction()
@@ -32,5 +35,48 @@ class SecurityController extends Controller
         );
 
 
+    }
+    
+    public function registerAction()
+    {
+           $form = $this->createForm(
+            new RegistrationType(),
+            new Registration()
+        );
+        return $this->render(
+            'RotisCourseMakerBundle:Security:register.html.twig',
+            array('form' => $form->createView())
+        );
+    }
+
+    public function createAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $form = $this->createForm(new RegistrationType(), new Registration());
+        $form->bind($this->getRequest());
+        if ($form->isValid())
+        {   
+            $encoder = $this->encoder->getEncoder($user);
+            $raw = $user->getPassword();
+            $salt = $user->getSalt();
+            $encoded = $encoder->encodePassword($raw, $salt);
+
+            if (!$encoder->isPasswordValid($encoded, $raw, $salt)) 
+            {
+                throw new \Exception('Password incorrectly encoded during user registration', 428);
+            }
+            else 
+            {
+                $user->setPassword($encoded);
+            }
+            
+            $registration = $form->getData();
+            $em->persist($registration->getUser());
+            $em->flush();
+            
+            return $this->redirect($this->generateUrl('accueil'));
+        }
+        
+        return $this->render('Rotis:CourseMakerBundle:register.html.twig', array('form' => $form->createView()));
     }
 }

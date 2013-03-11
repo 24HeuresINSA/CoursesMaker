@@ -18,11 +18,12 @@
     
       <div id="content" class="span9">
           {% block body %}
-              {% block rotiscoursemaker_body %}
-              {% endblock %}
           {% endblock %}
-          {% block fos_user_content %}
+          {% block rotiscoursemaker_body %}
           {% endblock %}
+          {% block form %}
+          {% endblock %}
+          
       </div>
       
     </div>

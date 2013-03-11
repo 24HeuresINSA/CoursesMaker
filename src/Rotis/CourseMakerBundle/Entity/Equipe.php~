@@ -42,6 +42,9 @@ class Equipe implements AdvancedUserInterface, \Serializable
      */
     protected $isActive;
     
+
+    private $categorie;
+   
     /**
      * Get id
      *
@@ -52,8 +55,26 @@ class Equipe implements AdvancedUserInterface, \Serializable
         return $this->id;
     }
 
+    /**
+     * Set categorie
+     *
+     * @param string $nom
+     * @return Equipe
+     */
+    public function setCategorie($nom)
+    {
+        return $this->categorie->setNom($nom);
+    }
 
-
+    /**
+     * Get categorie
+     *
+     * @return Categorie
+     */
+    public function getCategorie()
+    {
+        return $this->categorie->getNom();
+    }
     /**
      * Set valide
      *
@@ -149,5 +170,113 @@ class Equipe implements AdvancedUserInterface, \Serializable
     public function getCourse()
     {
         return $this->course;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return Equipe
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return Equipe
+     */
+    public function setPassword($password)
+    {
+        $this->passwors = $password;
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
+    }
+
+    public function isEqualTo(UserInterface $user)
+    {
+    return $this->id === $user->getId();
+    }
+
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
     }
 }

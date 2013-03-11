@@ -1,6 +1,6 @@
-{% extends '::layout.html.twig' %}
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
 {% block title %}Login page{% endblock %}
-{% block body %}
+{% block form %}
 {% if error %}
     <div>{{ error.message }}</div>
 {% endif %}

@@ -21,6 +21,9 @@ security:
             form_login:
                 login_path: login
                 check_path: login_check
+            logout:
+                path: /logout
+                target: /accueil
 
     providers:
         in_memory:
@@ -28,7 +31,7 @@ security:
                 users:
                     admin: { password: 1f6ccd2be75f1cc94a22a773eea8f8aeb5c68217, roles: 'ROLE_ADMIN' }
         administrators:
-            entity: { class: RotisCourseMakerBundle:User, property: username }
+            entity: { class: RotisCourseMakerBundle:Equipe, property: username }
         
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -42,4 +45,4 @@ security:
             iterations: 1
             encode_as_base64: false
 
-        Rotis\CourseMakerBundle\Entity\User: sha512
+        Rotis\CourseMakerBundle\Entity\Equipe: sha512

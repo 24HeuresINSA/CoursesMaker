@@ -17,4 +17,8 @@ Rotis\CourseMakerBundle\Entity\Categorie:
     courses:
       targetEntity: Course
       inversedBy: categories
+  oneToOne:
+    equipe:
+      targetEntity: Equipe
+      inversedBy: categorie
   lifecycleCallbacks: {  }

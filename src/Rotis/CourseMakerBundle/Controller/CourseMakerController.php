@@ -10,4 +10,9 @@ class CourseMakerController extends Controller
     {
         return $this->render('RotisCourseMakerBundle:CourseMaker:test.html.twig');
     }
+
+    public function contactAction()
+    {
+        return $this->render('RotisCourseMakerBundle:CourseMaker:contact.html.twig');
+    }
 }
