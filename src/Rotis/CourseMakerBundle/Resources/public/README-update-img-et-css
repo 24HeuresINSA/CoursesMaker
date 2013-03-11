@@ -1,0 +1,10 @@
+La fonction asset() permet d'appeler un fichier image, CSS ou bien JavaScript. Le dossier public/ de notre bundle n'est pas accessible directement : si vous cherchez à recharger une page de l'application vous ne verrez pas le logo apparaître. Il est en effet nécessaire de "publier" le contenu public des bundles dans le répertoire web/. Seul ce répertoire est accessible par les visiteurs du site. C'est d'ailleurs ce répertoire qui contient le fichier app_dev.php auquel nous faisons appel.
+
+Pour publier les éléments publics des différents bundles, ouvrez la console puis tapez la commande : php app/console assets:install web
+
+Les fichiers images et CSS de notre bundle filmothèque sont alors copiés vers le dossier web/bundles/myappfilmotheque/.
+
+Rechargez l'application dans votre navigateur. Vous devriez maintenant voir le logo et la nouvelle mise en page avec les styles CSS.
+
+
+Vous pouvez bien entendu intégrer d'autres images et adapter les styles CSS selon vos goûts. Attention à modifier les fichiers du bundle et pas ceux du répertoire web/. Une fois changés, publiez-les à nouveau en relançant la commande assets:install.
