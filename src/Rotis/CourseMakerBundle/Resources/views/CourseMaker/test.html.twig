@@ -5,7 +5,10 @@
 {% block div %}                
 	<h1>17,18,19 mai 2013</h1>
     <p>Inscription aux courses des 24 heures de l'INSA</p>
-    <p ><a class="btn btn-danger btn-large" href="register">Inscription &raquo;</a>  <a class="btn btn-success btn-large" href="login">Connexion &raquo;</a></p>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+	{% else %}
+	<p ><a class="btn btn-danger btn-large" href="register">Inscription &raquo;</a>  <a class="btn btn-success btn-large" href="login">Connexion &raquo;</a></p>
+	{% endif %}   
 {% endblock %}
 
 {% block content %}
