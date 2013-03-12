@@ -5,8 +5,8 @@
     <div>{{ error.message }}</div>
 {% endif %}
 
-<form>
-<fieldset>
+<form action="{{ path('login_check') }}" method="post">
+	<fieldset>
 		<legend>Connectez-vous</legend>
 		<div class="clearfix">
 			<label for="username">Nom d'utilisateur</label>
@@ -24,5 +24,4 @@
 		<input type="submit" value="C'est parti" class="btn primary">
 	</fieldset>
 </form>
-
 {% endblock %}
