@@ -1,27 +1,45 @@
 {% extends 'RotisCourseMakerBundle::layout.html.twig' %}
-{% block title %}Login page{% endblock %}
+
+{% block title %}CoursesMaker - Connexion{% endblock %}
+
+{% block div %}
+	<br/>
+	<h1>Connexion</h1>
+{% endblock %}
+
 {% block content %}
 {% if error %}
     <div>{{ error.message }}</div>
 {% endif %}
-
-<form action="{{ path('login_check') }}" method="post">
-	<fieldset>
-		<legend>Connectez-vous</legend>
-		<div class="clearfix">
-			<label for="username">Nom d'utilisateur</label>
-			<div class="input">
-				<input type="text" id="username" name="_username" value="{{ last_username }}" />
-			</div>
-		</div>
-		<div class="clearfix">
-			<label for="password">Mot de passe</label>
-			<div class="input">
-				<input type="password" id="password" name="_password" />
-			</div>
-		</div>
-		<input type="hidden" name="_target_path" value="/accueil" />
-		<input type="submit" value="C'est parti" class="btn primary">
-	</fieldset>
-</form>
+         
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="offset3 span6">
+			<form class="well form-horizontal" action="{{ path('login_check') }}" method="post">
+				<fieldset>	
+					<legend >Connectez-vous</legend>
+				    <div class="control-group clearfix">
+				        <label class="control-label required" for="username">Nom d'utilisateur </label>
+				        <div class="controls">
+				            <div class="input">
+								<input type="text" id="username" name="_username" value="{{ last_username }}" />								
+							</div><!--/input-->
+					    </div>
+					</div>
+				    <div class="control-group clearfix">
+				        <label class="control-label required" for="password">Mot de passe </label>
+				        <div class="controls">
+				            <div class="input">
+								<input type="password" id="password" name="_password" />
+							</div><!--/input-->
+				        </div>
+				    </div>
+					<br/>
+					<input type="hidden" name="_target_path" value="/accueil" />
+					<input type="submit" value="C'est parti !" class="btn btn-primary">
+				</fieldset>
+			</form>
+		</div><!--/span -->
+	</div><!-- /row -->
+</div><!-- /container -->
 {% endblock %}

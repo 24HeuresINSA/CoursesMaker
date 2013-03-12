@@ -11,8 +11,19 @@
     	<link rel="stylesheet" type="text/css" href="{{ asset('../vendor/twitter/bootstrap/css/bootstrap.min.css') }}" />
       	<link rel="stylesheet" type="text/css" href="{{ asset('../vendor/twitter/bootstrap/css/bootstrap-responsive.min.css') }}" />
    
+		<style type="text/css">
+      		body {
+				padding-top: 60px;
+				padding-bottom: 40px;
+			}
 
+			.sidebar-nav {
+    			padding: 9px 0;
+			}
+    	</style>  
+    	             
     	{% block stylesheets %}
+    	
    		{% endblock %}
 
 	</head>
@@ -29,21 +40,22 @@
 	                		<span class="icon-bar"></span>
 	                		<span class="icon-bar"></span>
 	              		</a>
-	              		<a class="brand" href="#">CoursesMaker</a>
+	              		<a class="brand" href="accueil">CoursesMaker</a>
 	              		
 	              		
 	              		<div class="nav-collapse collapse"> 
 		                	<p class="navbar-text pull-right">
 		                  		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-		                  		<a href="logout">Log out</a>
-		                  		Logged in as <a href="#" class="navbar-link">{{app.user.username}}</a>
+		                  		Bonjour <a href="#" class="navbar-link">{{app.user.username}}</a> :)
+		                  		<a href="logout">Déconnexion</a>
 		                  		{% else %}
-		                  		<a href="login">Log in</a>
+		                  		<a class="btn btn-small" href="register">Inscription</a>
+		                  		<a class="btn btn-small" href="login">Connexion</a>
 		                  		{% endif %}
 		                	</p>
 		                	<ul class="nav">
-		                  		<li class="active"><a href="accueil">Home</a></li>
-		                  		<li><a href="#">About</a></li>
+		                  		<li class="active"><a href="accueil">Accueil</a></li>
+		                  		<li><a href="#">Infos Pratiques</a></li>
 		                  		<li><a href="contact">Contact</a></li>
 		                	</ul>
 	              		</div><!--/.nav-collapse -->
@@ -63,6 +75,18 @@
 					{% endif %}
 				{% endblock %}
 				
+			<div class="hero-unit"> 
+				<div class="row-fluid">
+					<div class="span3">
+						<img src="{{ asset('bundles/rotiscoursemaker/img/logo_24H.png') }}" alt="24Heures" width="" height="" />
+					</div><!-- /span -->
+					<div class="span9">
+						{% block div %} <!-- Titre de la page -->
+						{% endblock %}		
+		 			</div><!--/span-->
+		 		</div><!--/row-->     	
+			</div><!-- /hero-unit -->		
+				
 				{% block content %}
 					<p>Il y aura ici le contenu</p>
 				{% endblock %}
@@ -79,6 +103,27 @@
 	        <!-- Placed at the end of the document so the pages load faster -->
 	        <script src="{{ asset('../vendor/jquery/jquery/jquery.min.js') }}"></script>
 	        <script src="{{ asset('../vendor/twitter/bootstrap/js/bootstrap.min.js') }}"></script>
+	       
+	        <!-- Script pour dérouler le contenu quand on clique sur un lien -->
+			<script type="text/javascript">// <![CDATA[
+				//------------------
+				function Swap( div_){
+				  var Obj = document.getElementById( div_);
+				  if( Obj){
+				    if( Obj.style.display=="")
+				      Obj.style.display="none";
+				    else
+				      Obj.style.display="";
+				  }
+				}
+				// ]]>
+			</script>
+			<!-- Exemple d'utilisation du scrip précédent -->
+			<!--<p><a onclick="Swap('DIV_1');" class="btn">Inscrire coureur 2</a></p>
+			<div id="DIV_1" style="display: none; padding-left: 20px;"><p> là on met le truc qui se déroule au clic</p></div>
+			<p><a onclick="Swap('DIV_2');" class="btn">Inscrire coureur 3</a></p>
+			<div id="DIV_2" style="display: none; padding-left: 20px;"><p>là on met le truc qui se déroule au clic</p></div>-->
+			
 		{% endblock %}
 		</div>
 	</body>
