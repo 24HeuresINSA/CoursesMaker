@@ -42,7 +42,9 @@ class Equipe implements AdvancedUserInterface, \Serializable
      */
     protected $isActive;
     
-
+    /**
+     * @var \Rotis\CourseMakerBundle\Entity\Categorie
+     */
     private $categorie;
    
     /**
@@ -58,12 +60,12 @@ class Equipe implements AdvancedUserInterface, \Serializable
     /**
      * Set categorie
      *
-     * @param string $nom
+     * @param \Rotis\CourseMakerBundle\Entity\Categorie $categorie
      * @return Equipe
      */
-    public function setCategorie($nom)
+    public function setCategorie(\Rotis\CourseMakerBundle\Entity\Categorie $categorie)
     {
-        return $this->categorie->setNom($nom);
+        $this->categorie = $categorie;
     }
 
     /**
@@ -73,7 +75,7 @@ class Equipe implements AdvancedUserInterface, \Serializable
      */
     public function getCategorie()
     {
-        return $this->categorie->getNom();
+        return $this->categorie;
     }
     /**
      * Set valide

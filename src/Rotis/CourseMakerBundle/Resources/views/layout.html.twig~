@@ -50,7 +50,7 @@
                 <ul class="nav">
                   <li class="active"><a href="accueil">Home</a></li>
                   <li><a href="#">About</a></li>
-                  <li><a href="#">Contact</a></li>
+                  <li><a href="contact">Contact</a></li>
                 </ul>
               </div><!--/.nav-collapse -->
             </div>

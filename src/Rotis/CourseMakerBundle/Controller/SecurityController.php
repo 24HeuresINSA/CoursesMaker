@@ -69,7 +69,6 @@ class SecurityController extends Controller
             {
                 $user->setPassword($encoded);
             }
-            
             $registration = $form->getData();
             $em->persist($registration->getUser());
             $em->flush();
