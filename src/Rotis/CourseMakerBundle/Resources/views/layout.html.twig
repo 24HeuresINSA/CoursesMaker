@@ -46,8 +46,8 @@
 	              		<div class="nav-collapse collapse"> 
 		                	<p class="navbar-text pull-right">
 		                  		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-		                  		Bonjour <a href="#" class="navbar-link">{{app.user.username}}</a> :)
-		                  		<a href="logout">Déconnexion</a>
+		                  		Bonjour <a href="account" class="navbar-link">{{app.user.username}}</a>
+		                  		<a class="btn btn-small" href="logout">Déconnexion</a>
 		                  		{% else %}
 		                  		<a class="btn btn-small" href="register">Inscription</a>
 		                  		<a class="btn btn-small" href="login">Connexion</a>
@@ -55,7 +55,7 @@
 		                	</p>
 		                	<ul class="nav">
 		                  		<li class="active"><a href="accueil">Accueil</a></li>
-		                  		<li><a href="#">Infos Pratiques</a></li>
+		                  		<li><a href="infos_pratiques">Infos Pratiques</a></li>
 		                  		<li><a href="contact">Contact</a></li>
 		                	</ul>
 	              		</div><!--/.nav-collapse -->

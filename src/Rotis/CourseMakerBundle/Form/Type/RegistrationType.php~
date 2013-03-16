@@ -10,15 +10,18 @@ class RegistrationType extends AbstractType
     {
         $builder->add('user', new UserType());
         $builder->add(
-            'terms',
-            'checkbox',
-            array('property_path' => 'termsAccepted')
+            'team',
+            'field', 
+            array('property_path' => 'team')
         );
-        $builder->add(var mail = document.getElementById("mail");
 
-        $("#email").keyup(function() {
-            mail.value = this.value;
-        }););
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#user.username').on('function', e(team) {
+        $('#val').change(e.target.value);
+    });
+});
+</script>
     }
 
     public function getName()

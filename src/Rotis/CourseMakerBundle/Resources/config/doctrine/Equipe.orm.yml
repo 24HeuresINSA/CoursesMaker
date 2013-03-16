@@ -26,12 +26,12 @@ Rotis\CourseMakerBundle\Entity\Equipe:
     course:
       targetEntity: Course
       inversedBy: equipes
+      cascade: ["persist","merge"]
+    categorie:
+      targetEntity: Categorie
+      inversedBy: equipes 
   oneToMany:
     joueurs:
       targetEntity: Joueur
-      mappedBy: equipe
-  oneToOne:
-    categorie:
-      targetEntity: Categorie
       mappedBy: equipe
   lifecycleCallbacks: {  }

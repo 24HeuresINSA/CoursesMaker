@@ -1,5 +1,5 @@
 <?php
-namespace Acme\AccountBundle\Form\Model;
+namespace Rotis\CourseMakerBundle\Form\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -13,11 +13,7 @@ class Registration
      */
     protected $user;
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\True()
-     */
-    protected $termsAccepted;
+    protected $team;
 
     public function setUser(Equipe $user)
     {
@@ -29,13 +25,13 @@ class Registration
         return $this->user;
     }
 
-    public function getTermsAccepted()
+    public function getTeam()
     {
-        return $this->termsAccepted;
+        return $this->team;
     }
 
-    public function setTermsAccepted($termsAccepted)
+    public function setTeam($team)
     {
-        $this->termsAccepted = (Boolean) $termsAccepted;
+        $this->team = $team;
     }
 }

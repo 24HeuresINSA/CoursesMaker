@@ -41,11 +41,7 @@ class Equipe implements AdvancedUserInterface, \Serializable
      * @var boolean
      */
     protected $isActive;
-    
-    /**
-     * @var \Rotis\CourseMakerBundle\Entity\Categorie
-     */
-    private $categorie;
+
    
     /**
      * Get id
@@ -63,9 +59,10 @@ class Equipe implements AdvancedUserInterface, \Serializable
      * @param \Rotis\CourseMakerBundle\Entity\Categorie $categorie
      * @return Equipe
      */
-    public function setCategorie(\Rotis\CourseMakerBundle\Entity\Categorie $categorie)
+    public function setCategorie($categorie)
     {
         $this->categorie = $categorie;
+        return $this;
     }
 
     /**
@@ -107,7 +104,36 @@ class Equipe implements AdvancedUserInterface, \Serializable
     /**
      * @var \Rotis\CourseMakerBundle\Entity\Course
      */
-    private $course;
+    protected $course;
+
+    /**
+     * @var \Rotis\CourseMakerBundle\Entity\Categorie
+     */
+    protected $categorie;
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     * @return User
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+	    
+        return $this;
+    }
+
+    /**
+     * Get salt
+     *
+	* @return string
+	*/
+	    public function getSalt()
+	    {
+		return $this->salt;
+	    }
+
 
     /**
      * Constructor
@@ -116,8 +142,33 @@ class Equipe implements AdvancedUserInterface, \Serializable
     {
         $this->joueurs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->isActive = true;
+        $this->course = new Course(1,"coursetemp",1,2013-05-17,2013-05-17);
+        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->valide = false;
     }
     
+    /**
+     * Get type
+     * @return \Rotis\CourseMakerBundle\Entity\Type
+     */
+    public function getType()
+    {
+        return $this->getCourse()->getType();
+    }
+
+    /**
+     *
+     * Set type
+     * @param \Rotis\CourseMakerBundle\Entity\Type $type
+     * @return Equipe
+     */
+    public function setType($type)
+    {
+        $this->getCourse()->setType($type);
+        return $this;
+    }
+
+
     /**
      * Add joueurs
      *
@@ -194,13 +245,6 @@ class Equipe implements AdvancedUserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getSalt()
-    {
-        return $this->salt;
-    }
 
     /**
      * @inheritDoc

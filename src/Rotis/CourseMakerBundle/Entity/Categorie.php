@@ -18,8 +18,11 @@ class Categorie
      * @var string
      */
     private $nom;
-
-    private $equipe;
+    
+    /**
+     * @var \Rotis\CourseMakerBundle\Entity\Equipe
+     */
+    private $equipes;
 
     /**
      * Get id
@@ -59,7 +62,7 @@ class Categorie
     private $nb_max_coureurs;
 
     /**
-     * @var \Rotis\CourseMakerBundle\Entity\Course
+     * @var \Doctrine\Common\Collections\Collection
      */
     private $courses;
 
@@ -108,5 +111,28 @@ class Categorie
     public function getCourses()
     {
         return $this->courses;
+    }
+
+    /**
+     * Set equipes
+     *
+     * @param \Rotis\CourseMakerBundle\Entity\Equipe $equipes
+     * @return Categorie
+     */
+    public function setEquipes(\Rotis\CourseMakerBundle\Entity\Equipe $equipes = null)
+    {
+        $this->equipes = $equipes;
+    
+        return $this;
+    }
+
+    /**
+     * Get equipes
+     *
+     * @return \Rotis\CourseMakerBundle\Entity\Equipe 
+     */
+    public function getEquipes()
+    {
+        return $this->equipes;
     }
 }

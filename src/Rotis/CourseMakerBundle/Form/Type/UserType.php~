@@ -17,18 +17,21 @@ class UserType extends AbstractType
            'second_name' => 'confirm',
            'type'        => 'password',
         ));
-        $builder->add('Team','text', array('read_only' => 'true'));
-        $builder->add('categorie', 'choice', array(
-            'choices' => array('s' => 'Solo', 'e' => 'Equipe'),
-            'required' => 'false',
+
+
+        $builder->add('type', 'entity', array(
+            'class' => 'RotisCourseMakerBundle:Type',
+            'property' => 'nom',
         ));
-        $builder->add('moyen', 'choice', array(
-            'choices' => array('p' => 'Pied', 'v' => 'Velo'),
-            'required' => 'false',
+            
+        $builder->add('categorie', 'entity', array(
+            'class' => 'RotisCourseMakerBundle:Categorie',
+            'property' => 'nom',
         ));
-        $builder->add('type', 'choice', array(
-            'choices' => array('pr' => 'Pro', 'l' => 'Loisir'),
-            'required' => 'false',
+
+        $builder->add('course', 'entity', array(
+            'class' => 'RotisCourseMakerBundle:Course',
+            'property'=> 'nom',
         ));
     }
 

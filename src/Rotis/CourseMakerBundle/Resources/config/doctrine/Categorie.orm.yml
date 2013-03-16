@@ -13,12 +13,12 @@ Rotis\CourseMakerBundle\Entity\Categorie:
       length: 255
     nb_max_coureurs:
       type: integer
-  manyToOne:
+  manyToMany:
     courses:
       targetEntity: Course
-      inversedBy: categories
-  oneToOne:
-    equipe:
+      inversedBy: categories 
+  oneToMany:  
+    equipes:
       targetEntity: Equipe
-      inversedBy: categorie
+      mappedBy: categorie
   lifecycleCallbacks: {  }

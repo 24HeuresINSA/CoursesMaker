@@ -22,7 +22,8 @@
 	"doctrine/data-fixtures": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "twitter/bootstrap": "v2.2.3",
-        "leafo/lessphp": "dev-master"
+        "leafo/lessphp": "dev-master",
+	"jquery/jquery": "1.9.1"
     },
     "scripts": {
         "post-install-cmd": [
@@ -51,6 +52,17 @@
                 "dist": {
                     "url": "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
                     "type": "zip"
+                }
+            }
+        },
+	{
+	    "type": "package",
+            "package": {
+                "name": "jquery/jquery",
+                "version": "1.9.1",
+                "dist": {
+                    "url": "http://code.jquery.com/jquery.min.js",
+                    "type": "file"
                 }
             }
         }

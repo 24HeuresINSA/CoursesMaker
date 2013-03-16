@@ -154,7 +154,7 @@ class Course
     /**
      * @var \Rotis\CourseMakerBundle\Entity\Type
      */
-    private $type;
+    protected $type;
 
     /**
      * Constructor
@@ -263,7 +263,6 @@ class Course
     public function setType(\Rotis\CourseMakerBundle\Entity\Type $type = null)
     {
         $this->type = $type;
-    
         return $this;
     }
 
