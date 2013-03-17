@@ -11,8 +11,11 @@ class RegistrationType extends AbstractType
         $builder->add('user', new UserType());
         $builder->add(
             'team',
-            'field', 
-            array('property_path' => 'team')
+            'text', 
+            array(
+                'property_path' => 'team',
+                'read_only' => 'read_only',
+            )
         );
 
 

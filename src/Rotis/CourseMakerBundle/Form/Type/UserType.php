@@ -5,6 +5,7 @@ namespace Rotis\CourseMakerBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class UserType extends AbstractType
 {
@@ -16,6 +17,7 @@ class UserType extends AbstractType
            'first_name'  => 'password',
            'second_name' => 'confirm',
            'type'        => 'password',
+           'invalid_message' => 'La confirmation du mot de passe a échoué',
         ));
 
 
@@ -29,10 +31,10 @@ class UserType extends AbstractType
             'property' => 'nom',
         ));
 
-     /*   $builder->add('course', 'entity', array(
+        $builder->add('course', 'entity', array(
             'class' => 'RotisCourseMakerBundle:Course',
             'property'=> 'nom',
-        ));*/
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

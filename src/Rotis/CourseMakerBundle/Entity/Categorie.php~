@@ -62,7 +62,7 @@ class Categorie
     private $nb_max_coureurs;
 
     /**
-     * @var \Rotis\CourseMakerBundle\Entity\Course
+     * @var \Doctrine\Common\Collections\Collection
      */
     private $courses;
 
@@ -73,7 +73,7 @@ class Categorie
      * @param integer $nbMaxCoureurs
      * @return Categorie
      */
-    public function setNbMaxCoureurs($nbMaxCoureurs)
+    public function setNbMaxCoureurs($nbMaxCoureurs = 1000)
     {
         $this->nb_max_coureurs = $nbMaxCoureurs;
     
