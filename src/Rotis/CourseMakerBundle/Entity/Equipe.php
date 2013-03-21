@@ -120,6 +120,7 @@ class Equipe implements AdvancedUserInterface, \Serializable
     /**
      * Set salt
      *
+     *
      * @param string $salt
      * @return User
      */
@@ -147,24 +148,20 @@ class Equipe implements AdvancedUserInterface, \Serializable
     public function __construct()
     {
         $this->joueurs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->course = new Course();
-        $this->course->setNom('test');
-        $this->course->setInscriptionsOuvertes(true);
-        $this->course->setDatetimeDebut(new \DateTime());
-        $this->course->setDatetimeFin(new \DateTime());
         $this->isActive = true;
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->valide = false;
     }
-    
+   
+ 
     /**
      * Get type
      * @return \Rotis\CourseMakerBundle\Entity\Type
      */
     public function getType()
     {
-        //var_dump($this);die;
-        return $this->getCourse()->getType();
+        var_dump($this->course);die;
+        return $this->course->getType();
     }
 
     /**

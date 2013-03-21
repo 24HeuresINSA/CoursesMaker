@@ -12,7 +12,7 @@ class UserType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('username','text');
+        $builder->add('username','text',array('label' => 'Nom de l\'équipe'));
         $builder->add('password', 'repeated', array(
            'first_name'  => 'password',
            'second_name' => 'confirm',
@@ -20,21 +20,17 @@ class UserType extends AbstractType
            'invalid_message' => 'La confirmation du mot de passe a échoué',
         ));
 
-
-        $builder->add('type', 'entity', array(
-            'class' => 'RotisCourseMakerBundle:Type',
-            'property' => 'nom',
-        ));
-            
-        $builder->add('categorie', 'entity', array(
-            'class' => 'RotisCourseMakerBundle:Categorie',
-            'property' => 'nom',
-        ));
-
         $builder->add('course', 'entity', array(
             'class' => 'RotisCourseMakerBundle:Course',
             'property'=> 'nom',
         ));
+
+        $builder->add('categorie', 'entity', array(
+            'class' => 'RotisCourseMakerBundle:Categorie',
+            'property' => 'nom',
+        ));
+          
+
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
