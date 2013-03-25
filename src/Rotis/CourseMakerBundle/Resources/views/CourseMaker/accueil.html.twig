@@ -1,0 +1,81 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+
+{% block title %}CoursesMaker - Accueil{% endblock %}
+
+{% block div %}                
+	<h1>17,18,19 mai 2013</h1>
+    <p>Inscription aux courses des 24 heures de l'INSA</p>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+	{% else %}
+	<p ><a class="btn btn-danger btn-large" href="register">Inscription &raquo;</a>  <a class="btn btn-success btn-large" href="login">Connexion &raquo;</a> <br/>
+        {% if app.session.hasFlash('notice') %}
+            <div class="flash-notice">
+                {{ app.session.flash('notice') }}
+            </div>
+        {% endif %}</p>
+	{% endif %}   
+{% endblock %}
+
+{% block content %}
+	<div class="container-fluid">
+		<div class="row-fluid">            
+			<div class="span12">
+				<div class="row-fluid">
+					<div class="span15">
+		   				<h2>Courses :</h2>
+		 			</div><!--/span-->
+		 		</div><!--/row-->
+		 		<div class="row-fluid">
+                	<div class="span3">
+                 		<h2>Vélo</h2>
+                  		<p>La course emblématique des 24h de l'INSA ! Quelque soit ton niveau viens rouler au milieu des vélos folklo dans une ambiance de folie et à proximité de tout les avantages du village coureur pour une épreuve d'endurance inoubliable de 24h.</p>
+                  		<p><a class="btn" href="#">En savoir plus  &raquo;</a></p>
+                	</div><!--/span-->
+                	<div class="span3">
+                  		<h2>Triathlon</h2>
+                  		<p>La huitième édition du 24thlon. Un épreuve de 24h pour 4h de natation, 14h de vélo et enfin 6h de course à pieds !</p>
+                  		<p><a class="btn" href="#">En savoir plus  &raquo;</a></p>
+                	</div><!--/span-->
+               	 	<div class="span3">
+                  		<h2>Pied</h2>
+                  		<p>L'épreuve d'endurance de course à pieds de 24h. Un défi unique en solo ou en équipe. Sur un parcours plein d'ambiance au centre des animations de la journée.</p>
+                  		<p><a class="btn" href="#">En savoir plus  &raquo;</a></p>
+                	</div><!--/span-->
+                 	<div class="span3">
+                  		<h2>Natation</h2>
+                  		<p>Dans un cadre festif viens te mesurer aux autres nageurs pour une épreuve d'endurance de 4h. Nage pour la plaisir ou la competition.</p>
+                  		<p><a class="btn" href="#">En savoir plus  &raquo;</a></p>
+                	</div><!--/span-->
+              	</div><!--/row-->
+              	<div class="row-fluid">
+                	<div class="span15">
+                  		<h2>Catégorie :</h2>
+                	</div><!--/span-->
+              	</div><!--/row-->
+              	<div class="row-fluid">
+                	<div class="span3">
+                  		<h2>Solo</h2>
+                  		<p>Le choix des athlètes à la recherche d'un défi endurance. Une catégorie extrêment physique qui necessitera sans doute plusieurs arrêt au village coureur pour le ravitaillement et sur la table de massage.</p>
+                  		<p><a class="btn" href="#">En savoir plus  &raquo;</a></p>
+                	</div><!--/span-->
+                	<div class="span3">
+                  		<h2>Equipe</h2>
+                  		<p>Pour les coureurs qui cherchent la performance. Des équipe de 2 ou 3 coureurs entrainés pour une catégorie où le niveau augmente chaque année. </p>
+                  		<p><a class="btn" href="#">En savoir plus  &raquo;</a></p>
+                	</div><!--/span-->
+                	<div class="span3">
+                  		<h2>Loisir</h2>
+                  		<p>Une catégorie qui s'adresse aux plus nombreux. Des équipes de 4 à 12 coureurs pour une épreuve détentu où amusement et bonne ambiance reste le maître mot. </p>
+                  		<p><a class="btn" href="#">En savoir plus  &raquo;</a></p>
+                	</div><!--/span-->
+                	<div class="span3">
+                  		<h2>Hors Catégorie</h2>
+                  		<p>Pour les plus originaux. Tandems, runbikes, vélo couchés, c'est dans cette catégorie que vous jouerez et participerez à mettre l'ambiance sur la course au coté des folklos et des autres coureurs. </p>
+                  		<p><a class="btn" href="#">En savoir plus  &raquo;</a></p>
+                	</div><!--/span-->
+              	</div><!--/row-->
+			</div><!--/span-->
+		</div><!--/row-->
+	</div><!--/container -->
+
+{% endblock %}
