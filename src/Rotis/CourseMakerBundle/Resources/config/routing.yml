@@ -1,6 +1,31 @@
-rotis_course_maker_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: RotisCourseMakerBundle:Default:index }
-rotis_course_maker_inscription:
-    pattern: /inscription
-    defaults: { _controller: RotisCourseMakerBundle:CourseMaker:dispatcher }
+login:
+    pattern: /login
+    defaults: { _controller: RotisCourseMakerBundle:Security:login }
+admin_control_equipe:
+    pattern: /admin_equipes
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:liste }
+login_check:
+    pattern: /login_check
+logout:
+    pattern:  /logout
+register:
+    pattern: /register
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:register }
+create:
+    pattern: /create
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:create }
+edit:
+    pattern: /edit
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:edit }
+contact:
+    pattern: /contact
+    defaults: { _controller: RotisCourseMakerBundle:CourseMaker:contact }
+accueil:
+    pattern: /accueil
+    defaults: { _controller: RotisCourseMakerBundle:CourseMaker:accueil }
+account:
+    pattern: /equipe/{name}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:edit_equipe }
+infos_pratiques:
+    pattern: /infos_pratiques
+    defaults: { _controller: RotisCourseMakerBundle:CourseMaker:infos }

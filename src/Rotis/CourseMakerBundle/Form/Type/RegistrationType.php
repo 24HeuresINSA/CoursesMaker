@@ -9,7 +9,7 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('user', new UserType(),array('label' => 'Inscris-toi, choisis ton type, ta catégorie et ta course, merci de renseigner le nom de ton equipe meme si tu es seul!ps: prends un curly ;)'));
+        $builder->add('user', new UserType(),array('label' => 'Inscris-toi,choisis ta course et ta catégorie, merci de renseigner le nom de ton equipe meme si tu es seul!ps: prends un curly ;)'));
 
     }
 

@@ -33,10 +33,4 @@ class SecurityController extends Controller
         );
     }
 
-    public function accountAction()
-    {
-        return $this->render('RotisCourseMakerBundle:Security:account.html.twig');
-    }
-    
-
 }

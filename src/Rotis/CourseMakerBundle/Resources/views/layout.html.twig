@@ -45,8 +45,11 @@
 	              		
 	              		<div class="nav-collapse collapse"> 
 		                	<p class="navbar-text pull-right">
-		                  		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-		                  		Bonjour <a href="account" class="navbar-link">{{app.user.username}}</a>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                Bonjour <a href="admin_equipes" class="navbar-link">{{app.user.username}}</a>
+                                <a class="btn btn-small" href="logout">Déconnexion</a>
+                                {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
+		                  		Bonjour <a href="equipe/{{ app.user.username }}" class="navbar-link">{{app.user.username}}</a>
 		                  		<a class="btn btn-small" href="logout">Déconnexion</a>
 		                  		{% else %}
 		                  		<a class="btn btn-small" href="register">Inscription</a>
@@ -55,7 +58,12 @@
 		                	</p>
 		                	<ul class="nav">
 		                  		<li class="active"><a href="accueil">Accueil</a></li>
-		                  		<li><a href="infos_pratiques">Infos Pratiques</a></li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li class="active"><a href="admin_equipes">{{ app.user.username }}</a></li>
+                                {%  elseif app.user.username is defined %}
+                                    <li class="active"><a href="equipe/{{ app.user.username }}">{{ app.user.username }}</a></li>
+                                {% endif %}
+                                <li><a href="infos_pratiques">Infos Pratiques</a></li>
 		                  		<li><a href="contact">Contact</a></li>
 		                	</ul>
 	              		</div><!--/.nav-collapse -->

@@ -13,8 +13,6 @@ class Registration
      */
     protected $user;
 
-    protected $team;
-
     public function setUser(Equipe $user)
     {
         $this->user = $user;
@@ -23,15 +21,5 @@ class Registration
     public function getUser()
     {
         return $this->user;
-    }
-
-    public function getTeam()
-    {
-        return $this->team;
-    }
-
-    public function setTeam($team)
-    {
-        $this->team = $team;
     }
 }
