@@ -46,25 +46,25 @@
 	              		<div class="nav-collapse collapse"> 
 		                	<p class="navbar-text pull-right">
                                 {% if is_granted('ROLE_ADMIN') %}
-                                Bonjour <a href="admin_equipes" class="navbar-link">{{app.user.username}}</a>
-                                <a class="btn btn-small" href="logout">Déconnexion</a>
+                                Bonjour <a href="{{ path('admin_home') }}" class="navbar-link">{{app.user.username}}</a>
+                                <a class="btn btn-small" href="{{ path('logout') }}">Déconnexion</a>
                                 {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
-		                  		Bonjour <a href="equipe/{{ app.user.username }}" class="navbar-link">{{app.user.username}}</a>
-		                  		<a class="btn btn-small" href="logout">Déconnexion</a>
+		                  		Bonjour <a href="{{ path('edit', { 'name': app.user.username }) }}" class="navbar-link">{{app.user.username}}</a>
+		                  		<a class="btn btn-small" href="{{ path('logout') }}">Déconnexion</a>
 		                  		{% else %}
-		                  		<a class="btn btn-small" href="register">Inscription</a>
-		                  		<a class="btn btn-small" href="login">Connexion</a>
+		                  		<a class="btn btn-small" href="{{ path('register') }}">Inscription</a>
+		                  		<a class="btn btn-small" href="{{ path('login') }}">Connexion</a>
 		                  		{% endif %}
 		                	</p>
 		                	<ul class="nav">
-		                  		<li class="active"><a href="accueil">Accueil</a></li>
+		                  		<li class="active"><a href="{{path('accueil') }}">Accueil</a></li>
                                 {% if is_granted('ROLE_ADMIN') %}
-                                    <li class="active"><a href="admin_equipes">{{ app.user.username }}</a></li>
+                                    <li class="active"><a href="{{path('admin_home') }}">{{ app.user.username }}</a></li>
+                                    <li><a href="{{ path('infos_pratiques') }}">Infos Pratiques</a></li>
                                 {%  elseif app.user.username is defined %}
-                                    <li class="active"><a href="equipe/{{ app.user.username }}">{{ app.user.username }}</a></li>
+                                    <li class="active"><a href="{{ path('edit', { 'name': app.user.username }) }}">{{ app.user.username }}</a></li>
                                 {% endif %}
-                                <li><a href="infos_pratiques">Infos Pratiques</a></li>
-		                  		<li><a href="contact">Contact</a></li>
+		                  		<li><a href="{{ path('contact') }}">Contact</a></li>
 		                	</ul>
 	              		</div><!--/.nav-collapse -->
 	            	</div>

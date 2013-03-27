@@ -1,0 +1,17 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+
+{% block title %}CoursesMaker - Choix de la Course{% endblock %}
+
+{% block content %}
+
+    <h1>Tableau de Bord</h1>
+    <form>
+
+    </form>
+    <ul>
+        {% for course in courses %}
+            <li><a>{{ course.nom }}</a></li>
+            {# href="course/{{ course.nom }} #}
+        {% endfor %}
+    </ul>
+{% endblock %}

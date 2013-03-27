@@ -3,6 +3,7 @@
 namespace Rotis\CourseMakerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Joueur
@@ -26,11 +27,25 @@ class Joueur
 
     /**
      * @var string
+     * @Assert\Email(
+     *     message = "mail '{{ value }}' non valide.",
+     *     checkMX = true
+     * )
      */
     private $email;
 
     /**
      * @var string
+     * @Assert\MinLength(
+     *     limit=10,
+     *     message="Votre numéro de tel doit faire {{ limit }} chiffres."
+     * )
+     * @Assert\MaxLength(10)
+     * @Assert\NotBlank(message="Veuillez renseigner un numéro de portable valide.")
+     * @Assert\Regex(
+     * pattern="/^0[67][0-9]{8}$/",
+     * message="Veuillez renseigner un numéro de portable valide."
+     * )
      */
     private $telephone;
 
@@ -260,7 +275,7 @@ class Joueur
      * @param \Rotis\CourseMakerBundle\Entity\Equipe $equipe
      * @return Joueur
      */
-    public function setEquipe(\Rotis\CourseMakerBundle\Entity\Equipe $equipe = null)
+    public function setEquipe(\Rotis\CourseMakerBundle\Entity\Equipe $equipe)
     {
         $this->equipe = $equipe;
     

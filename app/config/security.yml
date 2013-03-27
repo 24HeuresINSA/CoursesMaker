@@ -37,8 +37,6 @@ security:
             entity: { class: Rotis\CourseMakerBundle\Entity\Equipe, property: username }
         
     access_control:
-        - { path: ^/equipe, role: ROLE_USER }
-        - { path: ^/admin_equipes, role: ROLE_ADMIN }
         - { path: ^/infos_pratiques, role : IS_AUTHENTICATED_ANONYMOUSLY }
         - {path : ^/contact, role : IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/accueil, role: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -48,9 +46,10 @@ security:
         - { path: ^/create, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/edit, role: ROLE_USER }
         - { path: ^/_profiler, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/edit, role: ROLE_USER }
+        - { path: ^/equipe, role: ROLE_USER }
+        - { path: ^/, role: ROLE_ADMIN }
 
     encoders:
         Symfony\Component\Security\Core\User\User:

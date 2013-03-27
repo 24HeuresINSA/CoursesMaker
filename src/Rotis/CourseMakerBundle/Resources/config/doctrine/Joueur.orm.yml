@@ -17,6 +17,7 @@ Rotis\CourseMakerBundle\Entity\Joueur:
     email:
       type: string
       length: 255
+      unique: true
     telephone:
       type: string
       length: '20'

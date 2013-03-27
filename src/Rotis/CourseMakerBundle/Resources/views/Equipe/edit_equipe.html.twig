@@ -10,26 +10,34 @@
 
 
 <p>{{ equipe.username }} <br />
-   {{ equipe.valide }} <br />
+   {% if equipe.valide %}
+       Valide
+   {% else %}
+       Pas encore valide
+   {% endif %} <br />
    {{ equipe.course.nom }} <br />
    {{ equipe.categorie.nom }} <br />
+   {{ equipe.course.type.nom }}
+
 </p>
 
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="offset1 span10">
+    {% if is_granted('ROLE_ADMIN') %}
+    {% else %}
+    {% if equipe.categorie.nom != 'Solo' %}}
+    <div class="row-fluid">
+        <div class="offset1 span10">
 
-                <form action="{{ path('edit') }}" method="post" {{ form_enctype(form) }} class="well">
-                    {{ form_widget(form) }}
+            <form action="{{ path('edit', {'name': equipe.username })}}" method="post" {{ form_enctype(form) }} class="well">
+                {{ form_widget(form) }}
 
-                    <input type="submit" class="btn btn-primary"/>
-                </form>
-            </div>
+                <input type="submit" class="btn btn-primary"/>
+            </form>
         </div>
     </div>
-
-
-
+    {% else %}
+    Equipe complete!
+    {% endif %}
+    {% endif %}
 
 
 

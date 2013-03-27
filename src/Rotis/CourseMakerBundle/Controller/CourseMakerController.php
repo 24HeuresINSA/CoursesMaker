@@ -20,4 +20,16 @@ class CourseMakerController extends Controller
     {
         return $this->render('RotisCourseMakerBundle:CourseMaker:infos.html.twig');
     }
+
+    public function adminAction()
+    {
+        if (true === $this->get('security.context')->isGranted('ROLE_ADMIN'))
+        {
+            return $this->render('RotisCourseMakerBundle:CourseMaker:admin.html.twig');
+        }
+        else
+        {
+            return $this->redirect($this->generateUrl('accueil'));
+        }
+    }
 }
