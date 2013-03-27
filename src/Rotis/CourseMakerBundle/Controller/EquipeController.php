@@ -16,15 +16,15 @@ class EquipeController extends Controller
 {
     public function registerAction()
     {
+       if (true === $this->get('security.context')->isGranted('ROLE_USER')) {
+           return $this->redirect($this->generateUrl('accueil'));
+       }
 
-           if (true === $this->get('security.context')->isGranted('ROLE_USER')) 
-           {
-               return $this->redirect($this->generateUrl('accueil'));
-           }
-           $form = $this->createForm(
-            new RegistrationType(),
-            new Registration()
-        );
+       $form = $this->createForm(
+        new RegistrationType(),
+        new Registration()
+    );
+
         return $this->render(
             'RotisCourseMakerBundle:Equipe:register.html.twig',
             array('form' => $form->createView())
@@ -33,32 +33,43 @@ class EquipeController extends Controller
 
     public function editAction($name)
     {
+
         $repository = $this->getDoctrine()
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Equipe');
         $em = $this->getDoctrine()->getEntityManager();
         $form = $this->createForm(new PlayerAdditionType(), new PlayerAddition());
         $equipe= $repository->findOneBy(array('username' => $name));
-        if ($this->getRequest()->getMethod() == 'POST') {
-            $form->bindRequest($this->getRequest());
-        if ($form->isValid())
-        {
-            $factory = $this->get('security.encoder_factory');
-            $registration = $form->getData();
-            $joueur = $registration->getJoueur();
 
-            /*
-             $encoder = $factory->getEncoder($user);
-            $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
-            $user->setPassword($password);
-            $em->merge($user);
-            $em->flush();
-            $this->get('session')->setFlash(
-                'notice',
-                'Equipe modifiée!'
-            );*/
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')
+            && true === $this->get('security.context')->isGranted('ROLE_USER')
+            && (! method_exists($this->get('security.context')->getToken()->getUser(), 'getName')
+            || $this->get('security.context')->getToken()->getUser()->getName() !== $name))
+        {
             return $this->redirect($this->generateUrl('accueil'));
         }
+
+        if ($this->getRequest()->getMethod() == 'POST') {
+            $form->bindRequest($this->getRequest());
+
+            if ($form->isValid())
+            {
+                $factory = $this->get('security.encoder_factory');
+                $registration = $form->getData();
+                $joueur = $registration->getJoueur();
+
+                /*
+                 $encoder = $factory->getEncoder($user);
+                $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+                $user->setPassword($password);
+                $em->merge($user);
+                $em->flush();
+                $this->get('session')->setFlash(
+                    'notice',
+                    'Equipe modifiée!'
+                );*/
+                return $this->redirect($this->generateUrl('accueil'));
+            }
         }
 
         return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('equipe' => $equipe,'form' => $form->createView()));
