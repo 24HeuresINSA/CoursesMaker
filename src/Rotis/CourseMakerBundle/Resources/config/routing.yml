@@ -1,9 +1,12 @@
 login:
     pattern: /login
     defaults: { _controller: RotisCourseMakerBundle:Security:login }
-admin_control_equipe:
+admin_control_course:
     pattern: /admin_equipes
-    defaults: { _controller: RotisCourseMakerBundle:Equipe:liste }
+    defaults: { _controller: RotisCourseMakerBundle:AdminEquipe:listeCourse }
+admin_control_equipe:
+    pattern: /admin_equipes/{name}
+    defaults: { _controller: RotisCourseMakerBundle:AdminEquipe:listeEquipe }
 login_check:
     pattern: /login_check
 logout:
