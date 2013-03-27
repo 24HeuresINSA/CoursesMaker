@@ -8,8 +8,8 @@
 {% endblock %}
 
 {% block content %}
-{% if error %}
-    <div>{{ error.message }}</div>
+{% if error is defined %}
+    <div>{{ error }}</div>
 {% endif %}
          
 <div class="container-fluid">
