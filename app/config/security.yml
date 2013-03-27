@@ -32,7 +32,7 @@ security:
         in_memory:
             memory:
                 users: 
-                    admin: { password: 1f6ccd2be75f1cc94a22a773eea8f8aeb5c68217, roles: 'ROLE_ADMIN' }
+                    admin: { password: %admin_password%, roles: 'ROLE_ADMIN' }
         user_db:
             entity: { class: Rotis\CourseMakerBundle\Entity\Equipe, property: username }
         
@@ -49,6 +49,7 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/edit, role: ROLE_USER }
         - { path: ^/_profiler, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
     encoders:

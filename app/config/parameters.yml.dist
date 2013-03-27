@@ -15,3 +15,4 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     app_webmaster:     24h
+    admin_password:    PASSWORD FOR ADMIN USER
