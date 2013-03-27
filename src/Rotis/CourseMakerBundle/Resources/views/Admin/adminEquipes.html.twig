@@ -1,0 +1,22 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+
+{% block title %}CoursesMaker - Admin{% endblock %}
+
+{% block div %}                
+	<h1>Administration</h1> 
+{% endblock %}
+
+{% block content %}
+
+    <h1>Liste des Equipes</h1>
+    
+	<ul>
+	{% for equipe in equipes %}
+    <li>
+		<a href="../equipe/{{ equipe.username }} ">{{ equipe.username }}</a>
+    </li>
+    {% endfor %}
+    </ul>
+
+
+{% endblock %}
