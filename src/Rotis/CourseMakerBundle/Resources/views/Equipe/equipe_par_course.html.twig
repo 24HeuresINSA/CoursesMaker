@@ -1,0 +1,13 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+
+{% block title %}CoursesMaker - Equipes par course{% endblock %}
+
+{% block content %}
+
+    Bonjour par course
+
+    {% for equipes in equipes %}
+        {{ equipes.username }}
+    {%  endfor %}
+
+{% endblock %}

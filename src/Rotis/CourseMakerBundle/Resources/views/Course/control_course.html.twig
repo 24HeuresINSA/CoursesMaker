@@ -10,7 +10,7 @@
     </form>
     <ul>
         {% for course in courses %}
-            <li><a>{{ course.nom }}</a></li>
+            <li><a href="{{ path('admin_par_course', { 'id': course.getId() }) }} ">{{ course.nom }}</a></li>
             {# href="course/{{ course.nom }} #}
         {% endfor %}
     </ul>

@@ -40,7 +40,7 @@
 	                		<span class="icon-bar"></span>
 	                		<span class="icon-bar"></span>
 	              		</a>
-	              		<a class="brand" href="accueil">CoursesMaker</a>
+	              		<a class="brand" href="{{path('accueil') }}">CoursesMaker</a>
 	              		
 	              		
 	              		<div class="nav-collapse collapse"> 
@@ -49,7 +49,7 @@
                                 Bonjour <a href="{{ path('admin_home') }}" class="navbar-link">{{app.user.username}}</a>
                                 <a class="btn btn-small" href="{{ path('logout') }}">Déconnexion</a>
                                 {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
-		                  		Bonjour <a href="{{ path('edit', { 'name': app.user.username }) }}" class="navbar-link">{{app.user.username}}</a>
+		                  		Bonjour <a href="{{ path('edit', { 'id': app.user.id }) }}" class="navbar-link">{{app.user.username}}</a>
 		                  		<a class="btn btn-small" href="{{ path('logout') }}">Déconnexion</a>
 		                  		{% else %}
 		                  		<a class="btn btn-small" href="{{ path('register') }}">Inscription</a>
@@ -62,7 +62,7 @@
                                     <li class="active"><a href="{{path('admin_home') }}">{{ app.user.username }}</a></li>
                                     <li><a href="{{ path('infos_pratiques') }}">Infos Pratiques</a></li>
                                 {%  elseif app.user.username is defined %}
-                                    <li class="active"><a href="{{ path('edit', { 'name': app.user.username }) }}">{{ app.user.username }}</a></li>
+                                    <li class="active"><a href="{{ path('edit', { 'id': app.user.id }) }}">{{ app.user.username }}</a></li>
                                 {% endif %}
 		                  		<li><a href="{{ path('contact') }}">Contact</a></li>
 		                	</ul>
@@ -102,6 +102,7 @@
 	    
 				<footer>
 		           <p>&copy; 24 Heures de l'INSA 2013</p>
+                   <p><strong>Plus c'est long, plus c'est bon!</strong></p>
 		    	</footer>
 	    
 	        </div><!--/.fluid-container-->

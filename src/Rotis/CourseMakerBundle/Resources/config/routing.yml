@@ -7,6 +7,9 @@ admin_home:
 admin_control:
     pattern: /admin/{name}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:liste }
+admin_par_course:
+    pattern: /admin/course/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:listeParCourse }
 login_check:
     pattern: /login_check
 logout:
@@ -18,7 +21,7 @@ create:
     pattern: /create
     defaults: { _controller: RotisCourseMakerBundle:Equipe:create }
 edit:
-    pattern: /edit/{name}
+    pattern: /edit/{id}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:edit }
 contact:
     pattern: /contact
@@ -27,7 +30,7 @@ accueil:
     pattern: /
     defaults: { _controller: RotisCourseMakerBundle:CourseMaker:accueil }
 account:
-    pattern: /equipe/{name}
+    pattern: /equipe/{id}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:edit_equipe }
 infos_pratiques:
     pattern: /infos_pratiques

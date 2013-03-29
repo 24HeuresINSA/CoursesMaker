@@ -13,7 +13,7 @@ class SecurityController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
 
-        // TODO : no error is displayed of there's one?
+        // TODO : no error is displayed if there's one?
 
         // recupere l erreur de login si presente
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR))

@@ -26,7 +26,7 @@ security:
                 check_path: login_check
             logout:
                 path: /logout
-                target: /accueil
+                target: /
 
     providers:
         chain_provider:

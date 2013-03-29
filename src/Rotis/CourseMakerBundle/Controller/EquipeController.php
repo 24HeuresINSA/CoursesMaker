@@ -3,6 +3,7 @@ namespace Rotis\CourseMakerBundle\Controller;
 
 
 use Rotis\CourseMakerBundle\Entity\Joueur;
+use Rotis\CourseMakerBundle\Entity\Equipe;
 use Rotis\CourseMakerBundle\Form\Model\PlayerAddition;
 use Rotis\CourseMakerBundle\Form\Type\EditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,7 +32,7 @@ class EquipeController extends Controller
         );
     }
 
-    public function editAction($name)
+    public function editAction($id)
     {
 
         $repository = $this->getDoctrine()
@@ -39,12 +40,12 @@ class EquipeController extends Controller
             ->getRepository('RotisCourseMakerBundle:Equipe');
         $em = $this->getDoctrine()->getEntityManager();
         $form = $this->createForm(new PlayerAdditionType(), new PlayerAddition());
-        $equipe= $repository->findOneBy(array('username' => $name));
+        $equipe= $repository->find($id);
 
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')
             && true === $this->get('security.context')->isGranted('ROLE_USER')
-            && (! method_exists($this->get('security.context')->getToken()->getUser(), 'getName')
-            || $this->get('security.context')->getToken()->getUser()->getName() !== $name))
+            && (! method_exists($this->get('security.context')->getToken()->getUser(),'getId')
+            || $this->get('security.context')->getToken()->getUser()->getId() != $id))
         {
             return $this->redirect($this->generateUrl('accueil'));
         }
@@ -56,8 +57,21 @@ class EquipeController extends Controller
             {
                 $factory = $this->get('security.encoder_factory');
                 $registration = $form->getData();
+                $user = $this->get('security.context')->getToken()->getUser();
                 $joueur = $registration->getJoueur();
+                $repository = $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository('RotisCourseMakerBundle:Equipe');
 
+                $joueur->setEquipe($user);
+                $user->addJoueur($joueur);
+                $em->persist($joueur);
+                $em->persist($user);
+                $em->flush();
+                $this->get('session')->setFlash(
+                    'notice',
+                    'Ajout réussi!'
+                );
                 /*
                  $encoder = $factory->getEncoder($user);
                 $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
@@ -107,16 +121,16 @@ class EquipeController extends Controller
         return $this->render('RotisCourseMakerBundle:Equipe:register.html.twig', array('form' => $form->createView()));
     }
 
-    public function edit_equipeAction($name)
+    public function edit_equipeAction($id)
     {
         $repository = $this->getDoctrine()
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Equipe');
-        $equipe = $repository->findOneBy(array('username' => $name));
+        $equipe = $repository->find($id);
         $request = $this->get('request');
         $em = $this->get('doctrine.orm.entity_manager');
         $form = $this->get('form.factory')->create(new EditType());
-        if ($name == $equipe->getUsername())
+        if ($id == $equipe->getId())
         {
 
             return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig',array('equipe' => $equipe,'form' => $form->createView()));
@@ -159,4 +173,15 @@ class EquipeController extends Controller
 
         }
      }
+
+    public function listeParCourseAction($id)
+    {
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Equipe');
+        $listeEquipes = $this->getDoctrine()
+            ->getRepository('RotisCourseMakerBundle:Equipe')
+            ->findOneByJoinedCourseId($id);
+        return $this->render('RotisCourseMakerBundle:Equipe:equipe_par_course.html.twig');
+    }
 }

@@ -64,4 +64,15 @@ class EquipeRepository extends EntityRepository implements UserProviderInterface
         return $this->getEntityName() === $class
             || is_subclass_of($class, $this->getEntityName());
     }
+
+    public function findOneByJoinedCourseId($id)
+    {
+        $query = $this
+            ->createQueryBuilder('p')
+            ->where('p.courseid = :id')
+            ->setParameter('id', $id )
+            ->getQuery();
+        $equipes = $query->getResult($id);
+        return $equipes;
+    }
 }

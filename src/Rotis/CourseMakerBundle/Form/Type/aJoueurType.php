@@ -18,10 +18,10 @@ class aJoueurType extends AbstractType
         $builder->add('prenom','text',array('label' => 'Prénom'));
         $builder->add('taille_tshirt', 'choice', array(
             'choices'   => array(
-                'small'   => 'S',
-                'medium' => 'M',
-                'large'   => 'L',
-                'xlarge' => 'XL'
+                'S'   => 'S',
+                'M' => 'M',
+                'L'   => 'L',
+                'XL' => 'XL'
             ),
             'label' => 'Taille de votre t-shirt',
             'preferred_choices' => array('medium'),
@@ -30,30 +30,30 @@ class aJoueurType extends AbstractType
         );
 
         $builder->add('telephone','text', array(
-            'label' => 'Téléphone du chef d\'équipe'
+            'label' => 'Téléphone'
         ));
         $builder->add('email','text', array(
-            'label' => 'Mail du chef d\'équipe'
+            'label' => 'Mail'
         ));
 
         $builder->add('etudiant','choice', array(
             'choices' => array(
-                '0' => 'Oui',
-                '1' => 'Non'
+                '1' => 'Oui',
+                '0' => 'Non'
             ),
             'label' => 'Etes-vous étudiant?'
         )
         );
         $builder->add('papiers_ok', 'choice', array(
             'choices' => array(
-                '1' => 'Pas OK',
+                '0' => 'Pas OK',
             ),
             'read_only' => 'true',
             'label' => 'Validation des papiers'
         ));
         $builder->add('paiement_ok', 'choice', array(
             'choices' => array(
-                '1' => 'Pas OK',
+                '0' => 'Pas OK',
             ),
             'read_only' => 'true',
             'label' => 'Validation du paiement'

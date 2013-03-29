@@ -7,7 +7,7 @@
 {% block content %}   
 
 <h1>Informations sur l'Equipe {{ equipe.username }} </h1>
-
+{# TODO: ajouter des champs pour paiement et papiers #}
 
 <p>{{ equipe.username }} <br />
    {% if equipe.valide %}
@@ -17,17 +17,47 @@
    {% endif %} <br />
    {{ equipe.course.nom }} <br />
    {{ equipe.categorie.nom }} <br />
-   {{ equipe.course.type.nom }}
+   {{ equipe.course.type.nom }} <br />
 
+
+       <ul>
+           <li>Prenom {% for joueurs in equipe.joueurs %} {{ joueurs.prenom }} {% endfor %}</li>
+           <li>Nom {% for joueurs in equipe.joueurs %} {{ joueurs.nom }} {% endfor %}</li>
+           <li>Email {% for joueurs in equipe.joueurs %} {{ joueurs.email }} {% endfor %}</li>
+           <li>Telephone {% for joueurs in equipe.joueurs %} {{ joueurs.telephone }} {% endfor %}</li>
+           <li>Statut {% for joueurs in equipe.joueurs %} {% if joueurs.getEtudiant() %}
+                   Etudiant
+               {% else %}
+                   Pas Etudiant
+               {% endif %}
+               {% endfor %}</li>
+           <li>T-Shirt {% for joueurs in equipe.joueurs %} {{ joueurs.getTailleTshirt }} {% endfor %}</li>
+           <li>Papiers {% for joueurs in equipe.joueurs %} {% if joueurs.getPapiersOk() %}
+                   Papiers Validés
+               {% else %}
+                   En attente des papiers
+               {% endif %}
+               {% endfor %}
+           </li>
+           <li>Paiement {% for joueurs in equipe.joueurs %} {% if true == joueurs.getPaiementOk() %}
+                   Paiement Validé
+               {% else %}
+                   En attente de paiement
+               {% endif %}
+               {% endfor %}
+           </li>
+       </ul>
+
+{# TODO:Compter le nombre de joueurs de l'équipe et selon ça afficher ou non le form d'ajout #}
 </p>
 
     {% if is_granted('ROLE_ADMIN') %}
     {% else %}
-    {% if equipe.categorie.nom != 'Solo' %}}
+    {% if equipe.categorie.nom != 'Solo' %}
     <div class="row-fluid">
         <div class="offset1 span10">
 
-            <form action="{{ path('edit', {'name': equipe.username })}}" method="post" {{ form_enctype(form) }} class="well">
+            <form action="{{ path('edit', {'id': equipe.id })}}" method="post" {{ form_enctype(form) }} class="well">
                 {{ form_widget(form) }}
 
                 <input type="submit" class="btn btn-primary"/>

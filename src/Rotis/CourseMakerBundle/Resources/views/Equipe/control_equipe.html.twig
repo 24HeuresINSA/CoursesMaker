@@ -10,7 +10,7 @@
     </form>
     <ul>
         {% for equipe in equipes %}
-            <li><a href="{{ path('account', { 'name': equipe.username }) }} ">{{ equipe.username }}</a></li>
+            <li><a href="{{ path('account', { 'id': equipe.id }) }} ">{{ equipe.username }}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}
