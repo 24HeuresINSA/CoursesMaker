@@ -24,7 +24,7 @@ contact:
     pattern: /contact
     defaults: { _controller: RotisCourseMakerBundle:CourseMaker:contact }
 accueil:
-    pattern: /accueil
+    pattern: /
     defaults: { _controller: RotisCourseMakerBundle:CourseMaker:accueil }
 account:
     pattern: /equipe/{name}
