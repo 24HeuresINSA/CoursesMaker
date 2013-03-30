@@ -13,6 +13,11 @@ Rotis\CourseMakerBundle\Entity\Course:
       length: 255
     inscriptions_ouvertes:
       type: boolean
+    url:
+      type: string
+      length: 255
+    description:
+      type: text
     datetime_debut:
       type: datetime
     datetime_fin:

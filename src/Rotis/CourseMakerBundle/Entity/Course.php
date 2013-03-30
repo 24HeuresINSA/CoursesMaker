@@ -25,6 +25,16 @@ class Course
     private $inscriptions_ouvertes;
 
     /**
+     * @var string
+     */
+    private $url;
+
+    /**
+     * @var text
+     */
+    private $description;
+
+    /**
      * @var \DateTime
      */
     private $datetime_debut;
@@ -78,6 +88,47 @@ class Course
     {
         $this->inscriptions_ouvertes = $inscriptionsOuvertes;
     
+        return $this;
+    }
+
+    /**
+     * Get url
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Set url
+     *
+     * @param string $url
+     * @return course
+     */
+    public function setUrl($url = null)
+    {
+        $this->url = $url;
+        return $this;
+    }
+
+    /**
+     * Get description
+     * @return text
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set description
+     * @param text $description
+     * @return course
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
         return $this;
     }
 

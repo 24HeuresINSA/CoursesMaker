@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Sam 30 Mars 2013 à 14:51
+-- Généré le: Sam 30 Mars 2013 à 15:47
 -- Version du serveur: 5.5.29
 -- Version de PHP: 5.4.6-1ubuntu1.2
 
@@ -71,6 +71,8 @@ CREATE TABLE IF NOT EXISTS `Course` (
   `inscriptions_ouvertes` tinyint(1) NOT NULL,
   `datetime_debut` datetime NOT NULL,
   `datetime_fin` datetime NOT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_11326A8F74281A5E` (`edition_id`),
   KEY `IDX_11326A8FC54C8C93` (`type_id`)
@@ -80,20 +82,20 @@ CREATE TABLE IF NOT EXISTS `Course` (
 -- Contenu de la table `Course`
 --
 
-INSERT INTO `Course` (`id`, `edition_id`, `type_id`, `nom`, `inscriptions_ouvertes`, `datetime_debut`, `datetime_fin`) VALUES
-(5, 1, 1, 'Velo-solo', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
-(6, 1, 1, 'Velo-equipe', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
-(7, 1, 1, 'Velo-loisir', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
-(8, 1, 1, 'Velo-horscatégorie', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
-(9, 1, 2, 'Pied-solo', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
-(10, 1, 2, 'Pied-equipe', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
-(11, 1, 2, 'Pied-loisir', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
-(12, 1, 3, 'Triathlon-solo', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
-(13, 1, 3, 'Triathlon-equipe', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
-(14, 1, 3, 'Triathlon-loisir', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
-(15, 1, 4, 'Natation-solo', 1, '2013-05-18 14:00:00', '2013-05-18 18:00:00'),
-(16, 1, 4, 'Natation-equipe', 1, '2013-05-18 14:00:00', '2013-05-18 18:00:00'),
-(17, 1, 4, 'Natation-loisir', 1, '2013-05-18 14:00:00', '2013-05-18 18:00:00');
+INSERT INTO `Course` (`id`, `edition_id`, `type_id`, `nom`, `inscriptions_ouvertes`, `datetime_debut`, `datetime_fin`, `url`, `description`) VALUES
+(5, 1, 1, 'Velo-solo', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00', 'http://www.24heures.org/courses/course-cycliste/', ''),
+(6, 1, 1, 'Velo-equipe', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00', 'http://www.24heures.org/courses/course-cycliste/', ''),
+(7, 1, 1, 'Velo-loisir', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00', 'http://www.24heures.org/courses/course-cycliste/', ''),
+(8, 1, 1, 'Velo-horscatégorie', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00', 'http://www.24heures.org/courses/velos-folklo/', 'Pour les plus originaux. Tandems, runbikes, vélo couchés, c''est dans cette catégorie que vous jouerez et participerez à mettre l''ambiance sur la course au coté des folklos et des autres coureurs.'),
+(9, 1, 2, 'Pied-solo', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00', 'http://www.24heures.org/courses/course-a-pied/', ''),
+(10, 1, 2, 'Pied-equipe', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00', 'http://www.24heures.org/courses/course-a-pied/', ''),
+(11, 1, 2, 'Pied-loisir', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00', 'http://www.24heures.org/courses/course-a-pied/', ''),
+(12, 1, 3, 'Triathlon-solo', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00', 'http://www.24heures.org/courses/24thlon-triathlon/', ''),
+(13, 1, 3, 'Triathlon-equipe', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00', 'http://www.24heures.org/courses/24thlon-triathlon/', ''),
+(14, 1, 3, 'Triathlon-loisir', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00', 'http://www.24heures.org/courses/24thlon-triathlon/', ''),
+(15, 1, 4, 'Natation-solo', 1, '2013-05-18 14:00:00', '2013-05-18 18:00:00', 'http://www.24heures.org/courses/natation/', ''),
+(16, 1, 4, 'Natation-equipe', 1, '2013-05-18 14:00:00', '2013-05-18 18:00:00', 'http://www.24heures.org/courses/natation/', ''),
+(17, 1, 4, 'Natation-loisir', 1, '2013-05-18 14:00:00', '2013-05-18 18:00:00', 'http://www.24heures.org/courses/natation/', '');
 
 -- --------------------------------------------------------
 
