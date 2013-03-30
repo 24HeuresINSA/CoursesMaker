@@ -18,8 +18,13 @@
    {{ equipe.course.nom }} <br />
    {{ equipe.categorie.nom }} <br />
    {{ equipe.course.type.nom }} <br />
+   Nombre de coureurs {{ nombre }} <br />
 
-
+    <br />
+    {% if is_granted('ROLE_ADMIN') %}
+        <p><a class="btn" href="{{ path('admin_edit', { 'id': equipe.id }) }}">Editer l'équipe &raquo;</a></p>
+    {% endif %}
+    <br />
        <ul>
            <li>Prenom {% for joueurs in equipe.joueurs %} {{ joueurs.prenom }} {% endfor %}</li>
            <li>Nom {% for joueurs in equipe.joueurs %} {{ joueurs.nom }} {% endfor %}</li>
@@ -48,27 +53,38 @@
            </li>
        </ul>
 
-{# TODO:Compter le nombre de joueurs de l'équipe et selon ça afficher ou non le form d'ajout #}
-</p>
+{# TODO:
+Faire un formulaire d'édition de l'équipe
+Faire un tableau #}
 
-    {% if is_granted('ROLE_ADMIN') %}
-    {% else %}
-    {% if equipe.categorie.nom != 'Solo' %}
-    <div class="row-fluid">
-        <div class="offset1 span10">
+<br />
+    </p>
 
-            <form action="{{ path('edit', {'id': equipe.id })}}" method="post" {{ form_enctype(form) }} class="well">
+    {% if equipe.categorie.nom != 'Solo' or nombre < 1 %}
+        {% if equipe.categorie.nom != 'Equipe' or nombre < 3 %}
+            {% if equipe.categorie.nom != 'Loisir' or nombre < 12 %}
+        <div class="row-fluid">
+            <div class="offset1 span10">
+
+                <form action="{{ path('edit', {'id': equipe.id })}}" method="post" {{ form_enctype(form) }} class="well">
                 {{ form_widget(form) }}
-
-                <input type="submit" class="btn btn-primary"/>
-            </form>
+                <br />
+                    <input type="submit" class="btn btn-primary"/>
+                </form>
+            </div>
         </div>
-    </div>
+
     {% else %}
     Equipe complete!
     {% endif %}
+    {% else %}
+        Equipe complete!
+    {% endif %}
+    {% else %}
+        Equipe complete!
     {% endif %}
 
-
-
+<!-- Le javascript
+   ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
 {% endblock %}

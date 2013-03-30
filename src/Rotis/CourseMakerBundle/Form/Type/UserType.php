@@ -5,6 +5,7 @@ namespace Rotis\CourseMakerBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 use Doctrine\ORM\EntityRepository;
 
 class UserType extends AbstractType
@@ -14,8 +15,8 @@ class UserType extends AbstractType
     {
         $builder->add('username','text',array('label' => 'Nom de l\'équipe'));
         $builder->add('password', 'repeated', array(
-           'first_name'  => 'password',
-           'second_name' => 'confirm',
+           'first_name'  => 'mot_de_passe',
+           'second_name' => 'confirmation',
            'type'        => 'password',
            'invalid_message' => 'La confirmation du mot de passe a échoué',
         ));
@@ -23,13 +24,17 @@ class UserType extends AbstractType
         $builder->add('course', 'entity', array(
             'class' => 'RotisCourseMakerBundle:Course',
             'property'=> 'nom',
-        ));
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('c')
+                    ->where('c.inscriptions_ouvertes = true');
+            },
+        )
+        );
 
         $builder->add('categorie', 'entity', array(
             'class' => 'RotisCourseMakerBundle:Categorie',
             'property' => 'nom',
         ));
-          
 
     }
 

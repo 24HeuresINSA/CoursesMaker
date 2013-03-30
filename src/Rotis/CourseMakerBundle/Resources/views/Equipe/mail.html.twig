@@ -1,0 +1,12 @@
+Madame/Monsieur {{ prenom }} {{ nom }} bonjour,
+Par la présente nous vous confirmons votre inscription au site CoursesMaker.
+Voici vos identifiants:
+Equipe: {{ username }}
+{% if password != "0" %}
+Mot de passe: {{ password }}
+{% else %}
+    Le mot de passe a été remis au chef d'équipe.
+{% endif %}
+Nous vous sommes grés de bien vouloir nous faire parvenir votre paiement dans les plus brefs délais.
+
+Les organisateurs des courses vous saluent!

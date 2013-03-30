@@ -36,28 +36,12 @@ class aJoueurType extends AbstractType
             'label' => 'Mail'
         ));
 
-        $builder->add('etudiant','choice', array(
-            'choices' => array(
-                '1' => 'Oui',
-                '0' => 'Non'
-            ),
+        $builder->add('etudiant','checkbox', array(
+            'required' => false,
             'label' => 'Etes-vous étudiant?'
         )
         );
-        $builder->add('papiers_ok', 'choice', array(
-            'choices' => array(
-                '0' => 'Pas OK',
-            ),
-            'read_only' => 'true',
-            'label' => 'Validation des papiers'
-        ));
-        $builder->add('paiement_ok', 'choice', array(
-            'choices' => array(
-                '0' => 'Pas OK',
-            ),
-            'read_only' => 'true',
-            'label' => 'Validation du paiement'
-        ));
+
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

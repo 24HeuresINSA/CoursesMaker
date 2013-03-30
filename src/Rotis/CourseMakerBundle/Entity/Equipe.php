@@ -48,7 +48,16 @@ class Equipe implements AdvancedUserInterface, \Serializable
      */
     protected $isActive;
 
-   
+    /**
+     * Get user
+     *
+     * @return Equipe
+     */
+    public function getUser()
+    {
+        return $this;
+    }
+
     /**
      * Get id
      *

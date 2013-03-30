@@ -5,13 +5,14 @@ namespace Rotis\CourseMakerBundle\Controller;
 use Rotis\CourseMakerBundle\Entity\Joueur;
 use Rotis\CourseMakerBundle\Entity\Equipe;
 use Rotis\CourseMakerBundle\Form\Model\PlayerAddition;
-use Rotis\CourseMakerBundle\Form\Type\EditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Rotis\CourseMakerBundle\Form\Type\RegistrationType;
 use Rotis\CourseMakerBundle\Form\Model\Registration;
 use Rotis\CourseMakerBundle\Form\Type\PlayerAdditionType;
+use Rotis\CourseMakerBundle\Form\Type\EditionType;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class EquipeController extends Controller
 {
@@ -34,7 +35,6 @@ class EquipeController extends Controller
 
     public function editAction($id)
     {
-
         $repository = $this->getDoctrine()
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Equipe');
@@ -51,39 +51,41 @@ class EquipeController extends Controller
         }
 
         if ($this->getRequest()->getMethod() == 'POST') {
-            $form->bindRequest($this->getRequest());
-
+            $form->bind($this->getRequest());
             if ($form->isValid())
             {
-                $factory = $this->get('security.encoder_factory');
-                $registration = $form->getData();
-                $user = $this->get('security.context')->getToken()->getUser();
-                $joueur = $registration->getJoueur();
-                $repository = $this->getDoctrine()
-                    ->getManager()
-                    ->getRepository('RotisCourseMakerBundle:Equipe');
+                    $factory = $this->get('security.encoder_factory');
+                    $registration = $form->getData();
+                    $user = $this->get('security.context')->getToken()->getUser();
+                    $joueur = $registration->getJoueur();
+                    $joueur->setPapiersOk(false);
+                    $joueur->setPaiementOk(false);
+                    $repository = $this->getDoctrine()
+                        ->getManager()
+                        ->getRepository('RotisCourseMakerBundle:Equipe');
 
-                $joueur->setEquipe($user);
-                $user->addJoueur($joueur);
-                $em->persist($joueur);
-                $em->persist($user);
-                $em->flush();
-                $this->get('session')->setFlash(
-                    'notice',
-                    'Ajout réussi!'
-                );
-                /*
-                 $encoder = $factory->getEncoder($user);
-                $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
-                $user->setPassword($password);
-                $em->merge($user);
-                $em->flush();
-                $this->get('session')->setFlash(
-                    'notice',
-                    'Equipe modifiée!'
-                );*/
-                return $this->redirect($this->generateUrl('accueil'));
-            }
+                    $joueur->setEquipe($user);
+                    $user->addJoueur($joueur);
+                    $em->persist($joueur);
+                    $em->persist($user);
+                    $em->flush();
+                    $this->get('session')->setFlash(
+                        'notice',
+                        'Ajout réussi!'
+                    );
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('Confirmation d\'inscription à CoursesMaker')
+                    ->setFrom('courses@24heures.org')
+                    ->setTo($joueur->getEmail())
+                    ->setBody(
+                        $this->renderView(
+                            'RotisCourseMakerBundle:Equipe:mail.html.twig',
+                            array('prenom' => $joueur->getPrenom(),'nom' => $joueur->getNom(),'username' => $user->getUsername(),'password' => "0")
+                        )
+                    );
+                $this->get('mailer')->send($message);
+                    return $this->redirect($this->generateUrl('accueil'));
+                }
         }
 
         return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('equipe' => $equipe,'form' => $form->createView()));
@@ -93,6 +95,7 @@ class EquipeController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $form = $this->createForm(new RegistrationType(), new Registration());
+        if ($this->getRequest()->getMethod() == 'POST') {
         $form->bind($this->getRequest());
         if ($form->isValid())
         {
@@ -100,10 +103,13 @@ class EquipeController extends Controller
             $registration = $form->getData();
             $user = $registration->getUser();
             $joueur = $registration->getJoueur();
+            $joueur->setPapiersOk(false)
+                ->setPaiementOk(false);
             $repository = $this->getDoctrine()
                 ->getManager()
                 ->getRepository('RotisCourseMakerBundle:Equipe');
             $encoder = $factory->getEncoder($user);
+            $plainPassword = $user->getPassword();
             $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
             $user->setPassword($password);
             $joueur->setEquipe($user);
@@ -115,9 +121,20 @@ class EquipeController extends Controller
                 'notice',
                 'Equipe créée!'
             );
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Confirmation d\'inscription à CoursesMaker')
+                ->setFrom('courses@24heures.org')
+                ->setTo($joueur->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'RotisCourseMakerBundle:Equipe:mail.html.twig',
+                        array('prenom' => $joueur->getPrenom(),'nom' => $joueur->getNom(),'username' => $user->getUsername(),'password' => $plainPassword)
+                    )
+                );
+            $this->get('mailer')->send($message);
             return $this->redirect($this->generateUrl('accueil'));
         }
-        
+        }
         return $this->render('RotisCourseMakerBundle:Equipe:register.html.twig', array('form' => $form->createView()));
     }
 
@@ -127,26 +144,19 @@ class EquipeController extends Controller
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Equipe');
         $equipe = $repository->find($id);
-        $request = $this->get('request');
+        $nombre = count($equipe->getJoueurs());
         $em = $this->get('doctrine.orm.entity_manager');
-        $form = $this->get('form.factory')->create(new EditType());
-        if ($id == $equipe->getId())
+        $form = $this->createForm(new PlayerAdditionType(), new PlayerAddition());
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')
+            && true === $this->get('security.context')->isGranted('ROLE_USER')
+            && (! method_exists($this->get('security.context')->getToken()->getUser(),'getId')
+                || $this->get('security.context')->getToken()->getUser()->getId() != $id))
         {
+            return $this->redirect($this->generateUrl('accueil'));
+        }
+                return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig',array('nombre' => $nombre,'equipe' => $equipe,'form' => $form->createView()));
 
-            return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig',array('equipe' => $equipe,'form' => $form->createView()));
         }
-        else
-        {
-            if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
-            {
-                return $this->redirect($this->generateUrl('accueil'));
-            }
-            else
-            {
-                return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig',array('equipe' => $equipe,'form' => $form->  createView()));
-            }
-        }
-    }
 
     public function listeAction($name)
     {
@@ -179,9 +189,62 @@ class EquipeController extends Controller
         $repository = $this->getDoctrine()
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Equipe');
-        $listeEquipes = $this->getDoctrine()
-            ->getRepository('RotisCourseMakerBundle:Equipe')
-            ->findOneByJoinedCourseId($id);
-        return $this->render('RotisCourseMakerBundle:Equipe:equipe_par_course.html.twig');
+        $listeEquipes = $repository->findByJoinedCourseId($id);
+        $repocourse = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Course');
+        $course = $repocourse->find($id);
+        if (count($listeEquipes) > 0)
+        {
+            return $this->render('RotisCourseMakerBundle:Equipe:equipe_par_course.html.twig', array('existence' => true,'equipes' => $listeEquipes, 'course' => $nomCourse));
+        }
+        else
+        {
+            return $this->render('RotisCourseMakerBundle:Equipe:equipe_par_course.html.twig', array('existence' => false, 'course' => $course));
+        }
+    }
+
+    public function editInfosAction($id)
+    {
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Equipe');
+        $equipe = $repository->find($id);
+        $form = $this->createForm(
+            new EditionType(),
+            $equipe
+        );
+        return $this->render('RotisCourseMakerBundle:Equipe:admin_edit.html.twig', array('equipe' => $equipe, 'form' => $form->createView()));
+    }
+
+    public function updateAction($id)
+    {
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Equipe');
+        $em = $this->getDoctrine()->getEntityManager();
+        $olduser = $repository->find($id);
+        $form = $this->createForm(new EditionType(), $olduser );
+        if ($this->getRequest()->getMethod() == 'POST') {
+            $form->bind($this->getRequest());
+            if ($form->isValid())
+            {
+                $factory = $this->get('security.encoder_factory');
+                $registration = $form->getData();
+                $user = $registration->getUser();
+                $encoder = $factory->getEncoder($user);
+                $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+                $user->setPassword($password);
+                //$user->addJoueur($olduser->getJoueurs());
+                $em->merge($user);
+                $em->flush();
+                $this->get('session')->setFlash(
+                           'notice',
+                         'Equipe modifiée!'
+                        );
+                return $this->redirect($this->generateUrl('accueil'));
+            }
+        }
+        return $this->render('RotisCourseMakerBundle:Equipe:admin_edit.html.twig', array('equipe' => $olduser, 'form' => $form->createView()));
     }
 }

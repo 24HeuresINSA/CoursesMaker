@@ -10,6 +10,12 @@ admin_control:
 admin_par_course:
     pattern: /admin/course/{id}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:listeParCourse }
+admin_edit:
+    pattern: /admin/edit/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:editInfos }
+admin_update:
+    pattern: /admin/update/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:update }
 login_check:
     pattern: /login_check
 logout:
