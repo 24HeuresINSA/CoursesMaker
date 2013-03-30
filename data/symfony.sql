@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Jeu 21 Mars 2013 à 18:56
+-- Généré le: Sam 30 Mars 2013 à 14:51
 -- Version du serveur: 5.5.29
 -- Version de PHP: 5.4.6-1ubuntu1.2
 
@@ -19,21 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données: `symfony`
 --
-
--- --------------------------------------------------------
-
---
--- Structure de la table `Article`
---
-
-CREATE TABLE IF NOT EXISTS `Article` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `date` date NOT NULL,
-  `titre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `auteur` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `contenu` longtext COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -96,8 +81,8 @@ CREATE TABLE IF NOT EXISTS `Course` (
 --
 
 INSERT INTO `Course` (`id`, `edition_id`, `type_id`, `nom`, `inscriptions_ouvertes`, `datetime_debut`, `datetime_fin`) VALUES
-(5, 1, 1, 'Chameau', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
-(6, 1, 1, 'ouistiti', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
+(5, 1, 1, 'Velo-solo', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
+(6, 1, 1, 'Velo-equipe', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
 (7, 1, 1, 'Velo-loisir', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
 (8, 1, 1, 'Velo-horscatégorie', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
 (9, 1, 2, 'Pied-solo', 1, '2013-05-18 14:00:00', '2013-05-19 14:00:00'),
@@ -150,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `Equipe` (
   UNIQUE KEY `UNIQ_23E5BF23F85E0677` (`username`),
   KEY `IDX_23E5BF23591CC992` (`course_id`),
   KEY `IDX_23E5BF23BCF5E72D` (`categorie_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
 
 -- --------------------------------------------------------
 
@@ -170,8 +155,9 @@ CREATE TABLE IF NOT EXISTS `Joueur` (
   `papiers_ok` tinyint(1) NOT NULL,
   `paiement_ok` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_FADDACF3E7927C74` (`email`),
   KEY `IDX_FADDACF36D861B89` (`equipe_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=17 ;
 
 -- --------------------------------------------------------
 

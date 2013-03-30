@@ -25,37 +25,51 @@
         <p><a class="btn" href="{{ path('admin_edit', { 'id': equipe.id }) }}">Editer l'équipe &raquo;</a></p>
     {% endif %}
     <br />
-       <ul>
-           <li>Prenom {% for joueurs in equipe.joueurs %} {{ joueurs.prenom }} {% endfor %}</li>
-           <li>Nom {% for joueurs in equipe.joueurs %} {{ joueurs.nom }} {% endfor %}</li>
-           <li>Email {% for joueurs in equipe.joueurs %} {{ joueurs.email }} {% endfor %}</li>
-           <li>Telephone {% for joueurs in equipe.joueurs %} {{ joueurs.telephone }} {% endfor %}</li>
-           <li>Statut {% for joueurs in equipe.joueurs %} {% if joueurs.getEtudiant() %}
-                   Etudiant
-               {% else %}
-                   Pas Etudiant
-               {% endif %}
-               {% endfor %}</li>
-           <li>T-Shirt {% for joueurs in equipe.joueurs %} {{ joueurs.getTailleTshirt }} {% endfor %}</li>
-           <li>Papiers {% for joueurs in equipe.joueurs %} {% if joueurs.getPapiersOk() %}
-                   Papiers Validés
-               {% else %}
-                   En attente des papiers
-               {% endif %}
+       <table>
+           <thead>
+           <tr>
+               <td>Prenom</td>
+               <td>Nom</td>
+               <td>Email</td>
+               <td>Telephone</td>
+               <td>Statut</td>
+               <td>T-Shirt</td>
+               <td>Papiers</td>
+               <td>Paiement</td>
+           </tr>
+           </thead>
+           <tbody>
+           <tr>
+               {% for joueurs in equipe.joueurs %}
+               <tr>
+               <td>{{ joueurs.prenom }}</td>
+               <td>{{ joueurs.nom }}</td>
+               <td>{{ joueurs.email }}</td>
+               <td>{{ joueurs.telephone }}</td>
+                   {% if joueurs.getEtudiant() %}
+                       <td>Etudiant</td>
+                   {% else %}
+                       <td>Pas Etudiant</td>
+                   {% endif %}
+               <td>{{ joueurs.getTailleTshirt }}</td>
+                   {%  if joueurs.getPapiersOk() %}
+                       <td>Certificat médical reçu</td>
+                   {% else %}
+                       <td>En attente du certificat médical</td>
+                   {% endif %}
+                   {% if joueurs.getPaiementOk() %}
+                       <td>Paiement Validé</td>
+                   {% else %}
+                       <td>En attente de paiement</td>
+                   {% endif %}
+               </tr>
                {% endfor %}
-           </li>
-           <li>Paiement {% for joueurs in equipe.joueurs %} {% if true == joueurs.getPaiementOk() %}
-                   Paiement Validé
-               {% else %}
-                   En attente de paiement
-               {% endif %}
-               {% endfor %}
-           </li>
-       </ul>
+                <td></td>
+           </tr>
+           </tbody>
+       </table>
 
-{# TODO:
-Faire un formulaire d'édition de l'équipe
-Faire un tableau #}
+{# TODO:CSS le tableau #}
 
 <br />
     </p>
