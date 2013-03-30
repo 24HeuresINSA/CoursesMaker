@@ -2,18 +2,18 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     localhost
     database_port:     ~
-    database_name:     symfony
-    database_user:     root
-    database_password: root
+    database_name:     PUT YOUR DB NAME HERE
+    database_user:     DB USER
+    database_password: DB PASSWORD
 
     mailer_transport:  gmail
     mailer_host:       ~
-    mailer_user:       courses@24heures.org
-    mailer_password:   poneyroti24h
+    mailer_user:       PUT GMAIL ADDRESS HERE
+    mailer_password:   PASSWORD FOR GMAIL
     mailer_encryption: ssl
-    mailer_auth: login
+    mailer_auth:       login
 
-    locale:            en
+    locale:            fr
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     app_webmaster:     24h
