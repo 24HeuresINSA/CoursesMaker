@@ -59,8 +59,8 @@ class DefaultController extends ControllerTest
         ;
     }
 
-    // temproray page, empty at the moment
-    public function testInfosPratiques()
+    // temporary page, empty at the moment
+    /*public function testInfosPratiques()
     {
         $this
             ->request()
@@ -77,5 +77,5 @@ class DefaultController extends ControllerTest
                         ->withContent('Contact')
                     ->end()
         ;
-    }
+    }*/
 }
