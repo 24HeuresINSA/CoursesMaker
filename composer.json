@@ -19,11 +19,11 @@
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
         "kriswallsmith/assetic": "1.1.*@dev",
-	"doctrine/data-fixtures": "dev-master",
+"doctrine/data-fixtures": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "twitter/bootstrap": "v2.2.3",
         "leafo/lessphp": "dev-master",
-	"jquery/jquery": "1.9.1"
+"jquery/jquery": "1.9.1"
     },
     "scripts": {
         "post-install-cmd": [
@@ -41,30 +41,31 @@
     },
     "extra": {
         "symfony-app-dir": "app",
-        "symfony-web-dir": "web"
+        "symfony-web-dir": "web",
+        "symfony-assets-install": "symlink"
     },
-"repositories": [
+    "repositories": [
+            {
+                "type": "package",
+                "package": {
+                    "name": "twitter/bootstrap",
+                    "version": "2.2.3",
+                    "dist": {
+                        "url": "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
+                        "type": "zip"
+                    }
+                }
+            },
         {
             "type": "package",
-            "package": {
-                "name": "twitter/bootstrap",
-                "version": "2.2.3",
-                "dist": {
-                    "url": "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
-                    "type": "zip"
+                "package": {
+                    "name": "jquery/jquery",
+                    "version": "1.9.1",
+                    "dist": {
+                        "url": "http://code.jquery.com/jquery.min.js",
+                        "type": "file"
+                    }
                 }
             }
-        },
-	{
-	    "type": "package",
-            "package": {
-                "name": "jquery/jquery",
-                "version": "1.9.1",
-                "dist": {
-                    "url": "http://code.jquery.com/jquery.min.js",
-                    "type": "file"
-                }
-            }
-        }
-]
+    ]
 }
