@@ -76,4 +76,17 @@ class EquipeRepository extends EntityRepository implements UserProviderInterface
         $equipes = $query->getResult();
         return $equipes;
     }
+
+    public function findLike($mot)
+    {
+        $qb = $this
+            ->createQueryBuilder('e')
+            ->where('e.username LIKE :mot')
+            ->orderBy('e.username', 'ASC')
+            ->setParameter('mot', '%'.$mot.'%');
+
+        $query = $qb->getQuery();
+        $equipes = $query->getResult();
+        return $equipes;
+    }
 }

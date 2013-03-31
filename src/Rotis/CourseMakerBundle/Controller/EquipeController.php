@@ -13,6 +13,7 @@ use Rotis\CourseMakerBundle\Form\Type\RegistrationType;
 use Rotis\CourseMakerBundle\Form\Model\Registration;
 use Rotis\CourseMakerBundle\Form\Type\PlayerAdditionType;
 use Rotis\CourseMakerBundle\Form\Type\EditionType;
+use Rotis\CourseMakerBundle\Form\Type\RechercheType;
 use Symfony\Component\Validator\Constraints\NotNull;
 
 class EquipeController extends Controller
@@ -185,10 +186,9 @@ class EquipeController extends Controller
                 $repository = $this->getDoctrine()
                            ->getManager()
                            ->getRepository('RotisCourseMakerBundle:Equipe');
-
-
+                $form = $this->createForm(new RechercheType());
         $listeEquipes = $repository->findAll();
-        return $this->render('RotisCourseMakerBundle:Equipe:control_equipe.html.twig',array('equipes' => $listeEquipes));
+        return $this->render('RotisCourseMakerBundle:Equipe:control_equipe.html.twig',array('name' => $name,'equipes' => $listeEquipes, 'form' => $form->createView()));
         }
         elseif ( $name === "course" )
         {
@@ -199,7 +199,7 @@ class EquipeController extends Controller
 
 
             $listeCourses = $repository->findAll();
-            return $this->render('RotisCourseMakerBundle:Course:control_course.html.twig',array('courses' => $listeCourses));
+            return $this->render('RotisCourseMakerBundle:Course:control_course.html.twig',array('name' => $name,'courses' => $listeCourses));
 
         }
      }

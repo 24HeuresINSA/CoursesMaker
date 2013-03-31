@@ -1,16 +1,18 @@
 {% extends 'RotisCourseMakerBundle::layout.html.twig' %}
 
 {% block title %}CoursesMaker - Controle des Equipes{% endblock %}
-
+{% block div %}
+    <h1>Tableau de Bord</h1>
+{% endblock %}
 {% block content %}
 
-    <h1>Tableau de Bord</h1>
-    <form>
 
-    </form>
+
     <ul>
         {% for equipe in equipes %}
             <li><a href="{{ path('account', { 'id': equipe.id }) }} ">{{ equipe.username }}</a></li>
         {% endfor %}
     </ul>
+
+
 {% endblock %}

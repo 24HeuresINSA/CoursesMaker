@@ -29,6 +29,8 @@ register:
 create:
     pattern: /create
     defaults: { _controller: RotisCourseMakerBundle:Equipe:create }
+    requirements:
+        _method: POST
 edit:
     pattern: /edit/{id}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:edit }

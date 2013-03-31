@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class CourseRepository extends EntityRepository
 {
+    public function findLike($mot)
+    {
+        $qb = $this
+            ->createQueryBuilder('c')
+            ->where('c.nom LIKE :mot')
+            ->orderBy('e.nom', 'ASC')
+            ->setParameter('mot', '%'.$mot.'%');
+
+        $query = $qb->getQuery();
+        $courses = $query->getResult();
+        return $courses;
+    }
 }
