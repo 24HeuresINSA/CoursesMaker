@@ -12,7 +12,3 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
-
-atoum:
-    bundles:
-        RotisCourseMakerBundle: ~ # has Tests/Controller...

@@ -113,10 +113,31 @@
 	        <script src="{{ asset('../vendor/jquery/jquery/jquery.min.js') }}"></script>
 	        <script src="{{ asset('../vendor/twitter/bootstrap/js/bootstrap.min.js') }}"></script>
 	       
-	        <!-- Script pour dérouler le contenu quand on clique sur un lien -->
+
 			<script type="text/javascript">// <![CDATA[
 				//------------------
-				function Swap( div_){
+            $('#myAnim1').click(function() {
+                $('#myDiv1').toggle('slow', function() {
+                    // Animation complete.
+                });
+            });
+            $('#myAnim2').click(function() {
+                $('#myDiv2').toggle('slow', function() {
+                    // Animation complete.
+                });
+            });
+            $('#myAnim3').click(function() {
+                $('#myDiv3').toggle('slow', function() {
+                    // Animation complete.
+                });
+            });
+            $('#myAnim4').click(function() {
+                $('#myDiv4').toggle('slow', function() {
+                    // Animation complete.
+                });
+            });
+
+            function Swap( div_){
 				  var Obj = document.getElementById( div_);
 				  if( Obj){
 				    if( Obj.style.display=="")

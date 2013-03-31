@@ -16,6 +16,9 @@ admin_edit:
 admin_update:
     pattern: /admin/update/{id}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:update }
+admin_switch_validation:
+    pattern: /admin/{id}/{objet}/{etat}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:switchVal, etat: 0 }
 login_check:
     pattern: /login_check
 logout:
