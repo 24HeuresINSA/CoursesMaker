@@ -66,7 +66,8 @@ class EquipeController extends Controller
                     $joueur = $registration->getJoueur();
                     $joueur->setPapiersOk(false);
                     $joueur->setPaiementOk(false);
-                    if (0 == $tarifrepo->findTarifByIdCourse($user->getCourse()->getId())[0]->getPrix())
+                    $tarif = $tarifrepo->findTarifByIdCourse($user->getCourse()->getId());
+                    if (0 == $tarif[0]->getPrix())
                     {
                         $joueur->setPaiementOk(true);
                     }
