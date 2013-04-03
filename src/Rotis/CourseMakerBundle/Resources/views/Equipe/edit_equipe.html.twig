@@ -4,142 +4,156 @@
 {% block div %}
     <h1>Edition</h1>
 {% endblock %}
-{% block content %}   
+{% block content %}
 
-<h1>Informations sur l'Equipe {{ equipe.username }} </h1>
-{# TODO: ajouter des champs pour paiement et papiers #}
-{#
-<p>Nom d'équipe : {{ equipe.username }} <br />
-   {% if equipe.valide %}
-       Valide
-   {% else %}
-       Pas encore valide
-   {% endif %} <br />
-  Inscrite à la course : {{ equipe.course.nom }} <br />
-  Dans la catégorie : {{ equipe.categorie.nom }} <br />
-  De type : {{ equipe.course.type.nom }} <br />
-   Nombre de coureurs inscrits : {{ nombre }} <br />
-#}
-<table>
-    <thead>
-    <tr>
-        <th>Nom d'équipe</th>
-        <th>Statut</th>
-        <th>Inscrite à la course</th>
-        <th>Dans la catégorie</th>
-        <th>Type</th>
-        <th>Nombre de coureurs inscrits</th>
-        <th>Tarifs</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>{{ equipe.username }}</td>
-        <td>{% if equipe.valide %}
-                Valide
-            {% else %}
-                Pas encore valide
-            {% endif %}</td>
-        <td>{{ equipe.course.nom }}</td>
-        <td>{{ equipe.categorie.nom }}</td>
-        <td>{{ equipe.course.type.nom }}</td>
-        <td>{{ nombre }}</td>
-        <td>{% for tarif in tarifs %}
-                {% if tarif.getEtudiant() %}
-                    {{ tarif.prix }}€ pour les étudiants
+    <h1>Informations sur l'Equipe {{ equipe.username }} </h1>
+    {# TODO: ajouter des champs pour paiement et papiers #}
+    {#
+    <p>Nom d'équipe : {{ equipe.username }} <br />
+       {% if equipe.valide %}
+           Valide
+       {% else %}
+           Pas encore valide
+       {% endif %} <br />
+      Inscrite à la course : {{ equipe.course.nom }} <br />
+      Dans la catégorie : {{ equipe.categorie.nom }} <br />
+      De type : {{ equipe.course.type.nom }} <br />
+       Nombre de coureurs inscrits : {{ nombre }} <br />
+    #}
+    <table>
+        <thead>
+        <tr>
+            <th>Nom d'équipe</th>
+            <th>Statut</th>
+            <th>Inscrite à la course</th>
+            <th>Dans la catégorie</th>
+            <th>Type</th>
+            <th>Nombre de coureurs inscrits</th>
+            <th>Tarifs</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ equipe.username }}</td>
+            <td>{% if equipe.valide %}
+                    Valide
                 {% else %}
-                    {{ tarif.prix }}€ pour les non-étudiants
-                {% endif %}
-            {% endfor %}</td>
-    </tr>
-    </tbody>
-</table>
+                    Pas encore valide
+                {% endif %}</td>
+            <td>{{ equipe.course.nom }}</td>
+            <td>{{ equipe.categorie.nom }}</td>
+            <td>{{ equipe.course.type.nom }}</td>
+            <td>{{ nombre }}</td>
+            <td>{% for tarif in tarifs %}
+                    {% if tarif.getEtudiant() %}
+                        {{ tarif.prix }}€ pour les étudiants
+                    {% else %}
+                        {{ tarif.prix }}€ pour les non-étudiants
+                    {% endif %}
+                {% endfor %}</td>
+        </tr>
+        </tbody>
+    </table>
 
 
-    <br />
+    <br/>
     {% if is_granted('ROLE_ADMIN') %}
         <p><a class="btn" href="{{ path('admin_edit', { 'id': equipe.id }) }}">Editer l'équipe &raquo;</a></p>
     {% endif %}
-    <br />
-       <table>
-           <thead>
-           <tr>
-               <th>Prenom</th>
-               <th>Nom</th>
-               <th>Email</th>
-               <th>Telephone</th>
-               <th>Statut</th>
-               <th>T-Shirt</th>
-               <th>Papiers</th>
-               <th>Paiement</th>
-           </tr>
-           </thead>
-           <tbody>
-           <tr>
-               {% for joueurs in equipe.joueurs %}
-               <tr>
-               <td>{{ joueurs.prenom }}</td>
-               <td>{{ joueurs.nom }}</td>
-               <td>{{ joueurs.email }}</td>
-               <td>{{ joueurs.telephone }}</td>
-                   {% if joueurs.getEtudiant() %}
-                       <td>Etudiant</td>
-                   {% else %}
-                       <td>Pas Etudiant</td>
-                   {% endif %}
-               <td>{{ joueurs.getTailleTshirt }}</td>
-                   {%  if joueurs.getPapiersOk() %}
-                       <td>Certificat médical reçu</td>
-                   {% else %}
-                       <td>En attente du certificat médical {% if joueurs.getEtudiant() %}
-                                                                et/ou de la carte étudiant
-                                                            {% endif %}</td>
-                   {% endif %}
-                   {% if joueurs.getPaiementOk() %}
-                       <td>Paiement Validé</td>
-                   {% else %}
-                       <td>En attente de paiement</td>
-                   {% endif %}
-               {% if is_granted('ROLE_ADMIN') %}
-                        <td><a class="btn" href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPapiersOk(), 'objet': 'certificat'}) }}">{% if joueurs.getPapiersOk() %}Invalider certificat{% else %}Valider certificat{% endif %}</a></td>
-                        <td><a class="btn" href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPaiementOk(), 'objet': 'paiement'}) }}">{% if joueurs.getPaiementOk() %}Invalider paiement{% else %}Valider paiement{% endif %}</a></td>
-               {% endif %}
-               </tr>
-               {% endfor %}
-           </tr>
-           </tbody>
-       </table>
+    <br/>
+    <table>
+        <thead>
+        <tr>
+            <th>Prenom</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Telephone</th>
+            <th>Statut</th>
+            <th>T-Shirt</th>
+            <th>Papiers</th>
+            <th>Paiement</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for joueurs in equipe.joueurs %}
+        <tr>
+            <td>{{ joueurs.prenom }}</td>
+            <td>{{ joueurs.nom }}</td>
+            <td>{{ joueurs.email }}</td>
+            <td>{{ joueurs.telephone }}</td>
+            {% if joueurs.getEtudiant() %}
+                <td>Etudiant</td>
+            {% else %}
+                <td>Pas Etudiant</td>
+            {% endif %}
+            <td>{{ joueurs.getTailleTshirt }}</td>
+            {% if joueurs.getPapiersOk() %}
+                <td>Certificat médical reçu</td>
+            {% else %}
+                <td>En attente du certificat médical {% if joueurs.getEtudiant() %}
+                        et/ou de la carte étudiant
+                    {% endif %}</td>
+            {% endif %}
+            {% if joueurs.getPaiementOk() %}
+                <td>Paiement Validé</td>
+            {% else %}
+                <td>En attente de paiement</td>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <td><a class="btn"
+                       href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPapiersOk(), 'objet': 'certificat'}) }}">{% if joueurs.getPapiersOk() %}Invalider certificat{% else %}Valider certificat{% endif %}</a>
+                </td>
+                <td><a class="btn"
+                       href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPaiementOk(), 'objet': 'paiement'}) }}">{% if joueurs.getPaiementOk() %}Invalider paiement{% else %}Valider paiement{% endif %}</a>
+                <td><a class="btn"
+                       href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueurs.id}) }}">Supprimer coureur</a>
+                </td>
 
-{# TODO:CSS le tableau #}
+                </td>
+            {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
+                <td><a class="btn"
+                       href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueurs.id}) }}">Supprimer coureur</a>
+                </td>
 
-<br />
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+
+    {# TODO:CSS le tableau #}
+
+    <br/>
     </p>
 
     {% if equipe.categorie.nom != 'Solo' or nombre < 1 %}
         {% if equipe.categorie.nom != 'Equipe' or nombre < 3 %}
             {% if equipe.categorie.nom != 'Loisir' or nombre < 12 %}
-        <div class="row-fluid">
-            <div class="offset1 span10">
+                <div class="row-fluid">
+                    <div class="offset1 span10">
 
-                <form action="{{ path('edit', {'id': equipe.id })}}" method="post" {{ form_enctype(form) }} class="well">
-                {{ form_widget(form) }}
-                <br />
-                    <input type="submit" class="btn btn-primary"/>
-                </form>
-            </div>
-        </div>
+                        <form action="{{ path('edit', {'id': equipe.id }) }}" method="post" {{ form_enctype(form) }}
+                              class="well">
+                            {{ form_widget(form) }}
+                            <br/>
+                            <input type="submit" class="btn btn-primary"/>
+                        </form>
+                    </div>
+                </div>
 
-    {% else %}
-    Equipe complete!
-    {% endif %}
+            {% else %}
+                Equipe complete!
+            {% endif %}
+        {% else %}
+            Equipe complete!
+        {% endif %}
     {% else %}
         Equipe complete!
     {% endif %}
-    {% else %}
-        Equipe complete!
-    {% endif %}
 
-<!-- Le javascript
-   ================================================== -->
+    <!-- Le javascript
+       ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 {% endblock %}

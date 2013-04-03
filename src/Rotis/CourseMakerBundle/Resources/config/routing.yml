@@ -43,6 +43,9 @@ accueil:
 account:
     pattern: /equipe/{id}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:edit_equipe }
+equipe_remove_joueur:
+    pattern: /equipe/{id}/{idjoueur}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:remove_joueur}
 infos_pratiques:
     pattern: /infos_pratiques
     defaults: { _controller: RotisCourseMakerBundle:CourseMaker:infos }

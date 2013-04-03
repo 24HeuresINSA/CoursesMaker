@@ -11,9 +11,10 @@
         <div class="row-fluid">
             <div class="offset1 span10">
 
-                <form action="{{ path('admin_update', { 'id': equipe.id })}}" method="post" {{ form_enctype(form) }} class="well">
+                <form action="{{ path('admin_update', { 'id': equipe.id }) }}" method="post" {{ form_enctype(form) }}
+                      class="well">
                     {{ form_widget(form) }}
-                    <br />
+                    <br/>
                     <input type="submit" class="btn btn-primary"/>
                 </form>
             </div>
