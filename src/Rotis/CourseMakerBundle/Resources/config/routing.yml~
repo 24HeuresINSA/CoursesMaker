@@ -1,6 +1,0 @@
-rotis_course_maker_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: RotisCourseMakerBundle:Default:index }
-rotis_course_maker_inscription:
-    pattern: /inscription
-    defaults: { _controller: RotisCourseMakerBundle:ChoixCourse }
