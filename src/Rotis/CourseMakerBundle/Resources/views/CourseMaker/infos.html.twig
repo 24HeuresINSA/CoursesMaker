@@ -2,33 +2,26 @@
 
 {% block title %}CoursesMaker -  Infos pratiques{% endblock %}
 
-{% block content %}
+{% block content %}   
 
-    <h1>Tutoriels de l'admin!</h1>
+<h1>Tutoriels de l'admin!</h1>
 
     <h3 id="myAnim1" name="answer" onclick="showDiv()"><a>1. Ajouter des logins/mdp admins</a></h3>
 
-    <div id="myDiv1" style="display:none;" class="answer_list">
+    <div id="myDiv1" style="display:none;" class="answer_list" >
         <p>
         <ul>
-            <li>Ouvrir le fichier security.yml qui se trouve dans l'arborescence
-                /var/www/symfony/app/config/security.yml
-            </li>
-            <li>Dans ce fichier vous trouverez sous le paragraphe security providers in_memory memory users une entité
-                admin de base
-            </li>
-            <li>Imitez la syntaxe en sachant que admin est le username de l'entité, password son mot de passe, roles
-                définit ses droits
-            </li>
-            <li><strong>Il est recommandé de ne pas stocker le mot de passe dans security.yml. Je vous invite à employer
-                    une variable <br/>
-                    que vous déclarerez dans votre fichier parameters.yml</strong></li>
-            Exemple: %admin_password%
-            <li>Dans parameters.yml, déclarez votre mot de passe comme suit : admin_password: ...</li>
-            <li><strong>Utilisez un algorithme de hashage pour augmenter la sécurité</strong></li>
-            <li>Lancez la commande suivante dans un terminal: echo -n "yourpassword" | openssl sha1</li>
-            <li>Avec "seedy" on obtient 7ade87d7d871c86a19456a273bd790f070d94477 Plutôt sympas non?</li>
-            <li>Il ne vous reste plus qu'à insérer le mot de passe hashé dans votre fichier</li>
+        <li>Ouvrir le fichier security.yml qui se trouve dans l'arborescence /var/www/symfony/app/config/security.yml</li>
+        <li>Dans ce fichier vous trouverez sous le paragraphe security providers in_memory memory users une entité admin de base</li>
+        <li>Imitez la syntaxe en sachant que admin est le username de l'entité, password son mot de passe, roles définit ses droits</li>
+        <li><strong>Il est recommandé de ne pas stocker le mot de passe dans security.yml. Je vous invite à employer une variable <br/>
+            que vous déclarerez dans votre fichier parameters.yml</strong></li>
+        Exemple: %admin_password%
+        <li>Dans parameters.yml, déclarez votre mot de passe comme suit : admin_password: ...</li>
+        <li><strong>Utilisez un algorithme de hashage pour augmenter la sécurité</strong></li>
+        <li>Lancez la commande suivante dans un terminal: echo -n "yourpassword" | openssl sha1</li>
+        <li>Avec "seedy" on obtient 7ade87d7d871c86a19456a273bd790f070d94477 Plutôt sympas non?</li>
+        <li>Il ne vous reste plus qu'à insérer le mot de passe hashé dans votre fichier</li>
         </ul>
         </p>
 
@@ -37,8 +30,8 @@
 
     <h3>2. Controler les équipes</h3>
 
-    <h4 id="myAnim2" name="answer" onclick="showDiv()"><a>2.1. Afficher toutes les équipes</a></h4>
-    <div id="myDiv2" style="display:none;" class="answer_list">
+    <h4 id="myAnim2" name="answer" onclick="showDiv()"><a>2.1.  Afficher toutes les équipes</a></h4>
+    <div id="myDiv2" style="display:none;" class="answer_list" >
         <p>
         <ul>
             <li>Ouvrez /admin en cliquant sur votre nom d'utilisateur dans le bandeau en haut</li>
@@ -50,7 +43,7 @@
     </div>
 
     <h4 id="myAnim3" name="answer" onclick="showDiv()"><a>2.2 Afficher les équipes par course</a></h4>
-    <div id="myDiv3" style="display:none;" class="answer_list">
+    <div id="myDiv3" style="display:none;" class="answer_list" >
         <p>
         <ul>
             <li>Ouvrez /admin en cliquant sur votre nom d'utilisateur dans le bandeau en haut</li>
@@ -64,12 +57,10 @@
     </div>
 
     <h4 id="myAnim4" name="answer" onclick="showDiv()"><a>2.3 Valider les papiers d'un joueur</a></h4>
-    <div id="myDiv4" style="display:none;" class="answer_list">
+    <div id="myDiv4" style="display:none;" class="answer_list" >
         <p>
         <ul>
-            <li>Une fois que vous avez affiché une équipe, il vous est possible de valider les papiers/paiements de
-                chaque joueur
-            </li>
+            <li>Une fois que vous avez affiché une équipe, il vous est possible de valider les papiers/paiements de chaque joueur</li>
             <li>Cliquez sur le bouton qui correspond^^</li>
         </ul>
         </p>

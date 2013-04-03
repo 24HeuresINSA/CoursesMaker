@@ -66,7 +66,8 @@ class EquipeController extends Controller
                     $joueur = $registration->getJoueur();
                     $joueur->setPapiersOk(false);
                     $joueur->setPaiementOk(false);
-                    if (0 == $tarifrepo->findTarifByIdCourse($user->getCourse()->getId())[0]->getPrix())
+                    $tarif = $tarifrepo->findTarifByIdCourse($user->getCourse()->getId());
+                    if (0 == $tarif[0]->getPrix())
                     {
                         $joueur->setPaiementOk(true);
                     }
@@ -118,7 +119,8 @@ class EquipeController extends Controller
             $tarifrepo = $this->getDoctrine()
                 ->getManager()
                 ->getRepository('RotisCourseMakerBundle:Tarif');
-            if (0 == $tarifrepo->findTarifByIdCourse($user->getCourse()->getId())[0]->getPrix())
+            $tarif = $tarifrepo->findTarifByIdCourse($user->getCourse()->getId());
+            if (0 == $tarif[0]->getPrix())
             {
                 $joueur->setPaiementOk(true);
             }
@@ -318,37 +320,6 @@ class EquipeController extends Controller
             'notice',
             'Action effectuée'
         );
-        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('tarifs' => $tarifs,'nombre' => $nombre,'equipe' => $equipe,'form' => $form->createView()));
-    }
-
-    public function remove_joueurAction($id, $idjoueur)
-    {
-        $repoequipe = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('RotisCourseMakerBundle:Equipe');
-        $repojoueur = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('RotisCourseMakerBundle:Joueur');
-        $equipe = $repoequipe->find($id);
-        $joueur = $repojoueur->find($idjoueur);
-        $em = $this->getDoctrine()->getEntityManager();
-        $equipe->removeJoueur($joueur);
-        $em->remove($joueur);
-        $em->flush();
-        $nombre = count($equipe->getJoueurs());
-        $tarifrepo = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('RotisCourseMakerBundle:Tarif');
-        $tarifs = $tarifrepo->findTarifByIdCourse($equipe->getCourse()->getId());
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')
-            && true === $this->get('security.context')->isGranted('ROLE_USER')
-            && (! method_exists($this->get('security.context')->getToken()->getUser(),'getId')
-                || $this->get('security.context')->getToken()->getUser()->getId() != $id))
-        {
-            return $this->redirect($this->generateUrl('accueil'));
-        }
-        $form = $this->createForm(new PlayerAdditionType(), new PlayerAddition());
-
         return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('tarifs' => $tarifs,'nombre' => $nombre,'equipe' => $equipe,'form' => $form->createView()));
     }
 }

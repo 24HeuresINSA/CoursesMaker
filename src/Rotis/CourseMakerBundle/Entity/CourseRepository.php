@@ -24,18 +24,4 @@ class CourseRepository extends EntityRepository
         $courses = $query->getResult();
         return $courses;
     }
-
-
-    public function findCategorieWithCourse($id)
-    {
-        $qb = $this
-            ->createQueryBuilder('c')
-            ->where('c.type = :idtype')
-            ->setParameter('idtype', $id)
-            ->groupBy('c.type');
-
-        $query = $qb->getQuery();
-        $courses = $query->getResult();
-        return $courses;
-    }
 }

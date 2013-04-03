@@ -3,49 +3,43 @@
 {% block title %}CoursesMaker - Connexion{% endblock %}
 
 {% block div %}
-    <br/>
-    <h1>Connexion</h1>
+	<br/>
+	<h1>Connexion</h1>
 {% endblock %}
 
 {% block content %}
-    {% if error is defined %}
-        <div>{{ error }}</div>
-    {% endif %}
-
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="offset3 span6">
-                <form class="well form-horizontal" action="{{ path('login_check') }}" method="post">
-                    <fieldset>
-                        <legend>Connectez-vous</legend>
-                        <div class="control-group clearfix">
-                            <label class="control-label required" for="username">Nom d'équipe </label>
-
-                            <div class="controls">
-                                <div class="input">
-                                    <input type="text" id="username" name="_username" value="{{ last_username }}"/>
-                                </div>
-                                <!--/input-->
-                            </div>
-                        </div>
-                        <div class="control-group clearfix">
-                            <label class="control-label required" for="password">Mot de passe </label>
-
-                            <div class="controls">
-                                <div class="input">
-                                    <input type="password" id="password" name="_password"/>
-                                </div>
-                                <!--/input-->
-                            </div>
-                        </div>
-                        <br/>
-                        <input type="hidden" name="_target_path" value="/"/>
-                        <input type="submit" value="C'est parti !" class="btn btn-primary">
-                    </fieldset>
-                </form>
-            </div>
-            <!--/span -->
-        </div>
-        <!-- /row -->
-    </div><!-- /container -->
+{% if error is defined %}
+    <div>{{ error }}</div>
+{% endif %}
+         
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="offset3 span6">
+			<form class="well form-horizontal" action="{{ path('login_check') }}" method="post">
+				<fieldset>	
+					<legend >Connectez-vous</legend>
+				    <div class="control-group clearfix">
+				        <label class="control-label required" for="username">Nom d'équipe </label>
+				        <div class="controls">
+				            <div class="input">
+								<input type="text" id="username" name="_username" value="{{ last_username }}" />								
+							</div><!--/input-->
+					    </div>
+					</div>
+				    <div class="control-group clearfix">
+				        <label class="control-label required" for="password">Mot de passe </label>
+				        <div class="controls">
+				            <div class="input">
+								<input type="password" id="password" name="_password" />
+							</div><!--/input-->
+				        </div>
+				    </div>
+					<br/>
+					<input type="hidden" name="_target_path" value="/" />
+					<input type="submit" value="C'est parti !" class="btn btn-primary">
+				</fieldset>
+			</form>
+		</div><!--/span -->
+	</div><!-- /row -->
+</div><!-- /container -->
 {% endblock %}

@@ -19,11 +19,15 @@
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
         "kriswallsmith/assetic": "1.1.*@dev",
-"doctrine/data-fixtures": "dev-master",
+        "doctrine/data-fixtures": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "twitter/bootstrap": "v2.2.3",
         "leafo/lessphp": "dev-master",
-"jquery/jquery": "1.9.1"
+        "jquery/jquery": "1.9.1"
+    },
+    "require-dev": {
+        "atoum/atoum": "dev-master",
+        "atoum/atoum-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

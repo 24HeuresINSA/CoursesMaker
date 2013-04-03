@@ -8,12 +8,12 @@
     {% if existence %}
         {% for equipes in equipes %}
             <h6>{{ equipes.username }}</h6>
-        {% endfor %}
+        {%  endfor %}
     {% else %}
         <h6>Aucune équipe n'est encore inscrite</h6>
     {% endif %}
 
-    Début de la course: {{ course.getDatetimeDebut()| date('Y-m-d H:i:s') }} <br/>
+    Début de la course: {{ course.getDatetimeDebut()| date('Y-m-d H:i:s')}} <br />
     Fin: {{ course.getDatetimeFin()| date('Y-m-d H:i:s') }} <br/>
     Etat des inscriptions:
     {% if course.getInscriptionsOuvertes() %}
