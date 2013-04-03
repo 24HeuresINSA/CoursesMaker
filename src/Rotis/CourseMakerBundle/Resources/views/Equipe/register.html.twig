@@ -1,24 +1,24 @@
 {% extends 'RotisCourseMakerBundle::layout.html.twig' %}
 {% block title %}CoursesMaker - Inscription{% endblock %}
 {% block div %}
-	<h1>Inscription</h1>
+    <h1>Inscription</h1>
 {% endblock %}
 {% block content %}
-	<div class="container-fluid">
-		<div class="row-fluid">            
-			<div class="offset1 span10">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="offset1 span10">
 
-				<form action="{{ path('create')}}" method="post" {{ form_enctype(form) }} class="well">
-				    <table>
+                <form action="{{ path('create') }}" method="post" {{ form_enctype(form) }} class="well">
+                    <table>
                         <thead>
-                            <tr>
-                                <th scope="col">{{ form_label(form.user) }}</th>
-                                <th scope="col">{{ form_label(form.joueur) }}</th>
-                            </tr>
+                        <tr>
+                            <th scope="col">{{ form_label(form.user) }}</th>
+                            <th scope="col">{{ form_label(form.joueur) }}</th>
+                        </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>{{ form_label(form.user.username)}}</td>
+                            <td>{{ form_label(form.user.username) }}</td>
                             <td>{{ form_label(form.joueur.nom) }}</td>
                         </tr>
                         <tr>
@@ -32,19 +32,19 @@
                                 {{ form_widget(form.joueur.prenom) }}</td>
                         </tr>
                         <tr>
-                            <td>{{ form_label(form.user.course) }}</td>
+                            <td>{{ form_label(form.user.categorie) }}</td>
                             <td>{{ form_label(form.joueur.taille_tshirt) }}</td>
                         </tr>
                         <tr>
-                            <td>{{ form_widget(form.user.course) }}</td>
+                            <td>{{ form_widget(form.user.categorie) }}</td>
                             <td>{{ form_widget(form.joueur.taille_tshirt) }}</td>
                         </tr>
                         <tr>
-                            <td>{{ form_label(form.user.categorie) }}</td>
+                            <td>{{ form_label(form.user.course) }}</td>
                             <td>{{ form_label(form.joueur.telephone) }}</td>
                         </tr>
                         <tr>
-                            <td>{{ form_widget(form.user.categorie) }}</td>
+                            <td>{{ form_widget(form.user.course) }}</td>
                             <td>{{ form_widget(form.joueur.telephone) }}</td>
                         </tr>
                         <tr>
@@ -60,12 +60,12 @@
                             <td>{{ form_label(form.joueur.etudiant) }}{{ form_widget(form.joueur.etudiant) }}</td>
                         </tr>
                         </tbody>
-				    </table>
+                    </table>
                     {{ form_rest(form) }}
-                    <br />
-				    <input type="submit" class="btn btn-primary"/>
-				</form>
-			</div>
-		</div>
-	</div>
+                    <br/>
+                    <input type="submit" class="btn btn-primary"/>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

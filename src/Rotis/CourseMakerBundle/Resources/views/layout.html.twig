@@ -1,169 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-    	<meta charset="utf-8">
-    	<title>{% block title %}CoursesMaker{% endblock %}</title>
-    
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    	<meta name="description" content="Inscriptions aux courses des 24 Heures de l'INSA">
-    	<meta name="author" content="24Heures de l'INSA">
-    	
-    	<link rel="stylesheet" type="text/css" href="{{ asset('../vendor/twitter/bootstrap/css/bootstrap.min.css') }}" />
-      	<link rel="stylesheet" type="text/css" href="{{ asset('../vendor/twitter/bootstrap/css/bootstrap-responsive.min.css') }}" />
-   
-		<style type="text/css">
-      		body {
-				padding-top: 60px;
-				padding-bottom: 40px;
-			}
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}CoursesMaker{% endblock %}</title>
 
-			.sidebar-nav {
-    			padding: 9px 0;
-			}
-    	</style>  
-    	             
-    	{% block stylesheets %}
-    	
-   		{% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Inscriptions aux courses des 24 Heures de l'INSA">
+    <meta name="author" content="24Heures de l'INSA">
 
-	</head>
+    <link rel="stylesheet" type="text/css" href="{{ asset('../vendor/twitter/bootstrap/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('../vendor/twitter/bootstrap/css/bootstrap-responsive.min.css') }}"/>
 
-    <body>
-	    <div class="container">
-		{% block body %}
-		
-			<div class="navbar navbar-inverse navbar-fixed-top">
-	        	<div class="navbar-inner">
-	            	<div class="container-fluid">
-	              		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-	                		<span class="icon-bar"></span>
-	                		<span class="icon-bar"></span>
-	                		<span class="icon-bar"></span>
-	              		</a>
-	              		<a class="brand" href="{{path('accueil') }}">CoursesMaker</a>
-	              		
-	              		
-	              		<div class="nav-collapse collapse"> 
-		                	<p class="navbar-text pull-right">
-                                {% if is_granted('ROLE_ADMIN') %}
-                                Bonjour <a href="{{ path('admin_home') }}" class="navbar-link">{{app.user.username}}</a>
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+    </style>
+
+    {% block stylesheets %}
+
+    {% endblock %}
+
+</head>
+
+<body>
+<div class="container">
+    {% block body %}
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="{{ path('accueil') }}">CoursesMaker</a>
+
+
+                    <div class="nav-collapse collapse">
+                        <p class="navbar-text pull-right">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                Bonjour <a href="{{ path('admin_home') }}"
+                                           class="navbar-link">{{ app.user.username }}</a>
                                 <a class="btn btn-small" href="{{ path('logout') }}">Déconnexion</a>
-                                {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
-		                  		Bonjour <a href="{{ path('account', { 'id': app.user.id }) }}" class="navbar-link">{{app.user.username}}</a>
-		                  		<a class="btn btn-small" href="{{ path('logout') }}">Déconnexion</a>
-		                  		{% else %}
-		                  		<a class="btn btn-small" href="{{ path('register') }}">Inscription</a>
-		                  		<a class="btn btn-small" href="{{ path('login') }}">Connexion</a>
-		                  		{% endif %}
-		                	</p>
-		                	<ul class="nav">
-		                  		<li class="active"><a href="{{path('accueil') }}">Accueil</a></li>
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <li class="active"><a href="{{path('admin_home') }}">{{ app.user.username }}</a></li>
-                                    <li><a href="{{ path('infos_pratiques') }}">Infos Pratiques</a></li>
-                                {%  elseif app.user.username is defined %}
-                                    <li class="active"><a href="{{ path('account', { 'id': app.user.id }) }}">{{ app.user.username }}</a></li>
-                                {% endif %}
-		                  		<li><a href="{{ path('contact') }}">Contact</a></li>
-		                	</ul>
-	              		</div><!--/.nav-collapse -->
-	            	</div>
-				</div>
-			</div>
-			
-	
-			<div class="container-fluid">
-				{% block rotiscoursemaker_body %}
-					{% if pageTitle is defined %}
-						<div class="row-fluid">
-							<div class="page-header">
-								<h1>{{ pageTitle }}</h1>
-							</div>
-						</div>
-					{% endif %}
-				{% endblock %}
-				
-			<div class="hero-unit"> 
-				<div class="row-fluid">
-					<div class="span3">
-						<img src="{{ asset('bundles/rotiscoursemaker/img/logo_24H.png') }}" alt="24Heures" width="" height="" />
-					</div><!-- /span -->
-					<div class="span9">
-						{% block div %} <!-- Titre de la page -->
-						{% endblock %}		
-		 			</div><!--/span-->
-		 		</div><!--/row-->     	
-			</div><!-- /hero-unit -->		
-				
-				{% block content %}
-					<p>Il y aura ici le contenu</p>
-				{% endblock %}
-				<hr>
-	    
-				<footer>
-		           <p>&copy; 24 Heures de l'INSA 2013</p>
-                   <p><strong>Plus c'est long, plus c'est bon!</strong></p>
-		    	</footer>
-	    
-	        </div><!--/.fluid-container-->
-	    
-	        <!-- Le javascript
-	================================================== -->
-	        <!-- Placed at the end of the document so the pages load faster -->
-	        <script src="{{ asset('../vendor/jquery/jquery/jquery.min.js') }}"></script>
-	        <script src="{{ asset('../vendor/twitter/bootstrap/js/bootstrap.min.js') }}"></script>
-	       
+                            {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
+                                Bonjour <a href="{{ path('account', { 'id': app.user.id }) }}"
+                                           class="navbar-link">{{ app.user.username }}</a>
+                                <a class="btn btn-small" href="{{ path('logout') }}">Déconnexion</a>
+                            {% else %}
+                                <a class="btn btn-small" href="{{ path('register') }}">Inscription</a>
+                                <a class="btn btn-small" href="{{ path('login') }}">Connexion</a>
+                            {% endif %}
+                        </p>
+                        <ul class="nav">
+                            <li class="active"><a href="{{ path('accueil') }}">Accueil</a></li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li class="active"><a href="{{ path('admin_home') }}">{{ app.user.username }}</a></li>
+                                <li><a href="{{ path('infos_pratiques') }}">Infos Pratiques</a></li>
+                            {% elseif app.user.username is defined %}
+                                <li class="active"><a
+                                            href="{{ path('account', { 'id': app.user.id }) }}">Edition d'équipe</a>
+                                </li>
+                            {% endif %}
+                            <li><a href="{{ path('contact') }}">Contact</a></li>
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
 
-			<script type="text/javascript">// <![CDATA[
-				//------------------
-            $('#myAnim1').click(function() {
-                $('#myDiv1').toggle('slow', function() {
+
+        <div class="container-fluid">
+            {% block rotiscoursemaker_body %}
+                {% if pageTitle is defined %}
+                    <div class="row-fluid">
+                        <div class="page-header">
+                            <h1>{{ pageTitle }}</h1>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endblock %}
+
+            <div class="hero-unit">
+                <div class="row-fluid">
+                    <div class="span3">
+                        <img src="{{ asset('bundles/rotiscoursemaker/img/logo_24H.png') }}" alt="24Heures" width=""
+                             height=""/>
+                    </div>
+                    <!-- /span -->
+                    <div class="span9">
+                        {% block div %} <!-- Titre de la page -->
+                        {% endblock %}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+            </div>
+            <!-- /hero-unit -->
+
+            {% block content %}
+                <p>Il y aura ici le contenu</p>
+            {% endblock %}
+            <hr>
+
+            <footer>
+                <p>&copy; 24 Heures de l'INSA 2013</p>
+
+                <p><strong>Plus c'est long, plus c'est bon!</strong></p>
+            </footer>
+
+        </div><!--/.fluid-container-->
+
+              <!-- Le javascript
+      ================================================== -->
+              <!-- Placed at the end of the document so the pages load faster -->
+        <script src="{{ asset('../vendor/jquery/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('../vendor/twitter/bootstrap/js/bootstrap.min.js') }}"></script>
+
+
+        <script type="text/javascript">// <![CDATA[
+            //------------------
+            $('#myAnim1').click(function () {
+                $('#myDiv1').toggle('slow', function () {
                     // Animation complete.
                 });
             });
-            $('#myAnim2').click(function() {
-                $('#myDiv2').toggle('slow', function() {
+            $('#myAnim2').click(function () {
+                $('#myDiv2').toggle('slow', function () {
                     // Animation complete.
                 });
             });
-            $('#myAnim3').click(function() {
-                $('#myDiv3').toggle('slow', function() {
+            $('#myAnim3').click(function () {
+                $('#myDiv3').toggle('slow', function () {
                     // Animation complete.
                 });
             });
-            $('#myAnim4').click(function() {
-                $('#myDiv4').toggle('slow', function() {
+            $('#myAnim4').click(function () {
+                $('#myDiv4').toggle('slow', function () {
                     // Animation complete.
                 });
             });
 
-            function Swap( div_){
-				  var Obj = document.getElementById( div_);
-				  if( Obj){
-				    if( Obj.style.display=="")
-				      Obj.style.display="none";
-				    else
-				      Obj.style.display="";
-				  }
-				}
-                                
-                                        var $n2 = $("#registration_team");
+            function Swap(div_) {
+                var Obj = document.getElementById(div_);
+                if (Obj) {
+                    if (Obj.style.display == "")
+                        Obj.style.display = "none";
+                    else
+                        Obj.style.display = "";
+                }
+            }
 
-    					$("#registration_user_username").keyup(function () {
-        				    $n2.val(this.value);
-    					});
-                                
-				// ]]>
-			</script>
-			<!-- Exemple d'utilisation du script précédent -->
-			<!--<p><a onclick="Swap('DIV_1');" class="btn">Inscrire coureur 2</a></p>
-			<div id="DIV_1" style="display: none; padding-left: 20px;"><p> là on met le truc qui se déroule au clic</p></div>
-			<p><a onclick="Swap('DIV_2');" class="btn">Inscrire coureur 3</a></p>
-			<div id="DIV_2" style="display: none; padding-left: 20px;"><p>là on met le truc qui se déroule au clic</p></div>-->
-			
-		{% endblock %}
-		</div>
-	</body>
+            var $n2 = $("#registration_team");
+
+            $("#registration_user_username").keyup(function () {
+                $n2.val(this.value);
+            });
+
+            // ]]>
+
+
+
+        </script>
+        <!-- Exemple d'utilisation du script précédent -->
+        <!--<p><a onclick="Swap('DIV_1');" class="btn">Inscrire coureur 2</a></p>
+        <div id="DIV_1" style="display: none; padding-left: 20px;"><p> là on met le truc qui se déroule au clic</p></div>
+        <p><a onclick="Swap('DIV_2');" class="btn">Inscrire coureur 3</a></p>
+        <div id="DIV_2" style="display: none; padding-left: 20px;"><p>là on met le truc qui se déroule au clic</p></div>-->
+
+    {% endblock %}
+</div>
+</body>
 </html>
 
 

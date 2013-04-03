@@ -7,7 +7,8 @@
     <p>Inscriptions aux courses des 24 heures de l'INSA</p>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     {% else %}
-        <p ><a class="btn btn-danger btn-large" href="register">Inscription &raquo;</a>  <a class="btn btn-success btn-large" href="login">Connexion &raquo;</a> <br/>
+        <p><a class="btn btn-danger btn-large" href="register">Inscription &raquo;</a>  <a
+            class="btn btn-success btn-large" href="login">Connexion &raquo;</a> <br/>
         {% if app.session.hasFlash('notice') %}
             <div class="flash-notice">
                 {{ app.session.flash('notice') }}
@@ -23,59 +24,105 @@
                 <div class="row-fluid">
                     <div class="span15">
                         <h2>Courses :</h2>
-                    </div><!--/span-->
-                </div><!--/row-->
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
                 <div class="row-fluid">
                     <div class="span3">
                         <h2>Vélo</h2>
-                        <p>La course emblématique des 24h de l'INSA ! Quel que soit ton niveau viens rouler au milieu des vélos folklo dans une ambiance de folie et à proximité de tous les avantages du village coureur pour une épreuve d'endurance inoubliable de 24 heures.</p>
-                        <p><a class="btn" href="http://www.24heures.org/courses/course-cycliste/">En savoir plus  &raquo;</a></p>
-                    </div><!--/span-->
+
+                        <p>La course emblématique des 24h de l'INSA ! Quel que soit ton niveau viens rouler au milieu
+                            des vélos folklo dans une ambiance de folie et à proximité de tous les avantages du village
+                            coureur pour une épreuve d'endurance inoubliable de 24 heures.</p>
+
+                        <p><a class="btn" href="http://www.24heures.org/courses/course-cycliste/">En savoir
+                                plus &raquo;</a></p>
+                    </div>
+                    <!--/span-->
                     <div class="span3">
                         <h2>Triathlon</h2>
-                        <p>La huitième édition du 24thlon. Une épreuve de 24h dont 4h de natation, 14h de vélo et enfin 6h de course à pied !</p>
-                        <p><a class="btn" href="http://www.24heures.org/courses/24thlon-triathlon/">En savoir plus  &raquo;</a></p>
-                    </div><!--/span-->
+
+                        <p>La huitième édition du 24thlon. Une épreuve de 24h dont 4h de natation, 14h de vélo et enfin
+                            6h de course à pied !</p>
+
+                        <p><a class="btn" href="http://www.24heures.org/courses/24thlon-triathlon/">En savoir
+                                plus &raquo;</a></p>
+                    </div>
+                    <!--/span-->
                     <div class="span3">
                         <h2>Pied</h2>
-                        <p>L'épreuve d'endurance de course à pied de 24h. Un défi unique en solo ou en équipe. Sur un parcours plein d'ambiance au centre des animations de la journée.</p>
-                        <p><a class="btn" href="http://www.24heures.org/courses/course-a-pied/">En savoir plus  &raquo;</a></p>
-                    </div><!--/span-->
+
+                        <p>L'épreuve d'endurance de course à pied de 24h. Un défi unique en solo ou en équipe. Sur un
+                            parcours plein d'ambiance au centre des animations de la journée.</p>
+
+                        <p><a class="btn" href="http://www.24heures.org/courses/course-a-pied/">En savoir
+                                plus &raquo;</a></p>
+                    </div>
+                    <!--/span-->
                     <div class="span3">
                         <h2>Natation</h2>
-                        <p>Dans un cadre festif viens te mesurer aux autres nageurs pour une épreuve d'endurance de 4h. Nage pour le plaisir ou la competition.</p>
-                        <p><a class="btn" href="http://www.24heures.org/courses/natation/">En savoir plus  &raquo;</a></p>
-                    </div><!--/span-->
-                </div><!--/row-->
+
+                        <p>Dans un cadre festif viens te mesurer aux autres nageurs pour une épreuve d'endurance de 4h.
+                            Nage pour le plaisir ou la competition.</p>
+
+                        <p><a class="btn" href="http://www.24heures.org/courses/natation/">En savoir plus &raquo;</a>
+                        </p>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
                 <div class="row-fluid">
                     <div class="span15">
                         <h2>Catégorie :</h2>
-                    </div><!--/span-->
-                </div><!--/row-->
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
                 <div class="row-fluid">
                     <div class="span3">
                         <h2>Solo</h2>
-                        <p>Le choix des athlètes à la recherche d'un défi d'endurance. Une catégorie extrêmement physique qui nécessitera sans doute plusieurs arrêts au village coureur pour le ravitaillement et sur la table de massage.</p>
 
-                    </div><!--/span-->
+                        <p>Le choix des athlètes à la recherche d'un défi d'endurance. Une catégorie extrêmement
+                            physique qui nécessitera sans doute plusieurs arrêts au village coureur pour le
+                            ravitaillement et sur la table de massage.</p>
+
+                    </div>
+                    <!--/span-->
                     <div class="span3">
                         <h2>Equipe</h2>
-                        <p>Pour les coureurs qui cherchent la performance. <strong>Des équipes de 2 à 3 coureurs</strong> entrainés pour une catégorie où le niveau augmente chaque année. </p>
 
-                    </div><!--/span-->
+                        <p>Pour les coureurs qui cherchent la performance. <strong>Des équipes de 2 à 3
+                                coureurs</strong> entrainés pour une catégorie où le niveau augmente chaque année. </p>
+
+                    </div>
+                    <!--/span-->
                     <div class="span3">
                         <h2>Loisir</h2>
-                        <p>Une catégorie qui s'adresse aux plus nombreux. <strong>Des équipes de 4 à 12 coureurs</strong> pour une épreuve détente où amusement et bonne ambiance sont les maîtres mots. </p>
 
-                    </div><!--/span-->
+                        <p>Une catégorie qui s'adresse aux plus nombreux. <strong>Des équipes de 4 à 12
+                                coureurs</strong> pour une épreuve détente où amusement et bonne ambiance sont les
+                            maîtres mots. </p>
+
+                    </div>
+                    <!--/span-->
                     <div class="span3">
                         <h2>Hors Catégorie</h2>
-                        <p>Pour les plus originaux. Tandems, runbikes, vélo couchés, c'est dans cette catégorie que vous jouerez et participerez à mettre l'ambiance sur la course au coté des folklos et des autres coureurs. </p>
-                        <p><a class="btn" href="http://www.24heures.org/courses/velos-folklo/">En savoir plus  &raquo;</a></p>
-                    </div><!--/span-->
-                </div><!--/row-->
-            </div><!--/span-->
-        </div><!--/row-->
+
+                        <p>Pour les plus originaux. Tandems, runbikes, vélo couchés, c'est dans cette catégorie que vous
+                            jouerez et participerez à mettre l'ambiance sur la course au coté des folklos et des autres
+                            coureurs. </p>
+
+                        <p><a class="btn" href="http://www.24heures.org/courses/velos-folklo/">En savoir
+                                plus &raquo;</a></p>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+            </div>
+            <!--/span-->
+        </div>
+        <!--/row-->
     </div><!--/container -->
 
 {% endblock %}
