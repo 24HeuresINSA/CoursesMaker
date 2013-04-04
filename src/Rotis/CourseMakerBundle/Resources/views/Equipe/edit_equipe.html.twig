@@ -106,16 +106,18 @@
                 </td>
                 <td><a class="btn"
                        href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPaiementOk(), 'objet': 'paiement'}) }}">{% if joueurs.getPaiementOk() %}Invalider paiement{% else %}Valider paiement{% endif %}</a>
+                {% if nombre>1 %}
                 <td><a class="btn"
                        href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueurs.id}) }}">Supprimer coureur</a>
                 </td>
-
+                {% endif %}
                 </td>
             {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if nombre>1 %}
                 <td><a class="btn"
                        href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueurs.id}) }}">Supprimer coureur</a>
                 </td>
-
+                {% endif %}
             {% endif %}
         </tr>
         {% endfor %}

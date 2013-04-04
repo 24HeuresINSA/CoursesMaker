@@ -91,29 +91,6 @@ class Categorie
     }
 
     /**
-     * Set courses
-     *
-     * @param \Rotis\CourseMakerBundle\Entity\Course $courses
-     * @return Categorie
-     */
-    public function setCourses(\Rotis\CourseMakerBundle\Entity\Course $courses = null)
-    {
-        $this->courses = $courses;
-    
-        return $this;
-    }
-
-    /**
-     * Get courses
-     *
-     * @return \Rotis\CourseMakerBundle\Entity\Course 
-     */
-    public function getCourses()
-    {
-        return $this->courses;
-    }
-
-    /**
      * Set equipes
      *
      * @param \Rotis\CourseMakerBundle\Entity\Equipe $equipes
@@ -134,5 +111,69 @@ class Categorie
     public function getEquipes()
     {
         return $this->equipes;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->equipes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add equipes
+     *
+     * @param \Rotis\CourseMakerBundle\Entity\Equipe $equipes
+     * @return Categorie
+     */
+    public function addEquipe(\Rotis\CourseMakerBundle\Entity\Equipe $equipes)
+    {
+        $this->equipes[] = $equipes;
+    
+        return $this;
+    }
+
+    /**
+     * Remove equipes
+     *
+     * @param \Rotis\CourseMakerBundle\Entity\Equipe $equipes
+     */
+    public function removeEquipe(\Rotis\CourseMakerBundle\Entity\Equipe $equipes)
+    {
+        $this->equipes->removeElement($equipes);
+    }
+
+    /**
+     * Add courses
+     *
+     * @param \Rotis\CourseMakerBundle\Entity\Course $courses
+     * @return Categorie
+     */
+    public function addCourse(\Rotis\CourseMakerBundle\Entity\Course $courses)
+    {
+        $this->courses[] = $courses;
+    
+        return $this;
+    }
+
+    /**
+     * Remove courses
+     *
+     * @param \Rotis\CourseMakerBundle\Entity\Course $courses
+     */
+    public function removeCourse(\Rotis\CourseMakerBundle\Entity\Course $courses)
+    {
+        $this->courses->removeElement($courses);
+    }
+
+    /**
+     * Get courses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCourses()
+    {
+        return $this->courses;
     }
 }

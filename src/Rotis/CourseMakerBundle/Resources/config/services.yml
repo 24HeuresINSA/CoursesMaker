@@ -5,3 +5,8 @@ services:
 #    rotis_course_maker.example:
 #        class: %rotis_course_maker.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+    validator.unique.numero_unique:
+        class: Rotis\CourseMakerBundle\Validator\Constraints\EquipeCourseCategorieValidator
+        arguments: [ @doctrine.orm.entity_manager ]
+        tags:
+            - { name: validator.constraint_validator, alias: equipe_course_categorie_service }

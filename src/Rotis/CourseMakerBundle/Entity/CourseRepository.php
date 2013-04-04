@@ -26,7 +26,7 @@ class CourseRepository extends EntityRepository
     }
 
 
-    public function findCategorieWithCourse($id)
+    public function findTypeWithCourse($id)
     {
         $qb = $this
             ->createQueryBuilder('c')

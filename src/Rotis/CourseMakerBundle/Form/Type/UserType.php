@@ -28,12 +28,14 @@ class UserType extends AbstractType
                 return $er->createQueryBuilder('c')
                     ->where('c.inscriptions_ouvertes = true');
             },
+            'empty_value'=> 'Choisissez une course'
         )
         );
 
         $builder->add('categorie', 'entity', array(
             'class' => 'RotisCourseMakerBundle:Categorie',
             'property' => 'nom',
+            'empty_value' => 'Choisissez une catégorie'
         ));
 
     }
