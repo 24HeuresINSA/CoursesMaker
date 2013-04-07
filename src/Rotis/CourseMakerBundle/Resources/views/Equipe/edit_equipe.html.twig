@@ -7,19 +7,12 @@
 {% block content %}
 
     <h1>Informations sur l'Equipe {{ equipe.username }} </h1>
-    {# TODO: ajouter des champs pour paiement et papiers #}
-    {#
-    <p>Nom d'équipe : {{ equipe.username }} <br />
-       {% if equipe.valide %}
-           Valide
-       {% else %}
-           Pas encore valide
-       {% endif %} <br />
-      Inscrite à la course : {{ equipe.course.nom }} <br />
-      Dans la catégorie : {{ equipe.categorie.nom }} <br />
-      De type : {{ equipe.course.type.nom }} <br />
-       Nombre de coureurs inscrits : {{ nombre }} <br />
-    #}
+    {# TODO: ajouter des champs pour type paiement et numéro cheque #}
+    {% if app.session.hasFlash('notice') %}
+        <div class="flash-notice">
+    {{ app.session.flash('notice') }}
+        </div>
+    {% endif %}
     <table>
         <thead>
         <tr>
@@ -101,11 +94,22 @@
                 <td>En attente de paiement</td>
             {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
-                <td><a class="btn"
-                       href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPapiersOk(), 'objet': 'certificat'}) }}">{% if joueurs.getPapiersOk() %}Invalider certificat{% else %}Valider certificat{% endif %}</a>
-                </td>
-                <td><a class="btn"
-                       href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPaiementOk(), 'objet': 'paiement'}) }}">{% if joueurs.getPaiementOk() %}Invalider paiement{% else %}Valider paiement{% endif %}</a>
+                {% if joueurs.getPapiersOk() %}
+                    <td><a class="btn btn-danger"
+                       href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPapiersOk(), 'objet': 'certificat'}) }}">Invalider certificat</a>
+                    </td>
+                {% else %}
+                    <td><a class="btn btn-success"
+                       href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPapiersOk(), 'objet': 'certificat'}) }}">Valider certificat</a>
+                    </td>
+                {% endif %}
+                {% if joueurs.getPaiementOk() %}
+                <td><a class="btn btn-danger"
+                       href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPaiementOk(), 'objet': 'paiement'}) }}">Invalider paiement</a></td>
+                {% else %}
+                <td><a class="btn btn-success"
+                       href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPaiementOk(), 'objet': 'paiement'}) }}">Valider paiement</a></td>
+                {% endif %}
                 {% if nombre>1 %}
                 <td><a class="btn"
                        href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueurs.id}) }}">Supprimer coureur</a>
@@ -114,7 +118,7 @@
                 </td>
             {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
                 {% if nombre>1 %}
-                <td><a class="btn"
+                <td><a class="btn btn-danger"
                        href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueurs.id}) }}">Supprimer coureur</a>
                 </td>
                 {% endif %}

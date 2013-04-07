@@ -51,6 +51,7 @@ security:
         - { path: ^/_profiler, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/edit, role: ROLE_USER }
         - { path: ^/equipe, role: ROLE_USER }
+        - { path: ^/infos, role: ROLE_USER }
         - { path: ^/, role: ROLE_ADMIN }
 
     encoders:

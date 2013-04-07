@@ -77,11 +77,10 @@ class EquipeController extends Controller
             if ($form->isValid()) {
                 $factory = $this->get('security.encoder_factory');
                 $registration = $form->getData();
-                $user = $this->get('security.context')->getToken()->getUser();
                 $joueur = $registration->getJoueur();
                 $joueur->setPapiersOk(false);
                 $joueur->setPaiementOk(false);
-                $tarif = $tarifrepo->findTarifByIdCourse($user->getCourse()->getId());
+                $tarif = $tarifrepo->findTarifByIdCourse($equipe->getCourse()->getId());
                 if (0 == $tarif[0]->getPrix()) {
                     $joueur->setPaiementOk(true);
                 }
@@ -89,23 +88,23 @@ class EquipeController extends Controller
                     ->getManager()
                     ->getRepository('RotisCourseMakerBundle:Equipe');
 
-                $joueur->setEquipe($user);
-                $user->addJoueur($joueur);
+                $joueur->setEquipe($equipe);
+                $equipe->addJoueur($joueur);
                 $em->persist($joueur);
-                $em->persist($user);
+                $em->persist($equipe);
                 $em->flush();
                 $this->get('session')->setFlash(
                     'notice',
                     'Ajout réussi!'
                 );
                 $message = \Swift_Message::newInstance()
-                    ->setSubject('Confirmation d\'inscription à CoursesMaker')
+                    ->setSubject('Confirmation d\'inscription à courses.24heures.org')
                     ->setFrom('courses@24heures.org')
                     ->setTo($joueur->getEmail())
                     ->setBody(
                         $this->renderView(
                             'RotisCourseMakerBundle:Equipe:mail.html.twig',
-                            array('prenom' => $joueur->getPrenom(), 'nom' => $joueur->getNom(), 'username' => $user->getUsername(), 'password' => "0")
+                            array('joueur' => $joueur, 'username' => $equipe->getUsername(), 'password' => "0")
                         )
                     );
                 $this->get('mailer')->send($message);
@@ -150,7 +149,7 @@ class EquipeController extends Controller
                 $em->flush();
                 $this->get('session')->setFlash(
                     'notice',
-                    'Equipe créée!'
+                    'Votre équipe à bien été créée. Rendez vous dans l\'onglet Connexion pour avoir accès à toutes vos informations'
                 );
                 $message = \Swift_Message::newInstance()
                     ->setSubject('Confirmation d\'inscription à CoursesMaker')
@@ -322,4 +321,43 @@ class EquipeController extends Controller
         );
         return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
     }
+
+    public function remove_joueurAction($id, $idjoueur)
+    {
+        $equipe = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Equipe')->find($id);
+        $joueur = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Joueur')->find($idjoueur);
+        $nombre = count($equipe->getJoueurs());
+        $tarifrepo = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Tarif');
+        $em = $this->getDoctrine()->getEntityManager();
+        $tarifs = $tarifrepo->findTarifByIdCourse($equipe->getCourse()->getId());
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')
+            && true === $this->get('security.context')->isGranted('ROLE_USER')
+            && (!method_exists($this->get('security.context')->getToken()->getUser(), 'getId')
+                || $this->get('security.context')->getToken()->getUser()->getId() != $id)
+        ) {
+            return $this->redirect($this->generateUrl('accueil'));
+          }
+        $form = $this->createForm(new PlayerAdditionType(), new PlayerAddition());
+        if (true == $equipe->getJoueurs()->contains($joueur))
+        {
+            $equipe->removeJoueur($joueur);
+            $em->remove($joueur);
+            $em->merge($equipe);
+            $em->flush();
+            $this->get('session')->setFlash(
+                'notice',
+                'Coureur supprimé'
+            );
+
+        }
+        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
+
+    }
+
 }
