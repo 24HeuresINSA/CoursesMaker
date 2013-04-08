@@ -81,12 +81,16 @@
                     for (var i in categorie_course[e.target.value]) {
                         if (categorie_course[e.target.value][i] == value) {
                             option.show();
+                            option.removeAttr('disabled');
                             return;
                         }
                     }
 
                     option.hide();
+                    option.attr('disabled', 'disabled');
                 });
+                // anyway show first choice
+                $('#registration_user_course').find('option[value=]').removeAttr('disabled');
             });
         });
     </script>
