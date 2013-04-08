@@ -225,7 +225,7 @@ class EquipeController extends Controller
             ->getRepository('RotisCourseMakerBundle:Course');
         $course = $repocourse->find($id);
         if (count($listeEquipes) > 0) {
-            return $this->render('RotisCourseMakerBundle:Equipe:equipe_par_course.html.twig', array('existence' => true, 'equipes' => $listeEquipes, 'course' => $nomCourse));
+            return $this->render('RotisCourseMakerBundle:Equipe:equipe_par_course.html.twig', array('existence' => true, 'equipes' => $listeEquipes, 'course' => $course));
         } else {
             return $this->render('RotisCourseMakerBundle:Equipe:equipe_par_course.html.twig', array('existence' => false, 'course' => $course));
         }
