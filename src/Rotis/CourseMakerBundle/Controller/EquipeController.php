@@ -330,7 +330,6 @@ class EquipeController extends Controller
         $joueur = $this->getDoctrine()
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Joueur')->find($idjoueur);
-        $nombre = count($equipe->getJoueurs());
         $tarifrepo = $this->getDoctrine()
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Tarif');
@@ -356,6 +355,7 @@ class EquipeController extends Controller
             );
 
         }
+        $nombre = count($equipe->getJoueurs());
         return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
 
     }
