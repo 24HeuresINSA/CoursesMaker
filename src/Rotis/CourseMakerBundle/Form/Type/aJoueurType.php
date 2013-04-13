@@ -16,18 +16,19 @@ class aJoueurType extends AbstractType
     {
         $builder->add('nom','text', array('label' => 'Nom'));
         $builder->add('prenom','text',array('label' => 'Prénom'));
-        $builder->add('taille_tshirt', 'choice', array(
+     /*   $builder->add('taille_tshirt', 'choice', array(
             'choices'   => array(
                 'S'   => 'S',
                 'M' => 'M',
                 'L'   => 'L',
-                'XL' => 'XL'
+                'XL' => 'XL',
+                'NA' => 'NA'
             ),
             'label' => 'Taille de votre t-shirt',
             'preferred_choices' => array('medium'),
             'required' => 'true'
         )
-        );
+        );*/
 
         $builder->add('telephone','text', array(
             'label' => 'Téléphone'

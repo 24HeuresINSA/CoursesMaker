@@ -3,17 +3,18 @@
 {% block title %}CoursesMaker - PageEquipe{% endblock %}
 {% block div %}
     <h1>Edition</h1>
+    {% if app.session.hasFlash('notice') %}
+        <div class="flash-notice">
+            <h3 class="notice">{{ app.session.flash('notice') }}</h3>
+        </div>
+    {% endif %}
 {% endblock %}
 {% block content %}
 
     <h1>Informations sur l'Equipe {{ equipe.username }} </h1>
     {# TODO: ajouter des champs pour type paiement et numéro cheque #}
-    {% if app.session.hasFlash('notice') %}
-        <div class="flash-notice">
-    {{ app.session.flash('notice') }}
-        </div>
-    {% endif %}
-    <table>
+
+    <table class="bordered" id="tableEq">
         <thead>
         <tr>
             <th>Nom d'équipe</th>
@@ -28,8 +29,8 @@
         <tbody>
         <tr>
             <td>{{ equipe.username }}</td>
-            <td>{% if equipe.valide %}
-                    Valide
+            <td>{% if equipe.getValide() %}
+                    <p id="val"><strong>Valide</strong></p>
                 {% else %}
                     Pas encore valide
                 {% endif %}</td>
@@ -51,10 +52,11 @@
 
     <br/>
     {% if is_granted('ROLE_ADMIN') %}
-        <p><a class="btn" href="{{ path('admin_edit', { 'id': equipe.id }) }}">Editer l'équipe &raquo;</a></p>
+        {% if not equipe.getValide() %}<p><a class="btn" href="{{ path('admin_edit', { 'id': equipe.id }) }}">Editer l'équipe &raquo;</a></p>{% endif %}
+        {% if validable or equipe.getValide() %}<p><a class="btn" href="{{ path('admin_team_valid', { 'id': equipe.getId(), 'status': equipe.getValide() }) }}">{% if not equipe.getValide() %}Valider l'équipe{% else %}Invalider l'équipe{% endif %} &raquo;</a></p>{% endif %}
     {% endif %}
     <br/>
-    <table>
+    <table class="bordered" id="tableJ">
         <thead>
         <tr>
             <th>Prenom</th>
@@ -62,14 +64,14 @@
             <th>Email</th>
             <th>Telephone</th>
             <th>Statut</th>
-            <th>T-Shirt</th>
+          {# Pas de Tshirt cette annee #} {# <th>T-Shirt</th> #}
             <th>Papiers</th>
             <th>Paiement</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            {% for joueurs in equipe.joueurs %}
+
+            {% for joueurs in equipe.getJoueurs() %}
         <tr>
             <td>{{ joueurs.prenom }}</td>
             <td>{{ joueurs.nom }}</td>
@@ -80,7 +82,7 @@
             {% else %}
                 <td>Pas Etudiant</td>
             {% endif %}
-            <td>{{ joueurs.getTailleTshirt }}</td>
+           {#Pas de Tshirt cette annee#}{# <td>{{ joueurs.getTailleTshirt }}</td>#}
             {% if joueurs.getPapiersOk() %}
                 <td>Certificat médical reçu</td>
             {% else %}
@@ -93,72 +95,84 @@
             {% else %}
                 <td>En attente de paiement</td>
             {% endif %}
-            {% if is_granted('ROLE_ADMIN') %}
-                {% if joueurs.getPapiersOk() %}
+            {% if equipe.getValide() %}
+            {% else %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% if joueurs.getPapiersOk() %}
+                        <td><a class="btn btn-danger"
+                           href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPapiersOk(), 'objet': 'certificat'}) }}">Invalider certificat</a>
+                        </td>
+                    {% else %}
+                        <td><a class="btn btn-success"
+                           href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPapiersOk(), 'objet': 'certificat'}) }}">Valider certificat</a>
+                        </td>
+                    {% endif %}
+                    {% if joueurs.getPaiementOk() %}
                     <td><a class="btn btn-danger"
-                       href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPapiersOk(), 'objet': 'certificat'}) }}">Invalider certificat</a>
-                    </td>
-                {% else %}
+                           href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPaiementOk(), 'objet': 'paiement'}) }}">Invalider paiement</a></td>
+                    {% else %}
                     <td><a class="btn btn-success"
-                       href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPapiersOk(), 'objet': 'certificat'}) }}">Valider certificat</a>
+                           href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPaiementOk(), 'objet': 'paiement'}) }}">Valider paiement</a></td>
+                    {% endif %}
+                    {% if nombre>1 %}
+                    <td><a class="btn"
+                           href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueurs.id}) }}" onclick="return(confirm('Voulez-vous vraiment supprimer ce coureur?'));">Supprimer coureur</a>
                     </td>
-                {% endif %}
-                {% if joueurs.getPaiementOk() %}
-                <td><a class="btn btn-danger"
-                       href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPaiementOk(), 'objet': 'paiement'}) }}">Invalider paiement</a></td>
-                {% else %}
-                <td><a class="btn btn-success"
-                       href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPaiementOk(), 'objet': 'paiement'}) }}">Valider paiement</a></td>
-                {% endif %}
-                {% if nombre>1 %}
-                <td><a class="btn"
-                       href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueurs.id}) }}">Supprimer coureur</a>
-                </td>
-                {% endif %}
-                </td>
-            {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
-                {% if nombre>1 %}
-                <td><a class="btn btn-danger"
-                       href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueurs.id}) }}">Supprimer coureur</a>
-                </td>
+                    {% endif %}
+
+                </tbody>
+                    <tfoot>
+                {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% if nombre>1 %}
+                    <td><a class="btn btn-danger"
+                           href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueurs.id}) }}" onclick="return(confirm('Voulez-vous vraiment supprimer ce coureur?'));">Supprimer coureur</a>
+                    </td>
+                    {% endif %}
                 {% endif %}
             {% endif %}
         </tr>
         {% endfor %}
-        </tr>
-        </tbody>
+
+            </tfoot>
     </table>
 
     {# TODO:CSS le tableau #}
 
     <br/>
     </p>
+    {% if not equipe.getValide() %}
+        {% if equipe.categorie.nom != 'Solo' or nombre < 1 %}
+            {% if equipe.categorie.nom != 'Equipe' or nombre < 3 %}
+                {% if equipe.categorie.nom != 'Loisir' or nombre < 12 %}
+                    <div class="row-fluid">
+                        <div class="offset1 span10">
 
-    {% if equipe.categorie.nom != 'Solo' or nombre < 1 %}
-        {% if equipe.categorie.nom != 'Equipe' or nombre < 3 %}
-            {% if equipe.categorie.nom != 'Loisir' or nombre < 12 %}
-                <div class="row-fluid">
-                    <div class="offset1 span10">
-
-                        <form action="{{ path('edit', {'id': equipe.id }) }}" method="post" {{ form_enctype(form) }}
-                              class="well">
-                            {{ form_widget(form) }}
-                            <br/>
-                            <input type="submit" class="btn btn-primary"/>
-                        </form>
+                            <form action="{{ path('edit', {'id': equipe.id }) }}" method="post" {{ form_enctype(form) }}
+                                class="well">
+                                {{ form_widget(form) }}
+                                <br/>
+                                <input type="submit" class="btn btn-primary"/>
+                             </form>
+                        </div>
                     </div>
-                </div>
 
+                {% else %}
+                    Equipe complete!
+                {% endif %}
             {% else %}
                 Equipe complete!
             {% endif %}
         {% else %}
             Equipe complete!
         {% endif %}
-    {% else %}
-        Equipe complete!
     {% endif %}
 
+<style>
+    #val{
+        color: green;
+        display: inline;
+    }
+</style>
     <!-- Le javascript
        ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

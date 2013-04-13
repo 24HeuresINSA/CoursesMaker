@@ -2,7 +2,12 @@
 
 {% block title %}CoursesMaker - PageEquipe{% endblock %}
 {% block div %}
-    <h3>Edition des infos de l'équipe {{ equipe.username }}</h3>
+    <h2>Edition des infos de l'équipe {{ equipe.username }}</h2>
+    {% if app.session.hasFlash('notice') %}
+        <div class="flash-notice">
+            <h3 class="notice">{{ app.session.flash('notice') }}</h3>
+        </div>
+    {% endif %}
 {% endblock %}
 {% block content %}
 

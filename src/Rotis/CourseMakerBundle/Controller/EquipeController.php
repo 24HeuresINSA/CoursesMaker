@@ -6,6 +6,7 @@ use Rotis\CourseMakerBundle\Entity\Joueur;
 use Rotis\CourseMakerBundle\Entity\Equipe;
 use Rotis\CourseMakerBundle\Entity\Tarif;
 use Rotis\CourseMakerBundle\Form\Model\PlayerAddition;
+use Rotis\CourseMakerBundle\Form\Type\AdminEditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -59,6 +60,10 @@ class EquipeController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $form = $this->createForm(new PlayerAdditionType(), new PlayerAddition());
         $equipe = $repository->find($id);
+        if ($equipe->getValide())
+        {
+            return $this->redirect($this->generateUrl('accueil'));
+        }
         $nombre = count($equipe->getJoueurs());
         $tarifrepo = $this->getDoctrine()
             ->getManager()
@@ -79,7 +84,8 @@ class EquipeController extends Controller
                 $registration = $form->getData();
                 $joueur = $registration->getJoueur();
                 $joueur->setPapiersOk(false);
-                $joueur->setPaiementOk(false);
+                $joueur->setPaiementOk(false)
+                    ->setTailleTshirt('NA');
                 $tarif = $tarifrepo->findTarifByIdCourse($equipe->getCourse()->getId());
                 if (0 == $tarif[0]->getPrix()) {
                     $joueur->setPaiementOk(true);
@@ -111,8 +117,15 @@ class EquipeController extends Controller
                 return $this->redirect($this->generateUrl('accueil'));
             }
         }
-
-        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
+        $tousjoueurs = $equipe->getJoueurs();
+        $validable = true;
+        foreach($tousjoueurs as $joueur){
+            if ((!$joueur->getPapiersOk()) || (!$joueur->getPaiementOk()))
+            {
+                $validable = false;
+            }
+        }
+        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('validable' => $validable, 'tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
     }
 
     public function createAction()
@@ -127,7 +140,8 @@ class EquipeController extends Controller
                 $user = $registration->getUser();
                 $joueur = $registration->getJoueur();
                 $joueur->setPapiersOk(false)
-                    ->setPaiementOk(false);
+                    ->setPaiementOk(false)
+                    ->setTailleTshirt('NA');
                 $tarifrepo = $this->getDoctrine()
                     ->getManager()
                     ->getRepository('RotisCourseMakerBundle:Tarif');
@@ -188,7 +202,15 @@ class EquipeController extends Controller
         ) {
             return $this->redirect($this->generateUrl('accueil'));
         }
-        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
+        $tousjoueurs = $equipe->getJoueurs();
+        $validable = true;
+        foreach($tousjoueurs as $joueur){
+            if ((!$joueur->getPapiersOk()) || (!$joueur->getPaiementOk()))
+            {
+                $validable = false;
+            }
+        }
+        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('validable' => $validable,'tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
 
     }
 
@@ -238,9 +260,7 @@ class EquipeController extends Controller
             ->getRepository('RotisCourseMakerBundle:Equipe');
         $equipe = $repository->find($id);
         $form = $this->createForm(
-            new EditionType(),
-            $equipe
-        );
+            new AdminEditType(),$equipe);
         return $this->render('RotisCourseMakerBundle:Equipe:admin_edit.html.twig', array('equipe' => $equipe, 'form' => $form->createView()));
     }
 
@@ -251,7 +271,7 @@ class EquipeController extends Controller
             ->getRepository('RotisCourseMakerBundle:Equipe');
         $em = $this->getDoctrine()->getEntityManager();
         $olduser = $repository->find($id);
-        $form = $this->createForm(new EditionType(), $olduser);
+        $form = $this->createForm(new AdminEditType(), $olduser);
         if ($this->getRequest()->getMethod() == 'POST') {
             $form->bind($this->getRequest());
             if ($form->isValid()) {
@@ -280,8 +300,12 @@ class EquipeController extends Controller
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Joueur');
         $em = $this->getDoctrine()->getEntityManager();
-        $joueur = $repository->find($id);
-        $equipe = $joueur->getEquipe();
+        $lejoueur = $repository->find($id);
+        $equipe = $lejoueur->getEquipe();
+        if ($equipe->getValide())
+        {
+            return $this->redirect($this->generateUrl('accueil'));
+        }
         $nombre = count($equipe->getJoueurs());
         $tarifrepo = $this->getDoctrine()
             ->getManager()
@@ -298,28 +322,36 @@ class EquipeController extends Controller
         if ('certificat' === $objet) {
             if (true == $etat) //Si l'on a true, cela signifie que le certificat a été validé -> on souhaite annuler la validation
             {
-                $joueur->setPapiersOk(false);
+                $lejoueur->setPapiersOk(false);
             }
             if (false == $etat) {
-                $joueur->setPapiersOk(true);
+                $lejoueur->setPapiersOk(true);
             }
         } elseif ('paiement' === $objet) {
 
             if (true == $etat) //Si l'on a true, cela signifie que le paiement a été validé -> on souhaite annuler la validation
             {
-                $joueur->setPaiementOk(false);
+                $lejoueur->setPaiementOk(false);
             }
             if (false == $etat) {
-                $joueur->setPaiementOk(true);
+                $lejoueur->setPaiementOk(true);
             }
         }
-        $em->merge($joueur);
+        $em->merge($lejoueur);
         $em->flush();
         $this->get('session')->setFlash(
             'notice',
             'Action effectuée'
         );
-        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
+        $tousjoueurs = $equipe->getJoueurs();
+        $validable = true;
+        foreach($tousjoueurs as $joueur){
+            if ((!$joueur->getPapiersOk()) || (!$joueur->getPaiementOk()))
+            {
+                $validable = false;
+            }
+        }
+        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('validable' => $validable, 'tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
     }
 
     public function remove_joueurAction($id, $idjoueur)
@@ -327,6 +359,10 @@ class EquipeController extends Controller
         $equipe = $this->getDoctrine()
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Equipe')->find($id);
+        if ($equipe->getValide())
+        {
+            return $this->redirect($this->generateUrl('accueil'));
+        }
         $joueur = $this->getDoctrine()
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Joueur')->find($idjoueur);
@@ -356,8 +392,41 @@ class EquipeController extends Controller
 
         }
         $nombre = count($equipe->getJoueurs());
-        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
+        $tousjoueurs = $equipe->getJoueurs();
+        $validable = true;
+        foreach($tousjoueurs as $joueur){
+            if ((!$joueur->getPapiersOk()) || (!$joueur->getPaiementOk()))
+            {
+                $validable = false;
+            }
+        }
+        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('validable' => $validable, 'tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
 
     }
 
+    public function switchTeamValidAction($id, $status)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $equipe = $em->getRepository('RotisCourseMakerBundle:Equipe')->find($id);
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
+        {
+            return $this->redirect($this->generateUrl('accueil'));
+        }
+        if (true == $status)
+        {
+            $equipe->setValide(false);
+        }
+        else
+        {
+            $equipe->setValide(true);
+        }
+        $em->merge($equipe);
+        $em->flush();
+        $this->get('session')->setFlash(
+            'notice',
+            'Action effectuée'
+        );
+        return $this->render('RotisCourseMakerBundle:CourseMaker:accueil.html.twig');
+
+    }
 }

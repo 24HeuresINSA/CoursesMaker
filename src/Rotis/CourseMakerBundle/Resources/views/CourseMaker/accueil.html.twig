@@ -8,13 +8,13 @@
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     {% else %}
         <p><a class="btn btn-danger btn-large" href="register">Inscription &raquo;</a>  <a
-            class="btn btn-success btn-large" href="login">Connexion &raquo;</a> <br/>
-        {% if app.session.hasFlash('notice') %}
-            <div class="flash-notice">
-                {{ app.session.flash('notice') }}
-            </div>
-        {% endif %}</p>
+            class="btn btn-success btn-large" href="login">Connexion &raquo;</a> <br/></p>
     {% endif %}
+    {% if app.session.hasFlash('notice') %}
+        <div class="flash-notice">
+            <h3 class="notice">{{ app.session.flash('notice') }}</h3>
+        </div>
+    {% endif %}</p>
 {% endblock %}
 
 {% block content %}

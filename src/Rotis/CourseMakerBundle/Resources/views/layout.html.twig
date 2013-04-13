@@ -21,8 +21,8 @@
             padding-bottom: 40px;
         }
 
-        .sidebar-nav {
-            padding: 9px 0;
+        .notice{
+            color: red;
         }
     </style>
 
@@ -58,8 +58,8 @@
                                            class="navbar-link">{{ app.user.username }}</a>
                                 <a class="btn btn-small" href="{{ path('logout') }}">Déconnexion</a>
                             {% else %}
-                                <a class="btn btn-small" href="{{ path('register') }}">Inscription</a>
-                                <a class="btn btn-small" href="{{ path('login') }}">Connexion</a>
+                            <a class="btn btn-small" href="{{ path('register') }}">Inscription</a>
+                            <a class="btn btn-small" href="{{ path('login') }}">Connexion</a>
                             {% endif %}
                         </p>
                         <ul class="nav">
@@ -122,7 +122,29 @@
 
                 <p><strong>Plus c'est long, plus c'est bon!</strong></p>
             </footer>
+<style >
+    .bordered th{
+        border: 1px solid black;
+    }
+    .bordered tr{
+        border: 1px solid black;
+        text-align: left;
+    }
+    .bordered td{
+        border: 1px solid black;
+        text-align: left;
+    }
+    #tableJ tfoot{
+        border: none;
+    }
+  /*  #tableJ tr:last-child{
+        border:none;
+    }
+    #tableJ td{
+        border-bottom: 1px solid black;
+    }*/
 
+</style>
         </div><!--/.fluid-container-->
 
               <!-- Le javascript
@@ -153,6 +175,16 @@
                     // Animation complete.
                 });
             });
+            $('#myAnim5').click(function () {
+                $('#myDiv5').toggle('slow', function () {
+                // Animation complete.
+                 });
+            });
+             $('#myAnim6').click(function () {
+                  $('#myDiv6').toggle('slow', function () {
+                // Animation complete.
+                  });
+             });
 
             function Swap(div_) {
                 var Obj = document.getElementById(div_);

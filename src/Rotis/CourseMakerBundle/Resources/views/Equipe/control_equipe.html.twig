@@ -6,13 +6,25 @@
 {% endblock %}
 {% block content %}
 
-
+    <form class="form-search">
+        <input type="text" id="searchInput" class="input-medium search-query">
+        <button id="searchBtn" type="submit" class="btn">Rechercher</button>
+    </form>
 
     <ul>
         {% for equipe in equipes %}
-            <li><a href="{{ path('account', { 'id': equipe.id }) }} ">{{ equipe.username }}</a></li>
+            <li><a href="{{ path('account', { 'id': equipe.id }) }} ">{{ equipe.username }}</a> {% if equipe.getValide() %}<p id="val">Valide</p>{% else %}<p id="pasval">Pas Valide</p>{% endif %}</li>
         {% endfor %}
     </ul>
 
-
+<style>
+    #val{
+        color: green;
+        display: inline;
+    }
+    #pasval{
+        color: red;
+        display: inline;
+    }
+</style>
 {% endblock %}

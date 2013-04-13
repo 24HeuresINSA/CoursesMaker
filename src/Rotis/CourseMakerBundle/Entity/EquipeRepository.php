@@ -35,7 +35,7 @@ class EquipeRepository extends EntityRepository implements UserProviderInterface
             $user = $q->getSingleResult();
         } catch (NoResultException $e) {
             $message = sprintf(
-                'Unable to find an active admin AcmeUserBundle:User object identified by "%s".',
+                'Unable to find an active admin RotisCourseMakerBundle:User object identified by "%s".',
                 $username
             );
             throw new UsernameNotFoundException($message, 0, $e);
@@ -89,4 +89,5 @@ class EquipeRepository extends EntityRepository implements UserProviderInterface
         $equipes = $query->getResult();
         return $equipes;
     }
+
 }
