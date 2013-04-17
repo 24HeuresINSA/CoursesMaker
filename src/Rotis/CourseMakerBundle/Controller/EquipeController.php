@@ -105,6 +105,7 @@ class EquipeController extends Controller
                 );
                 $message = \Swift_Message::newInstance()
                     ->setSubject('Confirmation d\'inscription à courses.24heures.org')
+                    ->setFrom('courses@24heures.org')
                     ->setTo($joueur->getEmail())
                     ->setBody(
                         $this->renderView(
