@@ -105,7 +105,6 @@ class EquipeController extends Controller
                 );
                 $message = \Swift_Message::newInstance()
                     ->setSubject('Confirmation d\'inscription à courses.24heures.org')
-                    ->setFrom('courses@24heures.org')
                     ->setTo($joueur->getEmail())
                     ->setBody(
                         $this->renderView(
@@ -172,14 +171,23 @@ class EquipeController extends Controller
                     ->setBody(
                         $this->renderView(
                             'RotisCourseMakerBundle:Equipe:mail.html.twig',
-                            array('prenom' => $joueur->getPrenom(), 'nom' => $joueur->getNom(), 'username' => $user->getUsername(), 'password' => $plainPassword)
+                            array('joueur' => $joueur, 'username' => $user->getUsername(), 'password' => $plainPassword)
                         )
                     );
                 $this->get('mailer')->send($message);
                 return $this->redirect($this->generateUrl('accueil'));
             }
         }
-        return $this->render('RotisCourseMakerBundle:Equipe:register.html.twig', array('form' => $form->createView()));
+        $categories = $em->getRepository('RotisCourseMakerBundle:Categorie')->findAll();
+
+        $coursesForCategories = array();
+
+        foreach ($categories as $categorie) {
+            $coursesForCategories[$categorie->getId()] = $categorie->getCourses()->map(function($p) {
+                return $p->getId();
+            })->toArray();
+        }
+        return $this->render('RotisCourseMakerBundle:Equipe:register.html.twig', array('form' => $form->createView(),'categorie_course' => json_encode($coursesForCategories)));
     }
 
     public function edit_equipeAction($id)

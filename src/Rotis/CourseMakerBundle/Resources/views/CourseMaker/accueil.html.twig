@@ -7,8 +7,8 @@
     <p>Inscriptions aux courses des 24 heures de l'INSA</p>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     {% else %}
-        <p><a class="btn btn-danger btn-large" href="register">Inscription &raquo;</a>  <a
-            class="btn btn-success btn-large" href="login">Connexion &raquo;</a> <br/></p>
+        <p><a class="btn btn-danger btn-large" href="{{ path('register') }}">Inscription &raquo;</a>  <a
+            class="btn btn-success btn-large" href="{{ path('login') }}">Connexion &raquo;</a> <br/></p>
     {% endif %}
     {% if app.session.hasFlash('notice') %}
         <div class="flash-notice">
