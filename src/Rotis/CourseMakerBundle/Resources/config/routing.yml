@@ -70,5 +70,5 @@ infos_pratiques:
     pattern: /infos_pratiques
     defaults: { _controller: RotisCourseMakerBundle:CourseMaker:infos }
 infos_coureurs:
-    pattern: /infos
-    defaults: { _controller: RotisCourseMakerBundle:CourseMaker:infos_coureurs}
+    pattern: /infos/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:infos_coureurs}

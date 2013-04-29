@@ -19,6 +19,12 @@
                 au Club des 24 Heures de l'INSA
                 20 av Albert Einstein Rdc Bâtiment D
                 69621 Villeurbanne Cedex</p>
+
+            <h2>Horaires de la course {{ nom }}</h2>
+            <p>
+                Début: {{ debut | date('d-m-Y') }} à {{ debut | date('H:i') }}h.<br />
+                Fin: {{ fin | date('d-m-Y') }} à {{ fin | date('H:i') }}h.
+            </p>
         </div>
     </div>
 </div>

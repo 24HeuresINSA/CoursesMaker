@@ -103,8 +103,8 @@ class EquipeController extends Controller
                     'notice',
                     'Ajout réussi!'
                 );
-                $message = \Swift_Message::newInstance()
-                    ->setSubject('Confirmation d\'inscription à courses.24heures.org')
+                $message = \Swift_Message::newInstance();
+                $message->setSubject('Confirmation d\'inscription à courses.24heures.org')
                     ->setFrom('courses@24heures.org')
                     ->setTo($joueur->getEmail())
                     ->setBody(
@@ -165,8 +165,8 @@ class EquipeController extends Controller
                     'notice',
                     'Votre équipe à bien été créée. Rendez vous dans l\'onglet Connexion pour avoir accès à toutes vos informations'
                 );
-                $message = \Swift_Message::newInstance()
-                    ->setSubject('Confirmation d\'inscription à CoursesMaker')
+                $message = \Swift_Message::newInstance();
+                $message->setSubject('Confirmation d\'inscription à CoursesMaker')
                     ->setFrom('courses@24heures.org')
                     ->setTo($joueur->getEmail())
                     ->setBody(
@@ -417,6 +417,7 @@ class EquipeController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $equipe = $em->getRepository('RotisCourseMakerBundle:Equipe')->find($id);
+        $course = $equipe->getCourse();
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
             return $this->redirect($this->generateUrl('accueil'));
@@ -428,6 +429,23 @@ class EquipeController extends Controller
         else
         {
             $equipe->setValide(true);
+            $tousjoueurs = $equipe->getJoueurs();
+            foreach($tousjoueurs as $joueur)
+            {
+
+            $message = \Swift_Message::newInstance();
+            $message->setSubject('Validation de l\'inscription à courses.24heures.org')
+                ->setFrom('courses@24heures.org')
+                ->setTo($joueur->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'RotisCourseMakerBundle:Equipe:mail_admin_valid.html.twig',
+                        array('joueur' => $joueur, 'nomCourse' => $course->getNom(), 'date' => $course->getDatetimeDebut())
+                    )
+                );
+            $this->get('mailer')->send($message);
+
+            }
         }
         $em->merge($equipe);
         $em->flush();
@@ -436,6 +454,23 @@ class EquipeController extends Controller
             'Action effectuée'
         );
         return $this->render('RotisCourseMakerBundle:CourseMaker:accueil.html.twig');
+
+    }
+
+    public function infos_coureursAction($id)
+    {
+        $equipe = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Equipe')->find($id);
+        $course = $equipe->getCourse();
+        if ((true === $this->get('security.context')->isGranted('ROLE_USER')) and (false === $this->get('security.context')->isGranted('ROLE_ADMIN') ))
+        {
+            return $this->render('RotisCourseMakerBundle:Equipe:infos_coureurs.html.twig', array('nom'=> $course->getNom(),'debut' => $course->getDatetimeDebut(), 'fin' => $course->getDatetimeFin()));
+        }
+        else
+        {
+            return $this->redirect($this->generateUrl('accueil'));
+        }
 
     }
 }

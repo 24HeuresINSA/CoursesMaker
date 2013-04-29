@@ -31,7 +31,7 @@ class aJoueurType extends AbstractType
         );*/
 
         $builder->add('telephone','text', array(
-            'label' => 'Téléphone'
+            'label' => 'N° de portable'
         ));
         $builder->add('email','text', array(
             'label' => 'Mail'

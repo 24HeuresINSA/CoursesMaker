@@ -33,16 +33,5 @@ class CourseMakerController extends Controller
         }
     }
 
-    public function infos_coureursAction()
-    {
-        if (true === $this->get('security.context')->isGranted('ROLE_USER'))
-        {
-            return $this->render('RotisCourseMakerBundle:CourseMaker:infos_coureurs.html.twig');
-        }
-        else
-        {
-            return $this->redirect($this->generateUrl('accueil'));
-        }
 
-    }
 }

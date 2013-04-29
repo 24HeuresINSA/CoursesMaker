@@ -53,7 +53,7 @@
     <br/>
     {% if is_granted('ROLE_ADMIN') %}
         {% if not equipe.getValide() %}<p><a class="btn" href="{{ path('admin_edit', { 'id': equipe.id }) }}">Editer l'équipe &raquo;</a></p>{% endif %}
-        {% if validable or equipe.getValide() %}<p><a class="btn" href="{{ path('admin_team_valid', { 'id': equipe.getId(), 'status': equipe.getValide() }) }}">{% if not equipe.getValide() %}Valider l'équipe{% else %}Invalider l'équipe{% endif %} &raquo;</a></p>{% endif %}
+        {% if validable or equipe.getValide() %}<p><a class="btn" href="{{ path('admin_team_valid', { 'id': equipe.getId(), 'status': equipe.getValide() }) }}" onclick="return(confirm('Voulez-vous vraiment valider/invalider cette équipe?'));" >{% if not equipe.getValide() %}Valider l'équipe{% else %}Invalider l'équipe{% endif %} &raquo;</a></p>{% endif %}
     {% endif %}
     <br/>
     <table class="bordered" id="tableJ">
@@ -104,7 +104,7 @@
                         </td>
                     {% else %}
                         <td><a class="btn btn-success"
-                           href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPapiersOk(), 'objet': 'certificat'}) }}">Valider certificat</a>
+                           href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPapiersOk(), 'objet': 'certificat'}) }}" >Valider certificat</a>
                         </td>
                     {% endif %}
                     {% if joueurs.getPaiementOk() %}
