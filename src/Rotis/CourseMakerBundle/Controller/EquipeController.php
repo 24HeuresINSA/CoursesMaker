@@ -459,12 +459,13 @@ class EquipeController extends Controller
 
     public function infos_coureursAction($id)
     {
-        $equipe = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('RotisCourseMakerBundle:Equipe')->find($id);
-        $course = $equipe->getCourse();
         if ((true === $this->get('security.context')->isGranted('ROLE_USER')) and (false === $this->get('security.context')->isGranted('ROLE_ADMIN') ))
         {
+            $equipe = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('RotisCourseMakerBundle:Equipe')->find($id);
+            $course = $equipe->getCourse();
+
             return $this->render('RotisCourseMakerBundle:Equipe:infos_coureurs.html.twig', array('nom'=> $course->getNom(),'debut' => $course->getDatetimeDebut(), 'fin' => $course->getDatetimeFin()));
         }
         else
