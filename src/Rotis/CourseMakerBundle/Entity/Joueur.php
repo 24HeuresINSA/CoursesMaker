@@ -43,8 +43,8 @@ class Joueur
      * @Assert\MaxLength(10)
      * @Assert\NotBlank(message="Veuillez renseigner un numéro de portable valide.")
      * @Assert\Regex(
-     * pattern="/^0[67][0-9]{8}$/",
-     * message="Veuillez renseigner un numéro de portable valide."
+     * pattern="/^0[467][0-9]{8}$/",
+     * message="Veuillez renseigner un numéro de téléphone valide."
      * )
      */
     private $telephone;

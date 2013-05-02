@@ -23,8 +23,10 @@ class CourseController extends Controller
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Course')
             ->find($idcourse);
-
+        $em = $this->getDoctrine()->getEntityManager();
         $course->setInscriptionsOuvertes(!$status);
+        $em->merge($course);
+        $em->flush();
         return $this->render('RotisCourseMakerBundle:Course:edit_course.html.twig',array('course' => $course));
     }
 }
