@@ -6,9 +6,10 @@
 {% endblock %}
 {% block content %}
 
-    <form class="form-search">
-        <input type="text" id="searchInput" class="input-medium search-query">
-        <button id="searchBtn" type="submit" class="btn">Rechercher</button>
+    <form action="{{ path('search') }}" method="post" {{ form_enctype(form) }} class="well">
+        {{ form_widget(form) }}
+        <br />
+        <input type="submit" class="btn"/>
     </form>
 
     <ul>

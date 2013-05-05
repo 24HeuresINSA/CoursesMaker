@@ -2,7 +2,10 @@
 
 namespace Rotis\CourseMakerBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\Tests\Common\Annotations\Null;
+use Symfony\Component\Validator\Constraints\Collection;
 
 /**
  * JoueurRepository
@@ -12,4 +15,26 @@ use Doctrine\ORM\EntityRepository;
  */
 class JoueurRepository extends EntityRepository
 {
+    public function findENameJLike($mot)
+    {
+        $mot["mot"] = "%".$mot["mot"]."%";
+        $qb = $this
+            ->createQueryBuilder('j');
+            $qb->where('j.nom LIKE :mot' )
+                ->setParameter('mot', array($mot));//'%'.$mot.'%'
+
+        $query = $qb->getQuery();
+        $joueurs = $query->getResult();
+        $listeEquipes = new ArrayCollection();
+        foreach($joueurs as $joueur)
+        {
+           $Equipe = $joueur->getEquipe();
+           if(!($listeEquipes->contains($Equipe)))
+            {
+                $listeEquipes->add($Equipe);
+            }
+        }
+
+        return $listeEquipes;
+    }
 }

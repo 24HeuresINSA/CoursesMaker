@@ -80,8 +80,9 @@ class EquipeRepository extends EntityRepository implements UserProviderInterface
     public function findLike($mot)
     {
         $qb = $this
-            ->createQueryBuilder('e')
-            ->where('e.username LIKE :mot')
+            ->createQueryBuilder('e');
+
+        $qb->where($qb->expr()->like('e.username', ':mot'))
             ->orderBy('e.username', 'ASC')
             ->setParameter('mot', '%'.$mot.'%');
 
@@ -89,5 +90,4 @@ class EquipeRepository extends EntityRepository implements UserProviderInterface
         $equipes = $query->getResult();
         return $equipes;
     }
-
 }

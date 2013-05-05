@@ -226,11 +226,12 @@ class EquipeController extends Controller
     public function listeAction($name)
     {
         if ($name === "equipe") {
+            $form = $this->createForm(new RechercheType());
             $repository = $this->getDoctrine()
                 ->getManager()
                 ->getRepository('RotisCourseMakerBundle:Equipe');
-            $form = $this->createForm(new RechercheType());
             $listeEquipes = $repository->findAll();
+
             return $this->render('RotisCourseMakerBundle:Equipe:control_equipe.html.twig', array('name' => $name, 'equipes' => $listeEquipes, 'form' => $form->createView()));
         } elseif ($name === "course") {
 
@@ -243,6 +244,32 @@ class EquipeController extends Controller
             return $this->render('RotisCourseMakerBundle:Course:control_course.html.twig', array('name' => $name, 'courses' => $listeCourses));
 
         }
+    }
+
+    public function searchAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $form = $this->createForm(new RechercheType());
+        $repojoueurs = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Joueur');
+        $listeEquipes = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Equipe')->findAll();
+
+        if ($this->getRequest()->getMethod() == 'POST') {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+                $mot = $form->getData();
+
+                if (0 != $mot)
+                {
+                    $listeEquipes = $repojoueurs->findENameJLike($mot);
+                }
+                return $this->render('RotisCourseMakerBundle:Equipe:control_equipe.html.twig', array('name' => "equipe", 'equipes' => $listeEquipes,'form' => $form->createView()));
+            }
+        }
+        return $this->render('RotisCourseMakerBundle:Equipe:control_equipe.html.twig', array('name' => "equipe", 'equipes' => $listeEquipes, 'form' => $form->createView()));
     }
 
     public function listeParCourseAction($id)
