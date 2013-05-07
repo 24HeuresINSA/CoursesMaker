@@ -23,7 +23,14 @@
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "twitter/bootstrap": "v2.2.3",
         "leafo/lessphp": "dev-master",
-        "jquery/jquery": "1.9.1"
+        "jquery/jquery": "1.9.1",
+        "sonata-project/cache-bundle": "2.1.*",
+        "sonata-project/block-bundle": "2.1.*",
+        "sonata-project/jquery-bundle": "1.8.*",
+        "knplabs/knp-menu-bundle": "1.1.*",
+        "sonata-project/exporter": "1.2.*",
+        "sonata-project/admin-bundle": "2.1.*",
+        "sonata-project/doctrine-orm-admin-bundle": "2.1.*@dev"
     },
     "require-dev": {
         "atoum/atoum": "dev-master",

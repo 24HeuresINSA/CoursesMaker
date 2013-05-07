@@ -65,3 +65,11 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+# SonataBundles
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+        sonata.block.service.text:
+        sonata.block.service.rss:
