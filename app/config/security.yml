@@ -41,7 +41,7 @@ security:
         
     access_control:
         - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - {path : ^/contact, role : IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path : ^/contact, role : IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/logout, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login_check, role: IS_AUTHENTICATED_ANONYMOUSLY }

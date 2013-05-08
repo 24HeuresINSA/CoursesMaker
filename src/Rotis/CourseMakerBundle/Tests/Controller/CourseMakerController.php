@@ -16,47 +16,44 @@ class CourseMakerController extends ControllerTest
     {
         $this
             ->request()
-                ->GET('/')
-                ->hasStatus(200)
-                ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
-                ->crawler
-                    ->hasElement('.hero-unit') # main title, "hero" block
-                    ->end()
-                    ->hasElement('a')
-                        ->withContent('Inscription')
-                    ->end()
-                    ->hasElement('a')
-                        ->withContent('Connexion')
-                    ->end()
-                    ->hasElement('a')
-                        ->withContent('Contact')
-                    ->end()
-        ;
+            ->GET('/')
+            ->hasStatus(200)
+            ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+            ->crawler
+            ->hasElement('.hero-unit') # main title, "hero" block
+            ->end()
+            ->hasElement('a')
+            ->withContent('Inscription')
+            ->end()
+            ->hasElement('a')
+            ->withContent('Connexion')
+            ->end()
+            ->hasElement('a')
+            ->withContent('Contact')
+            ->end();
     }
 
     public function test404()
     {
         $this
             ->request()
-                ->GET('/bloorp')
-                ->hasStatus(404)
-        ;
+            ->GET('/bloorp')
+            ->hasStatus(404);
     }
 
     public function testContact()
     {
         $this
             ->request()
-                ->GET('/contact')
-                ->hasStatus(200)
-                ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
-                ->crawler
-                    ->hasElement('.hero-unit') # main title, "hero" block
-                    ->end()
-                    ->hasElement('a')
-                        ->withContent('Accueil')
-                    ->end()
-        ;
+            ->GET('/contact')
+            ->hasStatus(200)
+            ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+            ->crawler
+            ->hasElement('.hero-unit') # main title, "hero" block
+            ->end()
+            ->hasElement('a')
+            ->withContent('Accueil')
+            ->end();
     }
 
     // temporary page, empty at the moment

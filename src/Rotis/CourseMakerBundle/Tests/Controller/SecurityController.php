@@ -36,7 +36,7 @@ class SecurityController extends ControllerTest
     {
         $this
             ->request()
-                ->GET('/login') // Symfony2 prevent login forms to be send from other pages
+                ->GET('/login') // Symfony2 prevents login forms to be sent from other pages
                     ->hasStatus(200)
                     ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
                 ->POST('/login_check', array('_username' => 'admin', '_password' => 'admin', '_target_path' => '/'))
@@ -101,6 +101,13 @@ class SecurityController extends ControllerTest
     {
         $this
             ->request()
+                ->GET('/admin')
+                    ->hasStatus(302)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('a')
+                            ->withContent('http://localhost/login') // we are being redirected to login page
+                        ->end()
                 ->GET('/admin/equipe')
                     ->hasStatus(302)
                     ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
@@ -115,6 +122,91 @@ class SecurityController extends ControllerTest
                         ->hasElement('a')
                             ->withContent('http://localhost/login') // we are being redirected to login page
                         ->end()
+                ->GET('/admin/course/1')
+                    ->hasStatus(302)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('a')
+                            ->withContent('http://localhost/login') // we are being redirected to login page
+                        ->end()
+                ->GET('/admin/1/course')
+                    ->hasStatus(302)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('a')
+                            ->withContent('http://localhost/login') // we are being redirected to login page
+                        ->end()
+                ->GET('/admin/editcourse/1/0')
+                    ->hasStatus(302)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('a')
+                            ->withContent('http://localhost/login') // we are being redirected to login page
+                        ->end()
+                ->GET('/admin/edit/1')
+                    ->hasStatus(302)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('a')
+                            ->withContent('http://localhost/login') // we are being redirected to login page
+                        ->end()
+                ->GET('/admin/update/2')
+                    ->hasStatus(302)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('a')
+                            ->withContent('http://localhost/login') // we are being redirected to login page
+                        ->end()
+                ->GET('/admin/27/certificat/1')
+                    ->hasStatus(302)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('a')
+                            ->withContent('http://localhost/login') // we are being redirected to login page
+                        ->end()
+                ->GET('/admin/27/paiement/1')
+                    ->hasStatus(302)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('a')
+                            ->withContent('http://localhost/login') // we are being redirected to login page
+                        ->end()
+                ->GET('/admin/validate/1/0')
+                    ->hasStatus(302)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('a')
+                            ->withContent('http://localhost/login') // we are being redirected to login page
+                        ->end()
+                ->GET('/edit/1')
+                    ->hasStatus(302)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('a')
+                            ->withContent('http://localhost/login') // we are being redirected to login page
+                        ->end()
+                ->GET('/infos/1')
+                    ->hasStatus(302)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('a')
+                            ->withContent('http://localhost/login') // we are being redirected to login page
+                        ->end()
+                ->GET('/equipe/1')
+                    ->hasStatus(302)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('a')
+                            ->withContent('http://localhost/login') // we are being redirected to login page
+                        ->end()
+                ->GET('/equipe/1/3')
+                    ->hasStatus(302)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('a')
+                            ->withContent('http://localhost/login') // we are being redirected to login page
+                        ->end()
+
         ;
     }
 }
