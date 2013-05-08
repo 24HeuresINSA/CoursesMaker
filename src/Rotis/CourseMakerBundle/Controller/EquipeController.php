@@ -231,8 +231,10 @@ class EquipeController extends Controller
                 ->getManager()
                 ->getRepository('RotisCourseMakerBundle:Equipe');
             $listeEquipes = $repository->findAll();
+            $totalEquipes = count($listeEquipes);
+            $equipesValides = $repository->findEquipesValides();
 
-            return $this->render('RotisCourseMakerBundle:Equipe:control_equipe.html.twig', array('name' => $name, 'equipes' => $listeEquipes, 'form' => $form->createView()));
+            return $this->render('RotisCourseMakerBundle:Equipe:control_equipe.html.twig', array('nbEquipesValides' => $equipesValides, 'nbTotalEquipes' => $totalEquipes, 'name' => $name, 'equipes' => $listeEquipes, 'form' => $form->createView()));
         } elseif ($name === "course") {
 
             $repository = $this->getDoctrine()
@@ -241,6 +243,7 @@ class EquipeController extends Controller
 
 
             $listeCourses = $repository->findAll();
+
             return $this->render('RotisCourseMakerBundle:Course:control_course.html.twig', array('name' => $name, 'courses' => $listeCourses));
 
         }

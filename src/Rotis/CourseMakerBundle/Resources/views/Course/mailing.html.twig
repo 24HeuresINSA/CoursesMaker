@@ -1,0 +1,25 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+
+{% block title %}CoursesMaker - Génération de mailing{% endblock %}
+{% block div %}
+    <h1>Mailings classées</h1>
+{% endblock %}
+{% block content %}
+
+
+    <h3>Mailing de tous les joueurs</h3>
+    {% for joueur in tousJoueurs %}
+        {{ joueur.getEmail() }},
+    {% endfor %}
+
+    <h3>Mailing par course</h3>
+    {% for course in listeCourses %}
+        <h5>{{ course.getNom() }}</h5>
+        {% for equipe in course.getEquipes() %}
+            {% for joueur in equipe.getJoueurs() %}
+                {{ joueur.getEmail()  }},
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+
+{% endblock %}

@@ -11,10 +11,29 @@
 
     </form>
     <ul>
+
         {% for course in courses %}
             <li><a class="btn" href="{{ path('admin_course', {'idcourse': course.getId()}) }}">{{ course.nom }}</a>
                 <a class="btn" href="{{ path('admin_par_course', { 'id': course.getId() }) }} ">Equipes de {{ course.nom }}</a>
+                {% set nbval = 0 %}
+                {% set nbcoureurs= 0 %}
+                <p class="aligne"><strong>Equipes valides: {% for equipe in course.getEquipes() %} {% if equipe.getValide() %}{% set nbval = nbval+1 %}{% endif %}{% set nbcoureurs = nbcoureurs+equipe.getJoueurs().count %}{% endfor %} {% if nbval < course.getEquipes().count %}<em id="ko">{{ nbval }}/{{ course.getEquipes().count }}</em>{% else %}<em id="ok">{{ nbval }}/{{ course.getEquipes().count }}</em>{% endif %}</strong></p>
+                <p class="aligne">&nbsp;&nbsp;&nbsp;<strong>{{ nbcoureurs }}</strong> Coureurs inscrits</p>
             </li>
         {% endfor %}
     </ul>
+
+<style>
+    .aligne{
+        display: inline;
+    }
+    em#ko{
+        font-style: normal;
+        color: #ff0000;
+    }
+    em#ok{
+        font-style: normal;
+        color: green;
+    }
+</style>
 {% endblock %}

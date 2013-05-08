@@ -4,6 +4,9 @@ login:
 admin_home:
     pattern: /admin
     defaults: { _controller: RotisCourseMakerBundle:CourseMaker:admin }
+admin_mailing:
+    pattern: /admin/generate/mailing
+    defaults: { _controller: RotisCourseMakerBundle:Course:mailing }
 admin_control:
     pattern: /admin/{name}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:liste }

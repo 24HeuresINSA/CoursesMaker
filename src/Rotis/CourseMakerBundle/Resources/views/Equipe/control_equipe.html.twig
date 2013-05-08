@@ -6,6 +6,9 @@
 {% endblock %}
 {% block content %}
 
+    Nombre total d'équipes: {{ nbTotalEquipes }} <br />
+    Nombre d'équipes valides: {{ nbEquipesValides }}
+
     <form action="{{ path('search') }}" method="post" {{ form_enctype(form) }} class="well">
         {{ form_widget(form) }}
         <br />

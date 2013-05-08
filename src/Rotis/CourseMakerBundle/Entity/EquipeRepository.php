@@ -90,4 +90,14 @@ class EquipeRepository extends EntityRepository implements UserProviderInterface
         $equipes = $query->getResult();
         return $equipes;
     }
+
+    public function findEquipesValides()
+    {
+        $qb = $this
+            ->createQueryBuilder('e');
+            $qb->select('count(e.id)')
+                ->where('e.valide = true');
+        $count = $qb->getQuery()->getSingleScalarResult();
+        return $count;
+    }
 }
