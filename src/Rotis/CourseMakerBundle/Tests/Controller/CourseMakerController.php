@@ -41,19 +41,47 @@ class CourseMakerController extends ControllerTest
             ->hasStatus(404);
     }
 
-    public function testContact()
+    public function testStaticPages()
     {
         $this
             ->request()
-            ->GET('/contact')
-            ->hasStatus(200)
-            ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
-            ->crawler
-            ->hasElement('.hero-unit') # main title, "hero" block
-            ->end()
-            ->hasElement('a')
-            ->withContent('Accueil')
-            ->end();
+                ->GET('/contact')
+                    ->hasStatus(200)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('.hero-unit') # main title, "hero" block
+                        ->end()
+                        ->hasElement('a')
+                            ->withContent('Accueil')
+                        ->end()
+                ->GET('/register')
+                    ->hasStatus(200)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('.hero-unit') # main title, "hero" block
+                        ->end()
+                        ->hasElement('a')
+                            ->withContent('Accueil')
+                        ->end()
+                ->GET('/login')
+                    ->hasStatus(200)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('.hero-unit') # main title, "hero" block
+                        ->end()
+                        ->hasElement('a')
+                            ->withContent('Accueil')
+                        ->end()
+                ->GET('/')
+                    ->hasStatus(200)
+                    ->hasHeader('Content-Type', 'text/html; charset=UTF-8')
+                    ->crawler
+                        ->hasElement('.hero-unit') # main title, "hero" block
+                        ->end()
+                        ->hasElement('a')
+                            ->withContent('Accueil')
+                        ->end()
+        ;
     }
 
     // temporary page, empty at the moment
@@ -76,3 +104,4 @@ class CourseMakerController extends ControllerTest
         ;
     }*/
 }
+    {# TODO: #}
