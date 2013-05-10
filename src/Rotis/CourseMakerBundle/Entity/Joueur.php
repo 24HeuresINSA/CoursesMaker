@@ -291,4 +291,12 @@ class Joueur
     {
         return $this->equipe;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->prenom . ' ' . $this->nom;
+    }
 }

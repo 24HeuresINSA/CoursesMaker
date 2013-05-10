@@ -14,32 +14,54 @@ class EquipeAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('username')
-            ->add('valide', null, array('required' => false))
-            ->add('isActive')
+            ->add('username', null, array(
+                    'label' => "Nom d'utilisateur"
+                ))
+            ->add('valide', null, array(
+                    'required' => false,
+                    'label' => 'Validé'
+                ))
+            ->add('isActive', null, array(
+                    'label' => 'Active'
+                ))
             ->add('joueurs', 'entity', array(
                     'class' => 'RotisCourseMakerBundle:Joueur',
-                    'expanded' => true,
-                    'multiple' => true,
-                    'property' => 'nom'
+                    'expanded' => false,
+                    'multiple' => true
                 ));
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('username')
-            ->add('valide')
-            ->add('isActive');
+            ->add('username', null, array(
+                    'label' => "Nom d'utilisateur"
+                ))
+            ->add('valide', null, array(
+                    'required' => false,
+                    'label' => 'Validé'
+                ))
+            ->add('isActive', null, array(
+                    'label' => 'Active'
+                ));
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('id')
-            ->add('username')
-            ->add('valide', null, array('required' => false))
-            ->add('isActive');;
+            ->addIdentifier('username', null, array(
+                    'label' => "Nom d'utilisateur"
+                ))
+            ->add('countJoueurs', null, array(
+                    'label' => 'Nombre de joueurs'
+                ))
+            ->add('valide', null, array(
+                    'required' => false,
+                    'label' => 'Validé'
+                ))
+            ->add('isActive', null, array(
+                    'label' => 'Active'
+                ));
     }
 
     /*
@@ -47,7 +69,8 @@ class EquipeAdmin extends Admin
      * http://sonata-project.org/bundles/admin/2-1/doc/reference/templates.html
      */
 
-    protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+    // TODO : create a beautiful side menu
+    /*protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
     {
         $admin = $this->isChild() ? $this->getParent() : $this;
 
@@ -55,7 +78,7 @@ class EquipeAdmin extends Admin
             'Equipe',
             array('uri' => $admin->generateUrl('list'))
         );
-    }
+    }*/
 
     /*
      * Remove Add form
