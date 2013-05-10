@@ -1,0 +1,50 @@
+generator: admingenerator.generator.doctrine
+params:
+  model: Rotis\CourseMakerBundle\Entity\Course
+  namespace_prefix: Admingenerator
+  bundle_name: CourseMakerBundle
+  fields:
+    nom:
+    inscriptions_ouvertes:
+    url:
+    description:
+    datetime_debut:
+    datetime_fin:
+
+builders:
+  list:
+    params:
+      scopes:
+        group_1:
+          All: ~
+          Published:
+            default: true
+            filters:
+              is_published: true
+          "Not Published":
+            filters:
+              is_published: false
+      title: Here is a beautifull title no  ???
+      display: ~
+      max_per_page: 10
+      actions:
+        new: ~
+      batch_actions:
+        delete: ~
+      object_actions:
+        edit: ~
+        delete:
+          confirm: Êtes-vous sûr de vouloir supprimer {{ Course.nom }} ?
+  new:
+    params:
+      title: 'Ajouter une course'
+      display: ~
+      actions:
+        list: ~
+  edit:
+    params:
+      title: 'Modifier une course'
+      display: ~
+      actions:
+        list: ~
+  delete: ~
