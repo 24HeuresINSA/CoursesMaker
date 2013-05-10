@@ -5,10 +5,26 @@
 {% endblock %}
 
 {% block sonata_admin_content %}
-    <div>
-        <textarea rows="20" style="width: 600px;">{{ emails }}</textarea>
-    </div>
+    {% if emails is defined %}
+        <h2>Adresses e-mail de tous les coureurs</h2>
+        <div>
+            <textarea rows="20" style="width: 600px;">{{ emails }}</textarea>
+        </div>
+    {% endif %}
+
+    {% if emailsByCourse is defined %}
+        <h2>Adresses e-mail par course et par catégorie</h2>
+
+        {% for nomCourse, course in emailsByCourse %}
+            <h3>{{ nomCourse }}</h3>
+            {% for nomCategorie, emails in course %}
+                <h4>{{ nomCategorie }}</h4>
+                <textarea rows="10" style="width: 600px;">{{ emails }}</textarea>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
     <p>
-        Il y a {{ count }} coureurs.
+        Il y a {{ count }} coureurs au total.
     </p>
 {% endblock %}

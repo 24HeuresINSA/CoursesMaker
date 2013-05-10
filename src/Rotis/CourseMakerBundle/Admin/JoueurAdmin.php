@@ -112,8 +112,12 @@ class JoueurAdmin extends Admin
         $actions = parent::getBatchActions();
 
         // we don't have to check user permissions (the page is admin only)
-        $actions['merge'] = array(
+        $actions['emails'] = array(
             'label'            => 'Voir les e-mails',
+            'ask_confirmation' => false
+        );
+        $actions['emailsByCourse'] = array(
+            'label'            => 'E-mails par course/cat.',
             'ask_confirmation' => false
         );
 

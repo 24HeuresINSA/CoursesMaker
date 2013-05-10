@@ -8,20 +8,52 @@ use Sonata\AdminBundle\Controller\CRUDController;
 
 class JoueurBackendController extends CRUDController
 {
-    public function batchActionMerge(ProxyQueryInterface $selectedModelQuery)
+    public function batchActionEmails(ProxyQueryInterface $selectedModelQuery)
     {
         $selectedModels = $selectedModelQuery->execute();
 
         // we do the work here
-        $emails = '';
+        $allEmails = '';
         $count = 0;
+
         foreach ($selectedModels as $selectedModel) {
-            $emails .= $selectedModel->getEmail() . "\n";
+            $allEmails .= $selectedModel->getEmail() . "\n";
+
             $count++;
         }
 
         return $this->render('RotisCourseMakerBundle:Backend:joueurs_email.html.twig', array(
-                'emails' => $emails,
+                'emails' => $allEmails,
+                'count' => $count
+            ));
+    }
+
+    public function batchActionEmailsByCourse(ProxyQueryInterface $selectedModelQuery)
+    {
+        $selectedModels = $selectedModelQuery->execute();
+
+        // we do the work here
+        $emailsByCourse = array();
+        $count = 0;
+
+        foreach ($selectedModels as $selectedModel) {
+            $equipe = $selectedModel->getEquipe();
+
+            if (! array_key_exists($equipe->getCourse()->getNom(), $emailsByCourse)) {
+                $emailsByCourse[$equipe->getCourse()->getNom()] = array();
+            }
+
+            if (! array_key_exists($equipe->getCategorie()->getNom(), $emailsByCourse[$equipe->getCourse()->getNom()])) {
+                $emailsByCourse[$equipe->getCourse()->getNom()][$equipe->getCategorie()->getNom()] = '';
+            }
+
+            $emailsByCourse[$equipe->getCourse()->getNom()][$equipe->getCategorie()->getNom()] .= $selectedModel->getEmail() . "\n";
+
+            $count++;
+        }
+
+        return $this->render('RotisCourseMakerBundle:Backend:joueurs_email.html.twig', array(
+                'emailsByCourse' => $emailsByCourse,
                 'count' => $count
             ));
     }
