@@ -12,7 +12,7 @@ class JoueurAdmin extends Admin
     {
         $formMapper
             ->add('nom', null, array(
-                    'label' => 'nom'
+                    'label' => 'Nom'
                 ))
             ->add('prenom', null, array(
                     'label' => 'Prénom'
@@ -49,7 +49,7 @@ class JoueurAdmin extends Admin
     {
         $datagridMapper
             ->add('nom', null, array(
-                    'label' => 'nom'
+                    'label' => 'Nom'
                 ))
             ->add('prenom', null, array(
                     'label' => 'Prénom'
@@ -86,7 +86,7 @@ class JoueurAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('nom', null, array(
-                    'label' => 'nom'
+                    'label' => 'Nom'
                 ))
             ->addIdentifier('prenom', null, array(
                     'label' => 'Prénom'
