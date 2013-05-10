@@ -112,7 +112,7 @@ class Categorie
     {
         return $this->equipes;
     }
-    
+
     /**
      * Constructor
      */
@@ -183,6 +183,6 @@ class Categorie
      */
     public function __toString()
     {
-        return $this->nom;
+        return $this->nom ?: '';
     }
 }

@@ -382,6 +382,6 @@ class Equipe implements AdvancedUserInterface, \Serializable
      */
     public function __toString()
     {
-        return $this->username;
+        return $this->username ?: '';
     }
 }
