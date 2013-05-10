@@ -70,8 +70,8 @@ class EquipeAdmin extends Admin
             ->add('categorie', null, array(
                     'label' => 'Catégorie'
                 ))
-            ->add('countJoueurs', null, array(
-                    'label' => 'Nombre de joueurs'
+            ->add('countCoureurs', null, array(
+                    'label' => 'Nombre de coureurs'
                 ))
             ->add('valide', null, array(
                     'required' => false,

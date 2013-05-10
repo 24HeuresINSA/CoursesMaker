@@ -372,7 +372,7 @@ class Equipe implements AdvancedUserInterface, \Serializable
      *
      * @return integer
      */
-    public function countJoueurs()
+    public function countCoureurs()
     {
         return $this->joueurs->count();
     }
