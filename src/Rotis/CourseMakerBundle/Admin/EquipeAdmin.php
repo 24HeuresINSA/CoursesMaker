@@ -17,6 +17,12 @@ class EquipeAdmin extends Admin
             ->add('username', null, array(
                     'label' => "Nom d'utilisateur"
                 ))
+            ->add('course', null, array(
+                    'label' => 'Course'
+                ))
+            ->add('categorie', null, array(
+                    'label' => 'Catégorie'
+                ))
             ->add('valide', null, array(
                     'required' => false,
                     'label' => 'Validé'
@@ -37,6 +43,12 @@ class EquipeAdmin extends Admin
             ->add('username', null, array(
                     'label' => "Nom d'utilisateur"
                 ))
+            ->add('course', null, array(
+                    'label' => 'Course'
+                ))
+            ->add('categorie', null, array(
+                    'label' => 'Catégorie'
+                ))
             ->add('valide', null, array(
                     'required' => false,
                     'label' => 'Validé'
@@ -51,6 +63,12 @@ class EquipeAdmin extends Admin
         $listMapper
             ->addIdentifier('username', null, array(
                     'label' => "Nom d'utilisateur"
+                ))
+            ->add('course', null, array(
+                    'label' => 'Course'
+                ))
+            ->add('categorie', null, array(
+                    'label' => 'Catégorie'
                 ))
             ->add('countJoueurs', null, array(
                     'label' => 'Nombre de joueurs'

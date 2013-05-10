@@ -326,4 +326,12 @@ class Course
     {
         return $this->type;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->nom;
+    }
 }

@@ -176,4 +176,12 @@ class Categorie
     {
         return $this->courses;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->nom;
+    }
 }
