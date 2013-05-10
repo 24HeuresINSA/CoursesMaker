@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: '@RotisCourseMakerBundle/Resources/config/admin.yml' } # SonataAdminBundle
 
 framework:
     #esi:             ~
@@ -14,6 +15,7 @@ framework:
     validation:      { enable_annotations: true }
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
+    translator: ~
     trust_proxy_headers: false # Deprecated in 2.0; will be removed in 2.3 (used trusted_proxies instead)
     trusted_proxies: ~
     session:
@@ -73,3 +75,4 @@ sonata_block:
             contexts:   [admin]
         sonata.block.service.text:
         sonata.block.service.rss:
+

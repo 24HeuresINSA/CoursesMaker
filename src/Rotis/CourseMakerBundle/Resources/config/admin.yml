@@ -1,0 +1,61 @@
+sonata_admin:
+    title:      CourseMaker - Administration
+    templates:
+        # default global templates
+        layout:  SonataAdminBundle::standard_layout.html.twig
+        ajax:    SonataAdminBundle::ajax_layout.html.twig
+
+        # default actions templates, should extend a global templates
+        list:    SonataAdminBundle:CRUD:list.html.twig
+        show:    SonataAdminBundle:CRUD:show.html.twig
+        edit:    SonataAdminBundle:CRUD:edit.html.twig
+
+    dashboard:
+        blocks:
+            # display a dashboard block
+            - { position: left, type: sonata.admin.block.admin_list }
+            - { position: right, type: sonata.block.service.text, settings: { content: "<h2>Bienvenue !</h2> <p>Ceci est un essai en utilisant le SonataAdminBundle, qui manque encore de finition !</p>"} }
+        # with groups we can define how is organized the admin_list block
+        groups:
+            courses:
+                label: 'Métier'
+                items: ~
+            params:
+                label: Configuration
+                items: ~
+
+
+    # set to true to persist filter settings per admin module in the user's session
+    persist_filters: true
+
+services:
+    sonata.admin.course:
+        class: Rotis\CourseMakerBundle\Admin\CourseAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: params, label: "Courses" }
+        arguments:
+            - ~
+            - Rotis\CourseMakerBundle\Entity\Course
+            - 'SonataAdminBundle:CRUD'
+        calls:
+            - [ setTranslationDomain, [RotisCourseMakerBundle]]
+    sonata.admin.equipe:
+        class: Rotis\CourseMakerBundle\Admin\EquipeAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: courses, label: "Équipe" }
+        arguments:
+            - ~
+            - Rotis\CourseMakerBundle\Entity\Equipe
+            - 'SonataAdminBundle:CRUD'
+        calls:
+            - [ setTranslationDomain, [RotisCourseMakerBundle]]
+    sonata.admin.joueur:
+        class: Rotis\CourseMakerBundle\Admin\JoueurAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: courses, label: "Joueur" }
+        arguments:
+            - ~
+            - Rotis\CourseMakerBundle\Entity\Joueur
+            - 'SonataAdminBundle:CRUD'
+        calls:
+            - [ setTranslationDomain, [RotisCourseMakerBundle]]
