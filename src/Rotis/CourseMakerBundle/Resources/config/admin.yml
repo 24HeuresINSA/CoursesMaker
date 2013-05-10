@@ -58,7 +58,7 @@ services:
         arguments:
             - ~
             - Rotis\CourseMakerBundle\Entity\Joueur
-            - 'SonataAdminBundle:CRUD'
+            - 'RotisCourseMakerBundle:JoueurBackend'
         calls:
             - [ setTranslationDomain, [RotisCourseMakerBundle]]
     sonata.admin.categorie:

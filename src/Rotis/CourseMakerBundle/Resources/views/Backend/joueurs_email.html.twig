@@ -1,0 +1,14 @@
+{% extends 'SonataAdminBundle::standard_layout.html.twig' %}
+
+{%block actions %}
+    <a href="{{ path('admin_rotis_coursemaker_joueur_list') }}" class="btn"><i class="icon-backward"></i> Retourner à la liste</a>
+{% endblock %}
+
+{% block sonata_admin_content %}
+    <div>
+        <textarea rows="20" style="width: 600px;">{{ emails }}</textarea>
+    </div>
+    <p>
+        Il y a {{ count }} coureurs.
+    </p>
+{% endblock %}

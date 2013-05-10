@@ -102,4 +102,21 @@ class JoueurAdmin extends Admin
                 ))
         ;
     }
+
+    /*
+     * Add a batch action to view all e-mails
+     */
+    public function getBatchActions()
+    {
+        // retrieve the default (currently only the delete action) actions
+        $actions = parent::getBatchActions();
+
+        // we don't have to check user permissions (the page is admin only)
+        $actions['merge'] = array(
+            'label'            => 'Voir les e-mails',
+            'ask_confirmation' => false
+        );
+
+        return $actions;
+    }
 }
