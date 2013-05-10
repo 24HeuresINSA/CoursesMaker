@@ -20,6 +20,9 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new Rotis\CourseMakerBundle\RotisCourseMakerBundle(),
+            new Admingenerator\GeneratorBundle\AdmingeneratorGeneratorBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle()
                 
  );
 

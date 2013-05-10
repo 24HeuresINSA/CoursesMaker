@@ -1,3 +1,8 @@
+RotisCourseMakerBundle_admin_rotis_course_maker_bundle_Admingenerator:
+    resource: "@RotisCourseMakerBundle/Controller/Admingenerator/"
+    type:     admingenerator
+    prefix:   /admin/rotis_course_maker_bundle/Admingenerator
+
 rotis_course_maker:
     resource: "@RotisCourseMakerBundle/Resources/config/routing.yml"
     prefix:   /

@@ -65,3 +65,11 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+# SymfonyAdminGenerator
+admingenerator_generator:
+    use_propel:           false
+    use_doctrine_orm:     true
+    use_doctrine_odm:     false
+knp_menu:
+    twig:
+        template: AdmingeneratorGeneratorBundle:KnpMenu:knp_menu_trans.html.twig

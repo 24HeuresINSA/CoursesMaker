@@ -23,7 +23,10 @@
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "twitter/bootstrap": "v2.2.3",
         "leafo/lessphp": "dev-master",
-        "jquery/jquery": "1.9.1"
+        "jquery/jquery": "1.9.1",
+        "cedriclombardot/admingenerator-generator-bundle": "2.1.*@dev",
+        "cedriclombardot/twig-generator": "@dev",
+        "white-october/pagerfanta-bundle": "dev-master"
     },
     "require-dev": {
         "atoum/atoum": "dev-master",
