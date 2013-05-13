@@ -64,10 +64,10 @@ class EquipeAdmin extends Admin
             ->addIdentifier('username', null, array(
                     'label' => "Nom d'utilisateur"
                 ))
-            ->add('course', null, array(
+            ->add('course.nom', null, array(
                     'label' => 'Course'
                 ))
-            ->add('categorie', null, array(
+            ->add('categorie.nom', null, array(
                     'label' => 'Catégorie'
                 ))
             ->add('countCoureurs', null, array(

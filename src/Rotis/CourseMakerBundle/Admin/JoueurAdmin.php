@@ -94,10 +94,10 @@ class JoueurAdmin extends Admin
             ->add('equipe', null, array(
                     'label' => 'Équipe'
                 ))
-            ->add('equipe.course', null, array(
+            ->add('equipe.course.nom', null, array(
                     'label' => 'Course'
                 ))
-            ->add('equipe.categorie', null, array(
+            ->add('equipe.categorie.nom', null, array(
                     'label' => 'Catégorie'
                 ))
         ;
