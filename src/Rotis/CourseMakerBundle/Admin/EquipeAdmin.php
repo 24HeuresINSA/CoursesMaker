@@ -121,4 +121,15 @@ class EquipeAdmin extends Admin
     {
         return array('username');
     }
+
+    /*
+     * We want to only to export in CSV
+     */
+    public function getExportFormats()
+    {
+        return array(
+            'csv', 'xls'
+        );
+    }
+
 }
