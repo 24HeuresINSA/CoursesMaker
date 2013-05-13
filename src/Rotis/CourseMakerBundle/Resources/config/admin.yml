@@ -14,7 +14,7 @@ sonata_admin:
                 settings:
                     content: >
                         <h2>Bienvenue dans l'administration !</h2>
-                        <p>Ici vous pouvez lire un commentaire intelligent sur ce que vous pouvez faire. Ou pas.</p>
+                        <p>Le contenu de ce block ne sera pas parsé, renu en texte brut</p>
 
         # with groups we can define how is organized the admin_list block
         groups:
