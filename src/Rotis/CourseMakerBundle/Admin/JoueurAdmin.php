@@ -8,6 +8,14 @@ use Sonata\AdminBundle\Form\FormMapper;
 
 class JoueurAdmin extends Admin
 {
+    /*
+     * (default) values for datagrid page
+     */
+    protected $datagridValues = array(
+        '_sort_order' => 'ASC',
+        '_sort_by' => 'nom'
+    );
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
