@@ -113,4 +113,12 @@ class EquipeAdmin extends Admin
     {
         $collection->remove('create');
     }
+
+    /*
+     * We want only some fields to be exported
+     */
+    public function getExportFields()
+    {
+        return array('username');
+    }
 }
