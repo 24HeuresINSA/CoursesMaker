@@ -14,7 +14,7 @@ sonata_admin:
                 settings:
                     content: >
                         <h2>Bienvenue dans l'administration !</h2>
-                        <p>Le contenu de ce block ne sera pas parsé, renu en texte brut</p>
+                        <p>Le contenu de ce block ne sera pas parsé, rendu en texte brut</p>
 
         # with groups we can define how is organized the admin_list block
         groups:
@@ -24,7 +24,6 @@ sonata_admin:
             params:
                 label: 'Configuration'
                 items: ~
-
 
     # set to true to persist filter settings per admin module in the user's session
     persist_filters: true
