@@ -153,4 +153,12 @@ class Edition
     {
         return $this->courses;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->numero ?: '';
+    }
 }

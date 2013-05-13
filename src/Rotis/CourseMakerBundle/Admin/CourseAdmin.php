@@ -21,7 +21,16 @@ class CourseAdmin extends Admin
                 'class' => 'RotisCourseMakerBundle:Categorie',
                 'property' => 'nom',
                 'multiple' => true
-            ));
+            ))
+            ->add('edition', 'entity', array(
+                    'class' => 'RotisCourseMakerBundle:Edition',
+                    'property' => 'numero'
+                ))
+            ->add('type', 'entity', array(
+                    'class' => 'RotisCourseMakerBundle:Type',
+                    'property' => 'nom'
+                ))
+        ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -29,17 +38,24 @@ class CourseAdmin extends Admin
         $datagridMapper
             ->add('nom')
             ->add('inscriptions_ouvertes')
-            ->add('datetime_debut')
-            ->add('datetime_fin');
+            ->add('edition')
+            ->add('type')
+        ;
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('id')
-            ->add('nom')
+            ->addIdentifier('nom')
+            ->add('edition.numero', null, array(
+                    'label' => 'Édition'
+                ))
             ->add('inscriptions_ouvertes', 'boolean')
-            ->add('datetime_debut', 'datetime')
-            ->add('datetime_fin');
+            ->add('datetime_debut', null, array(
+                    'label' => 'Date de début'
+                ))
+            ->add('datetime_fin', null, array(
+                    'label' => 'Date de fin'
+                ));
     }
 }

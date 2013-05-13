@@ -44,6 +44,26 @@ class Course
      */
     private $datetime_fin;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $categories;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $equipes;
+
+    /**
+     * @var \Rotis\CourseMakerBundle\Entity\Edition
+     */
+    private $edition;
+
+    /**
+     * @var \Rotis\CourseMakerBundle\Entity\Type
+     */
+    protected $type;
+
 
     /**
      * Get id
@@ -187,25 +207,6 @@ class Course
     {
         return $this->datetime_fin;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $categories;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $equipes;
-
-    /**
-     * @var \Rotis\CourseMakerBundle\Entity\Edition
-     */
-    private $edition;
-
-    /**
-     * @var \Rotis\CourseMakerBundle\Entity\Type
-     */
-    protected $type;
 
     /**
      * Constructor
