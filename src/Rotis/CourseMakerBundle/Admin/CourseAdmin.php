@@ -13,10 +13,12 @@ class CourseAdmin extends Admin
         $formMapper
             ->add('nom')
             ->add('inscriptions_ouvertes', null, array('required' => false))
-            ->add('url') //TODO : validate
-            ->add('description') //TODO: required, false
-            ->add('datetime_debut') //TODO : type date time ?
-            ->add('datetime_fin') //TODO : type datetime ?
+            ->add('url')
+            ->add('description', null, array(
+                    'required' => false
+                ))
+            ->add('datetime_debut')
+            ->add('datetime_fin')
             ->add('categories', 'entity', array(
                 'class' => 'RotisCourseMakerBundle:Categorie',
                 'property' => 'nom',
