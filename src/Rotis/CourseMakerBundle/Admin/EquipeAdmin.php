@@ -75,11 +75,19 @@ class EquipeAdmin extends Admin
                 ))
             ->add('valide', null, array(
                     'required' => false,
-                    'label' => 'Validé'
+                    'label' => 'Validé',
+                    'template' => 'RotisCourseMakerBundle:backend:list_boolean_color.html.twig'
                 ))
             ->add('isActive', null, array(
                     'label' => 'Active'
-                ));
+                ))
+            ->add('_action', 'actions', array(
+                    'actions' => array(
+                        'edit' => array(),
+                        'delete' => array()
+                    )
+                ))
+        ;
     }
 
     /*

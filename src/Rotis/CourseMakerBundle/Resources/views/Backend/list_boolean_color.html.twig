@@ -1,0 +1,17 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% spaceless %}
+        {% if value %}
+            <span class="label label-success">
+                <i class="icon-ok-circle icon-white"></i>&nbsp;
+                {%- trans from 'SonataAdminBundle' %}label_type_yes{% endtrans -%}
+            </span>
+        {% else %}
+            <span class="label label-important">
+                <i class="icon-ban-circle icon-white"></i>&nbsp;
+                {%- trans from 'SonataAdminBundle' %}label_type_no{% endtrans -%}
+            </span>
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}
