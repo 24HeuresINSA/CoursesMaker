@@ -29,6 +29,14 @@ sonata_admin:
     # set to true to persist filter settings per admin module in the user's session
     persist_filters: true
 
+# some more
+sonata_doctrine_orm_admin:
+    templates:
+        types:
+            list:
+                date: RotisCourseMakerBundle:backend:list_date.html.twig
+                datetime: RotisCourseMakerBundle:backend:list_datetime.html.twig
+
 # services define objects editable in the backend
 services:
     sonata.admin.course:
