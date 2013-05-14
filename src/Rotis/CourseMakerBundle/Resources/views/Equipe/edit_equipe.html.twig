@@ -52,7 +52,11 @@
 
     <br/>
     {% if is_granted('ROLE_ADMIN') %}
-        {% if not equipe.getValide() %}<p><a class="btn" href="{{ path('admin_edit', { 'id': equipe.id }) }}">Editer l'équipe &raquo;</a></p>{% endif %}
+        {% if not equipe.getValide() %}
+            <p><a class="btn" href="{{ path('admin_edit', { 'id': equipe.id }) }}">Editer l'équipe &raquo;</a></p>
+            <p><a class="btn btn-danger" href="{{ path('admin_erase', { 'id': equipe.id }) }}" onclick="return(confirm('Voulez-vous vraiment supprimer l\'équipe?'));">Supprimer l'équipe &raquo;</a></p>
+
+        {% endif %}
         {% if validable or equipe.getValide() %}<p><a class="btn" href="{{ path('admin_team_valid', { 'id': equipe.getId(), 'status': equipe.getValide() }) }}" onclick="return(confirm('Voulez-vous vraiment valider/invalider cette équipe?'));" >{% if not equipe.getValide() %}Valider l'équipe{% else %}Invalider l'équipe{% endif %} &raquo;</a></p>{% endif %}
     {% endif %}
     <br/>

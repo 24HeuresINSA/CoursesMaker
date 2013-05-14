@@ -128,6 +128,45 @@ class EquipeController extends Controller
         return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('validable' => $validable, 'tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
     }
 
+    public function eraseAction($id)
+    {
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Equipe');
+
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') || (NULL == ($repository->find($id))))
+        {
+            return $this->redirect($this->generateUrl('accueil'));
+        }
+        else
+        {
+            $form = $this->createForm(new RechercheType());
+
+            $em = $this->get('doctrine.orm.entity_manager');
+            $equipe = $repository->find($id);
+            if ($equipe->getValide())
+            {
+                return $this->redirect($this->generateUrl('accueil'));
+            }
+            foreach($equipe->getJoueurs() as $joueur)
+            {
+                $equipe->removeJoueur($joueur);
+                $em->remove($joueur);
+            }
+            $em->merge($equipe);
+            $em->remove($equipe);
+            $em->flush();
+            $listeEquipes = $repository->findAll();
+            $totalEquipes = count($listeEquipes);
+            $equipesValides = $repository->findEquipesValides();
+            $this->get('session')->setFlash(
+                'notice',
+                'Suppression de l\'équipe réalisée'
+            );
+            return $this->render('RotisCourseMakerBundle:Equipe:control_equipe.html.twig', array('nbEquipesValides' => $equipesValides, 'nbTotalEquipes' => $totalEquipes, 'name' => "equipe", 'equipes' => $listeEquipes, 'form' => $form->createView()));
+        }
+    }
+
     public function createAction()
     {
         $em = $this->getDoctrine()->getEntityManager();

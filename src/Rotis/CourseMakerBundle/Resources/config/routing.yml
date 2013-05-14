@@ -30,6 +30,11 @@ admin_edit:
     defaults: { _controller: RotisCourseMakerBundle:Equipe:editInfos }
     requirements:
         id: \d+
+admin_erase:
+    pattern: /admin/erase/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:erase }
+    requirements:
+        id: \d+
 admin_update:
     pattern: /admin/update/{id}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:update }
