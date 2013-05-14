@@ -43,19 +43,25 @@ class EquipeAdmin extends Admin
             ->add('username', null, array(
                     'label' => "Nom d'utilisateur"
                 ))
-            ->add('course', null, array(
-                    'label' => 'Course'
-                ))
-            ->add('categorie', null, array(
-                    'label' => 'Catégorie'
-                ))
-            ->add('valide', null, array(
-                    'required' => false,
-                    'label' => 'Validé'
-                ))
-            ->add('isActive', null, array(
-                    'label' => 'Active'
-                ));
+        ;
+
+        if ($this->isGranted('ROLE_ADMIN_2')) {
+            $datagridMapper
+                ->add('course', null, array(
+                        'label' => 'Course'
+                    ))
+                ->add('categorie', null, array(
+                        'label' => 'Catégorie'
+                    ))
+                ->add('valide', null, array(
+                        'required' => false,
+                        'label' => 'Validé'
+                    ))
+                ->add('isActive', null, array(
+                        'label' => 'Active'
+                    ))
+            ;
+        }
     }
 
     protected function configureListFields(ListMapper $listMapper)

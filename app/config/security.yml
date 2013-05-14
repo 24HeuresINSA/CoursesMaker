@@ -6,8 +6,15 @@ security:
 
 
     role_hierarchy:
-        ROLE_ADMIN:       [ ROLE_USER, ROLE_SONATA_ADMIN ]
+        ROLE_ADMIN:       [ ROLE_USER, ROLE_SONATA_ADMIN, ROLE_ADMIN_EQUIPE ]
         ROLE_SUPER_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
+        ROLE_ADMIN_2:     [ ROLE_ADMIN ]
+        ROLE_ADMIN_EQUIPE:
+            - ROLE_SONATA_ADMIN_EQUIPE_LIST
+            - ROLE_SONATA_ADMIN_EQUIPE_EDIT
+            - ROLE_SONATA_ADMIN_EQUIPE_CREATE
+            - ROLE_SONATA_ADMIN_EQUIPE_VIEW
+            # but we can't export or delete them
 
 
 
@@ -34,7 +41,8 @@ security:
                 providers: [in_memory, user_db]
         in_memory:
             memory:
-                users: 
+                users:
+                    admin2: { password: %admin_password%, roles: 'ROLE_ADMIN_2' }
                     admin: { password: %admin_password%, roles: 'ROLE_ADMIN' }
         user_db:
             entity: { class: Rotis\CourseMakerBundle\Entity\Equipe, property: username }

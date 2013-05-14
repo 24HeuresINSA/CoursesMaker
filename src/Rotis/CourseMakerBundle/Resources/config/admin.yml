@@ -3,6 +3,8 @@ sonata_admin:
     title:      CourseMaker - Administration
     templates:
         layout:  RotisCourseMakerBundle:Backend:layout.html.twig
+    security:
+        handler: sonata.admin.security.handler.role
 
     dashboard:
         blocks:

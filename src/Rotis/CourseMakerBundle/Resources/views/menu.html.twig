@@ -1,0 +1,48 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="{{ path('accueil') }}">CoursesMaker</a>
+
+
+            <div class="nav-collapse collapse">
+                <p class="navbar-text pull-right">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        Bonjour <a href="{{ path('sonata_admin_dashboard') }}"
+                                   class="navbar-link">{{ app.user.username }}</a>
+                        <a class="btn btn-small" href="{{ path('logout') }}">Déconnexion</a>
+                    {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
+                        Bonjour <a href="{{ path('account', { 'id': app.user.id }) }}"
+                                   class="navbar-link">{{ app.user.username }}</a>
+                        <a class="btn btn-small" href="{{ path('logout') }}">Déconnexion</a>
+                    {% else %}
+                        <a class="btn btn-small" href="{{ path('register') }}">Inscription</a>
+                        <a class="btn btn-small" href="{{ path('login') }}">Connexion</a>
+                    {% endif %}
+                </p>
+                <ul class="nav">
+                    <li><a href="{{ path('accueil') }}">Accueil</a></li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {% block before_admin_links %}
+                            <li><a href="{{ path('sonata_admin_dashboard') }}">Administration</a></li>
+                        {% endblock %}
+                        <li><a href="{{ path('infos_pratiques') }}">Infos Pratiques</a></li>
+                    {% elseif app.user.username is defined %}
+                        <li class="active"><a
+                                    href="{{ path('account', { 'id': app.user.id }) }}">Edition d'équipe</a>
+                        </li>
+                        <li><a
+                                    href="{{ path('infos_coureurs', { 'id': app.user.id}) }}">Informations</a>
+                        </li>
+                    {% endif %}
+                    <li><a href="{{ path('contact') }}">Contact</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
