@@ -1,0 +1,12 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+.notice{
+    color: red;
+}
+
+th label{
+    font-weight: bold;
+}

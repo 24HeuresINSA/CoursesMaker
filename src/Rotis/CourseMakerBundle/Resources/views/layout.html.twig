@@ -7,24 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Inscriptions aux courses des 24 Heures de l'INSA">
     <meta name="author" content="24Heures de l'INSA">
+    <!--Favicon -->
+    <link rel="shortcut icon" href="{{ asset('bundles/rotiscoursemaker/img/favicon.ico')}}">
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('../vendor/twitter/bootstrap/css/bootstrap.min.css') }}"/>
+    <!--Bootstrap 2.3.2 stored locally (couldn't find online repo) -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rotiscoursemaker/bootstrap/css/bootstrap.min.css') }}"/>
     <link rel="stylesheet" type="text/css"
-          href="{{ asset('../vendor/twitter/bootstrap/css/bootstrap-responsive.min.css') }}"/>
+          href="{{ asset('bundles/rotiscoursemaker/bootstrap/css/bootstrap-responsive.min.css') }}"/>
 
-    <script src="{{ asset('../vendor/jquery/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('../vendor/twitter/bootstrap/js/bootstrap.min.js') }}"></script>
+    <!-- Personnal css -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rotiscoursemaker/css/global.css') }}" />
 
-    <style type="text/css">
-        body {
-            padding-top: 60px;
-            padding-bottom: 40px;
-        }
-
-        .notice{
-            color: red;
-        }
-    </style>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="{{ asset('bundles/rotiscoursemaker/bootstrap/js/bootstrap.min.js') }}"></script>
 
     {% block stylesheets %}
 
@@ -46,34 +42,23 @@
                     </a>
                     <a class="brand" href="{{ path('accueil') }}">CoursesMaker</a>
 
-
-                    <div class="nav-collapse collapse">
-                        <p class="navbar-text pull-right">
-                            {% if is_granted('ROLE_ADMIN') %}
-                                Bonjour <a href="{{ path('admin_home') }}"
-                                           class="navbar-link">{{ app.user.username }}</a>
-                                <a class="btn btn-small" href="{{ path('logout') }}">Déconnexion</a>
-                            {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
-                                Bonjour <a href="{{ path('account', { 'id': app.user.id }) }}"
-                                           class="navbar-link">{{ app.user.username }}</a>
-                                <a class="btn btn-small" href="{{ path('logout') }}">Déconnexion</a>
-                            {% else %}
-                            <a class="btn btn-small" href="{{ path('register') }}">Inscription</a>
-                            <a class="btn btn-small" href="{{ path('login') }}">Connexion</a>
-                            {% endif %}
-                        </p>
+                    <div class="nav-collapse">
                         <ul class="nav">
-                            <li class="active"><a href="{{ path('accueil') }}">Accueil</a></li>
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <li><a href="{{ path('logout') }}">Déconnexion</a></li>
+                            {% else %}
+                                <li class="active"><a href="{{ path('accueil') }}">Accueil</a></li>
+                                <li><a href="{{ path('register') }}">Inscription</a></li>
+                                <li><a href="{{ path('login') }}">Connexion</a></li>
+                            {% endif %}
+
                             {% if is_granted('ROLE_ADMIN') %}
-                                <li class="active"><a href="{{ path('admin_home') }}">{{ app.user.username }}</a></li>
+                                <li>Bonjour <a href="{{ path('admin_home') }}" class="navbar-link">{{ app.user.username }}</a></li>
                                 <li><a href="{{ path('infos_pratiques') }}">Infos Pratiques</a></li>
-                            {% elseif app.user.username is defined %}
-                                <li class="active"><a
-                                            href="{{ path('account', { 'id': app.user.id }) }}">Edition d'équipe</a>
-                                </li>
-                                <li><a
-                                            href="{{ path('infos_coureurs', { 'id': app.user.id}) }}">Informations</a>
-                                </li>
+                            {% elseif is_granted('ROLE_USER') %}
+                                <li>Bonjour <a href="{{ path('account', { 'id': app.user.id }) }}" class="navbar-link">{{ app.user.username }}</a></li>
+                                <li class="active"><a href="{{ path('account', { 'id': app.user.id }) }}">Edition d'équipe</a></li>
+                                <li><a href="{{ path('infos_coureurs', { 'id': app.user.id}) }}">Informations</a></li>
                             {% endif %}
                             <li><a href="{{ path('contact') }}">Contact</a></li>
                         </ul>
