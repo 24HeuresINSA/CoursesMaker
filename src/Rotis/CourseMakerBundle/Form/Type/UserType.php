@@ -13,12 +13,18 @@ class UserType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('username','text',array('label' => 'Nom de l\'équipe'));
+        $builder->add('username','text',array(
+            'label' => 'Nom de l\'équipe *',
+            'required' => true,
+        ));
         $builder->add('password', 'repeated', array(
            'first_name'  => 'mot_de_passe',
            'second_name' => 'confirmation',
            'type'        => 'password',
            'invalid_message' => 'La confirmation du mot de passe a échoué',
+           'required' => true,
+            'first_options'  => array('label' => 'Mot de passe *'),
+            'second_options' => array('label' => 'Confirmation')
         ));
 
         $builder->add('course', 'entity', array(
@@ -28,14 +34,17 @@ class UserType extends AbstractType
                 return $er->createQueryBuilder('c')
                     ->where('c.inscriptions_ouvertes = true');
             },
-            'empty_value'=> 'Choisissez une course'
-        )
-        );
+            'empty_value'=> 'Choisissez une course',
+            'required' => true,
+            'label' => 'Choix de la course *'
+        ));
 
         $builder->add('categorie', 'entity', array(
             'class' => 'RotisCourseMakerBundle:Categorie',
             'property' => 'nom',
-            'empty_value' => 'Choisissez une catégorie'
+            'empty_value' => 'Choisissez d\'abord une catégorie',
+            'required' => true,
+            'label' => 'Choix de la catégorie *'
         ));
 
     }

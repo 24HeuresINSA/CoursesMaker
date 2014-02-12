@@ -9,9 +9,9 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('user', new UserType(),array('label' => 'Merci de renseigner le nom de ton equipe meme si tu es seul'));
+        $builder->add('user', new UserType(),array('label' => 'Création de l\'équipe (* = obligatoire)'));
 
-        $builder->add('joueur',new aJoueurType(),array('label' => 'Creation du chef d\'équipe'));
+        $builder->add('joueur',new aJoueurType(),array('label' => 'Creation du chef d\'équipe (* = obligatoire)'));
     }
 
     public function getName()

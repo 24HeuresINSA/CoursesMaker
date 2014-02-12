@@ -9,56 +9,46 @@
             <div class="offset1 span10">
 
                 <form action="{{ path('create') }}" method="post" {{ form_enctype(form) }} class="well">
-                    <table>
+                    <table class="table">
                         <thead>
-                        <tr>
-                            <th scope="col">{{ form_label(form.user) }}</th>
-                            <th scope="col">{{ form_label(form.joueur) }}</th>
-                        </tr>
+                            <tr>
+                                <th scope="col">{{ form_label(form.user) }}</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>{{ form_label(form.user.username) }}</td>
-                            <td>{{ form_label(form.joueur.nom) }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ form_widget(form.user.username) }}</td>
-                            <td>{{ form_widget(form.joueur.nom) }}</td>
-                        </tr>
-
-                        <tr>
-                            <td>{{ form_widget(form.user.password) }}</td>
-                            <td>{{ form_label(form.joueur.prenom) }}
-                                {{ form_widget(form.joueur.prenom) }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ form_label(form.user.categorie) }}</td>
-                            {# Pas de Tshirt cette annee #}{# <td>{{ form_label(form.joueur.taille_tshirt) }}</td> #}
-                        </tr>
-                        <tr>
-                            <td>{{ form_widget(form.user.categorie) }}</td>
-                           {# Pas de Tshirt cette annee #} {# <td>{{ form_widget(form.joueur.taille_tshirt) }}</td> #}
-                        </tr>
-                        <tr>
-                            <td>{{ form_label(form.user.course) }}</td>
-                            <td>{{ form_label(form.joueur.telephone) }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ form_widget(form.user.course) }}</td>
-                            <td>{{ form_widget(form.joueur.telephone) }}</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>{{ form_label(form.joueur.email) }}</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>{{ form_widget(form.joueur.email) }}</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>{{ form_label(form.joueur.etudiant) }}{{ form_widget(form.joueur.etudiant) }}</td>
-                        </tr>
+                            <tr>
+                                <td>{{ form_label(form.user.username) }}{{ form_widget(form.user.username) }}{{ form_errors(form.user.username) }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ form_label(form.user.categorie) }}{{ form_widget(form.user.categorie) }}{{ form_errors(form.user.categorie) }}</td>
+                                {# Pas de Tshirt cette annee #}{# <td>{{ form_label(form.joueur.taille_tshirt) }}</td> #}
+                               {# Pas de Tshirt cette annee #} {# <td>{{ form_widget(form.joueur.taille_tshirt) }}</td> #}
+                            </tr>
+                            <tr>
+                                <td>{{ form_label(form.user.course) }}{{ form_widget(form.user.course) }}{{ form_errors(form.user.course) }}</td>
+                            </tr>
+                        </tbody>
+                        <thead>
+                            <tr>
+                                <th scope="col">{{ form_label(form.joueur) }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ form_label(form.joueur.nom) }}{{ form_widget(form.joueur.nom)}}{{ form_errors(form.joueur.nom) }}</td>
+                                <td>{{ form_label(form.joueur.prenom) }}{{ form_widget(form.joueur.prenom) }}{{ form_errors(form.joueur.prenom) }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ form_widget(form.user.password) }}{{ form_errors(form.user.password) }}</td>
+                                <td>{{ form_label(form.joueur.etudiant) }}{{ form_widget(form.joueur.etudiant) }}{{ form_errors(form.joueur.etudiant) }}</td>
+                            </tr>
+                            <tr>
+                                <td>Nous avons l'habitude de communiquer des informations à propos des courses par mail. Merci de rentrer un numéro de téléphone si vous n'avez pas d'adresse mail.</td>
+                            </tr>
+                            <tr>
+                                <td>{{ form_label(form.joueur.email) }}{{ form_widget(form.joueur.email) }}{{ form_errors(form.joueur.email) }}</td>
+                                <td>{{ form_label(form.joueur.telephone) }}{{ form_widget(form.joueur.telephone) }}</td>
+                            </tr>
                         </tbody>
                     </table>
                     {{ form_rest(form) }}

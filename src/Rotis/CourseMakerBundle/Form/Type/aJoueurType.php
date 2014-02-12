@@ -14,8 +14,14 @@ class aJoueurType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom','text', array('label' => 'Nom'));
-        $builder->add('prenom','text',array('label' => 'Prénom'));
+        $builder->add('nom','text', array(
+            'label' => 'Nom *',
+            'required' => true,
+        ));
+        $builder->add('prenom','text',array(
+            'label' => 'Prénom *',
+            'required' => true,
+        ));
      /*   $builder->add('taille_tshirt', 'choice', array(
             'choices'   => array(
                 'S'   => 'S',
@@ -31,10 +37,12 @@ class aJoueurType extends AbstractType
         );*/
 
         $builder->add('telephone','text', array(
-            'label' => 'Téléphone'
+            'label' => 'Téléphone',
+            'required' => false,
         ));
         $builder->add('email','text', array(
-            'label' => 'Mail'
+            'label' => 'Mail',
+            'required' => false,
         ));
 
         $builder->add('etudiant','checkbox', array(

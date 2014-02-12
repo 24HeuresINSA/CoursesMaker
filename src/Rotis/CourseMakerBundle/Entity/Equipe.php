@@ -24,12 +24,17 @@ class Equipe implements AdvancedUserInterface, \Serializable
 
     /**
      * @var string
+     * @Assert\NotBlank(
+     *      message = "Cette case ne peut être laissée vide"
+     * )
      */
     private $password;
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *       message = "Cette case ne peut être laissée vide"
+     * )
      */
     private $username;
 

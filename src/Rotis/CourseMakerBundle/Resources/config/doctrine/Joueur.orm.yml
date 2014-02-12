@@ -20,7 +20,8 @@ Rotis\CourseMakerBundle\Entity\Joueur:
       unique: true
     telephone:
       type: string
-      length: '20'
+      length: 20
+      nullable: true
     etudiant:
       type: boolean
     taille_tshirt:

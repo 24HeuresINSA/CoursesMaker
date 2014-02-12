@@ -17,11 +17,17 @@ class Joueur
 
     /**
      * @var string
+     * @Assert\NotBlank(
+     *      message = "Cette case ne peut être laissée vide"
+     * )
      */
     private $nom;
 
     /**
      * @var string
+     * @Assert\NotBlank(
+     *      message = "Cette case ne peut être laissée vide"
+     * )
      */
     private $prenom;
 
@@ -41,7 +47,6 @@ class Joueur
      *     message="Votre numéro de tel doit faire {{ limit }} chiffres."
      * )
      * @Assert\MaxLength(10)
-     * @Assert\NotBlank(message="Veuillez renseigner un numéro de portable valide.")
      * @Assert\Regex(
      * pattern="/^0[467][0-9]{8}$/",
      * message="Veuillez renseigner un numéro de téléphone valide."
