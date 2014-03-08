@@ -16,7 +16,7 @@ Rotis\CourseMakerBundle\Entity\Categorie:
   manyToMany:
     courses:
       targetEntity: Course
-      inversedBy: categories 
+      mappedBy: categories 
   oneToMany:  
     equipes:
       targetEntity: Equipe

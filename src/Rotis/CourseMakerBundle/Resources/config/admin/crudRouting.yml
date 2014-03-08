@@ -1,0 +1,72 @@
+categorie_create:
+    pattern: /categorie/create
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:createCategorie }
+categorie_edit:
+    pattern: /categorie/edit/{id}
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:editCategorie }
+    requirements:
+        id: \d+
+categorie_remove:
+    pattern: /categorie/remove/{id}
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:removeCategorie }
+    requirements:
+        id: \d+
+
+course_create:
+    pattern: /course/create
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:createCourse }
+course_edit:
+    pattern: /course/edit/{id}
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:editCourse }
+    requirements:
+        id: \d+
+course_remove:
+    pattern: /course/remove/{id}
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:removeCourse }
+    requirements:
+        id: \d+
+
+edition_create:
+    pattern: /edition/create
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:createEdition }
+edition_edit:
+    pattern: /edition/edit/{id}
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:editEdition }
+    requirements:
+        id: \d+
+edition_remove:
+    pattern: /edition/remove/{id}
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:removeEdition }
+    requirements:
+        id: \d+
+
+tarif_create:
+    pattern: /tarif/create
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:createTarif }
+tarif_edit:
+    pattern: /tarif/edit/{id}
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:editTarif }
+    requirements:
+        id: \d+
+tarif_remove:
+    pattern: /tarif/remove/{id}
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:removeTarif }
+    requirements:
+        id: \d+
+
+type_create:
+    pattern: /type/create
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:createType }
+type_edit:
+    pattern: /type/edit/{id}
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:editType }
+    requirements:
+        id: \d+
+type_remove:
+    pattern: /type/remove/{id}
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:removeType }
+    requirements:
+        id: \d+
+dashboard:
+    pattern: /dashboard
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:dashboard }

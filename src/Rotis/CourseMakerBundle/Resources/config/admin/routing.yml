@@ -1,0 +1,56 @@
+rotis_course_maker_admin_crud:
+    resource: "@RotisCourseMakerBundle/Resources/config/admin/crudRouting.yml"
+    prefix:   /CRUD
+
+admin_home:
+    pattern: /
+    defaults: { _controller: RotisCourseMakerBundle:CourseMaker:admin }
+admin_mailing:
+    pattern: /generate/mailing
+    defaults: { _controller: RotisCourseMakerBundle:Course:mailing }
+admin_infos_pratiques:
+    pattern: /infos_pratiques
+    defaults: { _controller: RotisCourseMakerBundle:CourseMaker:infos }
+admin_control:
+    pattern: /{name}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:liste }
+admin_par_course:
+    pattern: /course/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:listeParCourse }
+    requirements:
+        id: \d+
+admin_course:
+    pattern: /{idcourse}/course
+    defaults: { _controller: RotisCourseMakerBundle:Course:edit }
+    requirements:
+        idcourse: \d+
+admin_switch_ouverture:
+    pattern: /editcourse/{idcourse}/{status}
+    defaults: { _controller: RotisCourseMakerBundle:Course:switchOuverture, status: 0 }
+    requirements:
+        idcourse: \d+
+admin_edit:
+    pattern: /edit/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:editInfos }
+    requirements:
+        id: \d+
+admin_erase:
+    pattern: /erase/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:erase }
+    requirements:
+        id: \d+
+admin_update:
+    pattern: /update/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:update }
+    requirements:
+        id: \d+
+admin_switch_validation:
+    pattern: /{id}/{objet}/{etat}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:switchVal, etat: 0 }
+    requirements:
+        id: \d+
+admin_team_valid:
+    pattern: /validate/{id}/{status}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:switchTeamValid, status: 0 }
+    requirements:
+        id: \d+

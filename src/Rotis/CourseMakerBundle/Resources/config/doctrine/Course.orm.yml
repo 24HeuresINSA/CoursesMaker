@@ -16,8 +16,10 @@ Rotis\CourseMakerBundle\Entity\Course:
     url:
       type: string
       length: 255
+      nullable: true
     description:
       type: text
+      nullable: true
     datetime_debut:
       type: datetime
     datetime_fin:
@@ -28,10 +30,11 @@ Rotis\CourseMakerBundle\Entity\Course:
       inversedBy: courses
     type:
       targetEntity: Type
+      inversedBy: courses
   manyToMany:
     categories:
       targetEntity: Categorie
-      mappedBy: courses
+      inversedBy: courses
   oneToMany:  
     equipes:
       targetEntity: Equipe

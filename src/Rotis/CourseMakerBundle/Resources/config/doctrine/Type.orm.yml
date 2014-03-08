@@ -11,4 +11,10 @@ Rotis\CourseMakerBundle\Entity\Type:
     nom:
       type: string
       length: 255
+
+  oneToMany:
+    courses:
+      targetEntity: Course
+      mappedBy: type
+
   lifecycleCallbacks: {  }
