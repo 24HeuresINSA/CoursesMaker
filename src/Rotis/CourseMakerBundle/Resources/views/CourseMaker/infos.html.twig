@@ -6,33 +6,31 @@
 
     <h1>Tutoriels de l'admin!</h1>
 
-    <h3 id="myAnim1" name="answer" onclick="showDiv()"><a>1. Ajouter des logins/mdp admins</a></h3>
-
+    <h3>1. Dashboard d'administration</h3>
+    <h4 id="myAnim1" name="answer" onclick="showDiv()"><a>1.1 Générer les données</a></h4>
     <div id="myDiv1" style="display:none;" class="answer_list">
         <p>
-        <ul>
-            <li>Ouvrir le fichier security.yml qui se trouve dans l'arborescence
-                /var/www/symfony/app/config/security.yml
-            </li>
-            <li>Dans ce fichier vous trouverez sous le paragraphe security providers in_memory memory users une entité
-                admin de base
-            </li>
-            <li>Imitez la syntaxe en sachant que admin est le username de l'entité, password son mot de passe, roles
-                définit ses droits
-            </li>
-            <li><strong>Il est recommandé de ne pas stocker le mot de passe dans security.yml. Je vous invite à employer
-                    une variable <br/>
-                    que vous déclarerez dans votre fichier parameters.yml</strong></li>
-            Exemple: %admin_password%
-            <li>Dans parameters.yml, déclarez votre mot de passe comme suit : admin_password: ...</li>
-            <li><strong>Utilisez un algorithme de hashage pour augmenter la sécurité</strong></li>
-            <li>Lancez la commande suivante dans un terminal: echo -n "yourpassword" | openssl sha1</li>
-            <li>Avec "seedy" on obtient 7ade87d7d871c86a19456a273bd790f070d94477 Plutôt sympas non?</li>
-            <li>Il ne vous reste plus qu'à insérer le mot de passe hashé dans votre fichier</li>
-        </ul>
+        Accédez à admin_home et cliquez sur "Accéder au dashboard d'admin". Voici les étapes à suivre :
+        <ol>
+            <li>Créer l'édition</li>
+            <li>Créer une catégorie de course</li>
+            <ul>
+                <li>Les catégories définissent la façon dont les équipes se positionnent dans une course</li>
+                <li>Par exemple solo, équipe, loisir, ...</li>
+            </ul>
+            <li>Créer un type de course</li>
+            <ul>
+                <li>Les types de courses définissent le moyen utilisé</li>
+                <li>Par exemple pied, velo, roller , ...</li>
+            </ul>
+            <li>Créer une course</li>
+            <li>Associer un tarif à une course et sa catégorie</li>
+        </ol>
         </p>
 
     </div>
+
+
 
 
     <h3>2. Controler les équipes</h3>
@@ -41,7 +39,7 @@
     <div id="myDiv2" style="display:none;" class="answer_list">
         <p>
         <ul>
-            <li>Ouvrez /admin en cliquant sur votre nom d'utilisateur dans le bandeau en haut</li>
+            <li>Ouvrez admin_home</li>
             <li>Cliquez sur le bouton afficher toutes les équipes</li>
             <li>Cliquez sur une équipe pour afficher ses informations ainsi qu'un formulaire d'édition</li>
             <li><strong>L'édition d'équipe n'est à utiliser qu'en dernier recours</strong></li>
@@ -113,4 +111,5 @@
         </ul>
         </p>
     </div>
+
 {% endblock %}

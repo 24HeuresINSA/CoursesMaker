@@ -26,8 +26,6 @@ class SecurityController extends Controller
                 )
             );
         } else {
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR); // TODO : maybe to remove?
-
             return $this->render('RotisCourseMakerBundle:Security:login.html.twig',
                 array(
                     //last username entered by the user

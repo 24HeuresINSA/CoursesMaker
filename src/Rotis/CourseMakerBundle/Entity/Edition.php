@@ -29,6 +29,10 @@ class Edition
      */
     private $date_2;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $courses;
 
     /**
      * Get id
@@ -108,10 +112,6 @@ class Edition
     {
         return $this->date_2;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $courses;
 
     /**
      * Constructor

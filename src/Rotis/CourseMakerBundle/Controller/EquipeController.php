@@ -264,7 +264,8 @@ class EquipeController extends Controller
 
     public function listeAction($name)
     {
-        if ($name === "equipe") {
+        if ($name === "equipe")
+        {
             $form = $this->createForm(new RechercheType());
             $repository = $this->getDoctrine()
                 ->getManager()
@@ -274,7 +275,9 @@ class EquipeController extends Controller
             $equipesValides = $repository->findEquipesValides();
 
             return $this->render('RotisCourseMakerBundle:Equipe:control_equipe.html.twig', array('nbEquipesValides' => $equipesValides, 'nbTotalEquipes' => $totalEquipes, 'name' => $name, 'equipes' => $listeEquipes, 'form' => $form->createView()));
-        } elseif ($name === "course") {
+        }
+        elseif ($name === "course")
+        {
 
             $repository = $this->getDoctrine()
                 ->getManager()
@@ -282,8 +285,24 @@ class EquipeController extends Controller
 
 
             $listeCourses = $repository->findAll();
-
-            return $this->render('RotisCourseMakerBundle:Course:control_course.html.twig', array('name' => $name, 'courses' => $listeCourses));
+            $totalValidTeams = 0;
+            $totalTeams = 0;
+            $totalCoureurs = 0;
+            foreach($listeCourses as $course)
+            {
+                foreach($course->getEquipes() as $equipe)
+                {
+                    if($equipe->getValide())
+                    {
+                        $totalValidTeams++;
+                    }
+                    $totalTeams++;
+                    $totalCoureurs+= $equipe->getJoueurs->count();
+                }
+            }
+            return $this->render('RotisCourseMakerBundle:Course:control_course.html.twig', array(
+                'name' => $name, 'courses' => $listeCourses, 'totalCoureurs' => $totalCoureurs, 'totalValidTeams' => $totalValidTeams, 'totalTeams' => $totalTeams,
+            ));
 
         }
     }

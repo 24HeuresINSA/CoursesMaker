@@ -29,10 +29,9 @@
 </head>
 
 <body>
-<div class="container">
     {% block body %}
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
             <div class="navbar-inner">
                 <div class="container-fluid">
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -44,23 +43,28 @@
 
                     <div class="nav-collapse">
                         <ul class="nav">
-                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            <li><a href="{{ path('logout') }}">Déconnexion</a></li>
-                            {% else %}
+                            {% if not(is_granted('IS_AUTHENTICATED_FULLY')) %}
                                 <li class="active"><a href="{{ path('accueil') }}">Accueil</a></li>
                                 <li><a href="{{ path('register') }}">Inscription</a></li>
-                                <li><a href="{{ path('login') }}">Connexion</a></li>
                             {% endif %}
 
                             {% if is_granted('ROLE_ADMIN') %}
-                                <li>Bonjour <a href="{{ path('admin_home') }}" class="navbar-link">{{ app.user.username }}</a></li>
-                                <li><a href="{{ path('infos_pratiques') }}">Infos Pratiques</a></li>
+                                <li><a href="{{ path('admin_home') }}" class="navbar-link">Admin Home</a></
+                                li>
+                                <li><a href="{{ path('admin_infos_pratiques') }}">Infos Pratiques</a></li>
                             {% elseif is_granted('ROLE_USER') %}
-                                <li>Bonjour <a href="{{ path('account', { 'id': app.user.id }) }}" class="navbar-link">{{ app.user.username }}</a></li>
+                                <li>Bonjour {{ app.user.username }}</a></li>
                                 <li class="active"><a href="{{ path('account', { 'id': app.user.id }) }}">Edition d'équipe</a></li>
                                 <li><a href="{{ path('infos_coureurs', { 'id': app.user.id}) }}">Informations</a></li>
                             {% endif %}
                             <li><a href="{{ path('contact') }}">Contact</a></li>
+                        </ul>
+                        <ul class="nav">
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <li><a href="{{ path('logout') }}">Déconnexion</a></li>
+                        {% else %}
+                            <li ><a href="{{ path('login') }}">Connexion</a></li>
+                        {% endif %}
                         </ul>
                     </div>
                     <!--/.nav-collapse -->
@@ -199,7 +203,6 @@
         <div id="DIV_2" style="display: none; padding-left: 20px;"><p>là on met le truc qui se déroule au clic</p></div>-->
 
     {% endblock %}
-</div>
 </body>
 </html>
 

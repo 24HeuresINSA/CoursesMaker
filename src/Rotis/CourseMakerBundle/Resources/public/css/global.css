@@ -1,7 +1,3 @@
-body {
-    padding-top: 60px;
-    padding-bottom: 40px;
-}
 
 .notice{
     color: red;
@@ -9,4 +5,8 @@ body {
 
 th label{
     font-weight: bold;
+}
+table caption{
+	font-weight: bold;
+	font-size: 1.5em;
 }

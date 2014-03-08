@@ -24,6 +24,16 @@ class Categorie
      */
     private $equipes;
 
+        /**
+     * @var integer
+     */
+    private $nb_max_coureurs;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $courses;
+
     /**
      * Get id
      *
@@ -56,16 +66,6 @@ class Categorie
     {
         return $this->nom;
     }
-    /**
-     * @var integer
-     */
-    private $nb_max_coureurs;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $courses;
-
 
     /**
      * Set nb_max_coureurs

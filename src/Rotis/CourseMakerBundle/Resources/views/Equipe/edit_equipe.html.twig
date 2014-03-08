@@ -14,7 +14,7 @@
     <h1>Informations sur l'Equipe {{ equipe.username }} </h1>
     {# TODO: ajouter des champs pour type paiement et numéro cheque #}
 
-    <table class="bordered" id="tableEq">
+    <table class="table bordered" id="tableEq">
         <thead>
         <tr>
             <th>Nom d'équipe</th>
@@ -60,7 +60,7 @@
         {% if validable or equipe.getValide() %}<p><a class="btn" href="{{ path('admin_team_valid', { 'id': equipe.getId(), 'status': equipe.getValide() }) }}" onclick="return(confirm('Voulez-vous vraiment valider/invalider cette équipe?'));" >{% if not equipe.getValide() %}Valider l'équipe{% else %}Invalider l'équipe{% endif %} &raquo;</a></p>{% endif %}
     {% endif %}
     <br/>
-    <table class="bordered" id="tableJ">
+    <table class="table bordered" id="tableJ">
         <thead>
         <tr>
             <th>Prenom</th>

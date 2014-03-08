@@ -3,9 +3,11 @@
 namespace Rotis\CourseMakerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Rotis\CourseMakerBundle\Validator\Constraints as RotisAssert;
 
 /**
  * Tarif
+ * @RotisAssert\MatchCourseCategorie
  */
 class Tarif
 {
@@ -23,6 +25,16 @@ class Tarif
      * @var boolean
      */
     private $etudiant;
+
+    /**
+     * @var \Rotis\CourseMakerBundle\Entity\Course
+     */
+    private $course;
+
+    /**
+     * @var \Rotis\CourseMakerBundle\Entity\Categorie
+     */
+    private $categorie;
 
 
     /**
@@ -80,16 +92,6 @@ class Tarif
     {
         return $this->etudiant;
     }
-    /**
-     * @var \Rotis\CourseMakerBundle\Entity\Course
-     */
-    private $course;
-
-    /**
-     * @var \Rotis\CourseMakerBundle\Entity\Categorie
-     */
-    private $categorie;
-
 
     /**
      * Set course

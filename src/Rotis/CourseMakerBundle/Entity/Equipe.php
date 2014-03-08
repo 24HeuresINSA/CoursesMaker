@@ -5,7 +5,9 @@ namespace Rotis\CourseMakerBundle\Entity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
+
 use Symfony\Component\Validator\Constraints as Assert;
+use Rotis\CourseMakerBundle\Validator\Constraints as RotisAssert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\ExecutionContext;
 
@@ -14,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Equipe
  * @UniqueEntity(fields={"username"}, message="Ce nom d'utilisateur est déjà pris (à la casse près)")
+ * @RotisAssert\MatchCourseCategorie
  */
 class Equipe implements AdvancedUserInterface, \Serializable
 {
