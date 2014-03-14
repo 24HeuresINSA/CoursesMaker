@@ -182,7 +182,6 @@ class CRUDController extends Controller
             {
                 $this->getDoctrine()->getManager()->persist($tarif);
                 $this->getDoctrine()->getManager()->flush();
-
                 return $this->redirect($this->generateUrl('dashboard'));
             }
         }

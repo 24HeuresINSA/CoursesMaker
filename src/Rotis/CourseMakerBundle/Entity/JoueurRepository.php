@@ -37,4 +37,24 @@ class JoueurRepository extends EntityRepository
 
         return $listeEquipes;
     }
+
+    public function findJWithoutMail()
+    {
+        $qb = $this->createQueryBuilder('j');
+        $qb->where('j.email is NULL')
+            ->andWhere('j.telephone is NOT NULL');
+        $query = $qb->getQuery();
+        $joueurs = $query->getResult();
+        return $joueurs;
+    }
+
+    public function fidJWithoutMailNorTel()
+    {
+        $qb = $this->createQueryBuilder('j');
+        $qb->where('j.email is NULL')
+            ->andWhere('j.telephone is NULL');
+        $query = $qb->getQuery();
+        $joueurs = $query->getResult();
+        return $joueurs;
+    }
 }

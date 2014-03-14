@@ -118,7 +118,6 @@ class Categorie
     public function __construct()
     {
         $this->equipes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -153,7 +152,7 @@ class Categorie
     public function addCourse(\Rotis\CourseMakerBundle\Entity\Course $courses)
     {
         $this->courses[] = $courses;
-    
+
         return $this;
     }
 

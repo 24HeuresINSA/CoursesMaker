@@ -1,0 +1,52 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+{% block title %}CoursesMaker - Relous{% endblock %}
+{% block div %}
+    <h1>Coureurs Relous</h1>
+{% endblock %}
+{% block content %}
+
+<div>
+	<table class="table table-bordered">
+	  <caption>Coureurs Sans mail</caption>
+	  <thead>
+	    <tr>
+	    	<th>Id</th>
+	      	<th>Nom</th>
+	      	<th>Prénom</th>
+	      	<th>Téléphone</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		{% for coureur in coureursNoMail %}
+		    <tr>
+				<td>{{ coureur.id }}</td>
+				<td>{{ coureur.nom }}</td>
+				<td>{{ coureur.prenom }}</td>
+				<td>{{ coureur.telephone }}</td>
+		    </tr>
+		{% endfor %}
+	  </tbody>
+	</table>
+</div>
+<div>
+	<table class="table table-bordered">
+	  <caption>Coureurs sans mail ni tel</caption>
+	  <thead>
+	    <tr>
+	    	<th>Id</th>
+	      	<th>Nom</th>
+	      	<th>Prénom</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		{% for coureur in coureursNada %}
+		    <tr>
+				<td>{{ coureur.id }}</td>
+				<td>{{ coureur.nom }}</td>
+				<td>{{ coureur.prenom }}</td>
+		    </tr>
+		{% endfor %}
+	  </tbody>
+	</table>
+</div>
+{% endblock %}

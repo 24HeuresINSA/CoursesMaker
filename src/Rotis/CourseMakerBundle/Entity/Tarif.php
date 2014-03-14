@@ -27,15 +27,14 @@ class Tarif
     private $etudiant;
 
     /**
-     * @var \Rotis\CourseMakerBundle\Entity\Course
-     */
-    private $course;
-
-    /**
      * @var \Rotis\CourseMakerBundle\Entity\Categorie
      */
     private $categorie;
 
+    /**
+     * @var \Rotis\CourseMakerBundle\Entity\Course
+     */
+    private $course;
 
     /**
      * Get id
@@ -94,29 +93,6 @@ class Tarif
     }
 
     /**
-     * Set course
-     *
-     * @param \Rotis\CourseMakerBundle\Entity\Course $course
-     * @return Tarif
-     */
-    public function setCourse(\Rotis\CourseMakerBundle\Entity\Course $course = null)
-    {
-        $this->course = $course;
-    
-        return $this;
-    }
-
-    /**
-     * Get course
-     *
-     * @return \Rotis\CourseMakerBundle\Entity\Course 
-     */
-    public function getCourse()
-    {
-        return $this->course;
-    }
-
-    /**
      * Set categorie
      *
      * @param \Rotis\CourseMakerBundle\Entity\Categorie $categorie
@@ -137,5 +113,28 @@ class Tarif
     public function getCategorie()
     {
         return $this->categorie;
+    }
+
+    /**
+     * Set type
+     *
+     * @param \Rotis\CourseMakerBundle\Entity\Course $course
+     * @return Tarif
+     */
+    public function setCourse(\Rotis\CourseMakerBundle\Entity\Course $course = null)
+    {
+        $this->course = $course;
+
+        return $this;
+    }
+
+    /**
+     * Get course
+     *
+     * @return \Rotis\CourseMakerBundle\Entity\Course 
+     */
+    public function getCourse()
+    {
+        return $this->course;
     }
 }

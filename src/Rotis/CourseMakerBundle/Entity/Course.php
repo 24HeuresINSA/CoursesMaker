@@ -44,10 +44,6 @@ class Course
      */
     private $datetime_fin;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $categories;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -63,6 +59,11 @@ class Course
      * @var \Rotis\CourseMakerBundle\Entity\Type
      */
     protected $type;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $categories;
 
     /**
      * Get id
@@ -212,41 +213,7 @@ class Course
      */
     public function __construct()
     {
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->equipes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add categories
-     *
-     * @param \Rotis\CourseMakerBundle\Entity\Categorie $categories
-     * @return Course
-     */
-    public function addCategorie(\Rotis\CourseMakerBundle\Entity\Categorie $categories)
-    {
-        $this->categories[] = $categories;
-
-        return $this;
-    }
-
-    /**
-     * Remove categories
-     *
-     * @param \Rotis\CourseMakerBundle\Entity\Categorie $categories
-     */
-    public function removeCategorie(\Rotis\CourseMakerBundle\Entity\Categorie $categories)
-    {
-        $this->categories->removeElement($categories);
-    }
-
-    /**
-     * Get categories
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCategories()
-    {
-        return $this->categories;
     }
 
     /**
@@ -325,5 +292,38 @@ class Course
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Add categories
+     *
+     * @param \Rotis\CourseMakerBundle\Entity\Categorie $categories
+     * @return Course
+     */
+    public function addCategory(\Rotis\CourseMakerBundle\Entity\Categorie $categories)
+    {
+        $this->categories[] = $categories;
+
+        return $this;
+    }
+
+    /**
+     * Remove categories
+     *
+     * @param \Rotis\CourseMakerBundle\Entity\Categorie $categories
+     */
+    public function removeCategory(\Rotis\CourseMakerBundle\Entity\Categorie $categories)
+    {
+        $this->categories->removeElement($categories);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

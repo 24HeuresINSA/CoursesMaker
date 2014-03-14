@@ -1,0 +1,177 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+{% block title %}CoursesMaker - Dashboard{% endblock %}
+{% block div %}
+    <h1>Dashboard d'administration</h1>
+{% endblock %}
+{% block content %}
+
+<div>
+	<table class="table table-bordered">
+	  <caption>Editions</caption>
+	  <thead>
+	    <tr>
+	    	<th>Id</th>
+	      	<th>Numéro</th>
+	      	<th>Première Date</th>
+	      	<th>Seconde Date</th>
+	      	<th>Nombre de courses</th>
+	      	<th>Editer</th>
+	      	<th>Suppression</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		{% for edition in editions %}
+		    <tr>
+				<td>{{ edition.id }}</td>
+				<td>{{ edition.numero }}</td>
+				<td>{{ edition.date1 | date('j/n/Y') }}</td>
+				<td>{{ edition.date2 | date('j/n/Y') }}</td>
+				<td>{{ edition.courses | length }}</td>
+				<td><a href="{{ path('edition_edit',{ 'id' : edition.id}) }}"><i class="icon-edit"></i></a></td>
+				<td><a href="{{ path('edition_remove', { 'id' : edition.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
+		    </tr>
+		{% endfor %}
+		<tr>
+			<td><a href="{{ path('edition_create') }}"><i class="icon-plus"></i></a></td>
+		</tr>
+	  </tbody>
+	</table>
+</div>
+<div>
+	<table class="table table-bordered">
+	  <caption>Categories</caption>
+	  <thead>
+	    <tr>
+			<th>Id</th>
+			<th>Nom</th>
+			<th>Nombre max de coureurs</th>
+			<th>Nombre d'équipes</th>
+			<th>Nombre de courses</th>
+			<th>Editer</th>
+	      	<th>Suppression</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {% for categorie in categories %}
+		    <tr>
+				<td>{{ categorie.id }}</td>
+				<td>{{ categorie.nom }}</td>
+				<td>{{ categorie.nbmaxcoureurs }}</td>
+				<td>{{ categorie.equipes | length }}</td>
+				<td>{{ categorie.courses | length }}</td>
+				<td><a href="{{ path('categorie_edit',{ 'id' : categorie.id}) }}"><i class="icon-edit"></i></a></td>
+				<td><a href="{{ path('categorie_remove', { 'id' : categorie.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
+		    </tr>
+		{% endfor %}
+		<tr>
+			<td><a href="{{ path('categorie_create') }}"><i class="icon-plus"></i></a></td>
+		</tr>
+	  </tbody>
+	</table>
+</div>
+<div>
+	<table class="table table-bordered">
+	  <caption>Types</caption>
+	  <thead>
+	    <tr>
+	    	<th>Id</th>
+			<th>Nom</th>
+			<th>Nombre de courses</th>
+			<th>Editer</th>
+	      	<th>Suppression</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {% for type in types %}
+		    <tr>
+				<td>{{ type.id }}</td>
+				<td>{{ type.nom }}</td>
+				<td>{{ type.courses | length }}</td>
+				<td><a href="{{ path('type_edit',{ 'id' : type.id}) }}"><i class="icon-edit"></i></a></td>
+				<td><a href="{{ path('type_remove', { 'id' : type.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
+		    </tr>
+		{% endfor %}
+		<tr>
+			<td><a href="{{ path('type_create') }}"><i class="icon-plus"></i></a></td>
+		</tr>
+	  </tbody>
+	</table>
+</div>
+<div>
+	<table class="table table-bordered">
+	  <caption>Courses</caption>
+	  <thead>
+	    <tr>
+			<th>Id</th>
+			<th>Nom</th>
+			<th>Inscriptions ouvertes</th>
+			<th>Lien d'informations</th>
+			<th>Description</th>
+			<th>Début</th>
+			<th>Fin</th>
+			<th>Nombre de catégories</th>
+			<th>Nombre d'équipes</th>
+			<th>Numéro de l'édition</th>
+			<th>Type</th>
+			<th>Editer</th>
+	      	<th>Suppression</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+			{% for course in courses %}
+			    <tr>
+					<td>{{ course.id }}</td>
+					<td>{{ course.nom }}</td>
+					<td>{{ course.inscriptionsouvertes }}</td>
+					<td>{{ course.url }}</td>
+					<td>{{ course.description }}</td>
+					<td>{{ course.datetimedebut | date('j/n/Y G:i:s') }}</td>
+					<td>{{ course.datetimefin | date('j/n/Y G:i:s') }}</td>
+					<td>{{ course.categories | length }}</td>
+					<td>{{ course.equipes | length }}</td>
+					<td>{{ course.edition.numero }}</td>
+					<td>{{ course.type.nom }}</td>
+					<td><a href="{{ path('course_edit',{ 'id' : course.id}) }}"><i class="icon-edit"></i></a></td>
+				<td><a href="{{ path('course_remove', { 'id' : course.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
+			    </tr>
+			{% endfor %}
+			<tr>
+				<td><a href="{{ path('course_create') }}"><i class="icon-plus"></i></a></td>
+			</tr>
+	  </tbody>
+	</table>
+</div>
+<div>
+	<table class="table table-bordered">
+	  <caption>Tarifs</caption>
+	  <thead>
+	    <tr>
+			<th>Id</th>
+			<th>Prix</th>
+			<th>Etudiant/Pas étudiant</th>
+			<th>Course</th>
+			<th>Categorie</th>
+			<th>Editer</th>
+	      	<th>Suppression</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {% for tarif in tarifs %}
+		    <tr>
+				<td>{{ tarif.id }}</td>
+				<td>{{ tarif.prix }}</td>
+				<td>{% if tarif.etudiant %}Etudiant{% else %}Pas Etudiant{% endif %}</td>
+				<td>{{ tarif.course.nom }}</td>
+				<td>{{ tarif.categorie.nom }}</td>
+				<td><a href="{{ path('tarif_edit',{ 'id' : tarif.id}) }}"><i class="icon-edit"></i></a></td>
+				<td><a href="{{ path('tarif_remove', { 'id' : tarif.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
+		    </tr>
+		{% endfor %}
+		<tr>
+			<td><a href="{{ path('tarif_create') }}"><i class="icon-plus"></i></a></td>
+		</tr>
+	  </tbody>
+	</table>
+</div>
+
+{% endblock %}

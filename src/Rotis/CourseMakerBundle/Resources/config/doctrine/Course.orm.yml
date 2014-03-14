@@ -35,6 +35,14 @@ Rotis\CourseMakerBundle\Entity\Course:
     categories:
       targetEntity: Categorie
       inversedBy: courses
+      joinTable:
+        name: courses_categories
+        joinColumns:
+          course_id:
+            ReferencedColumnName: id
+        inverseJoinColumns:
+          categorie_id:
+            ReferencedColumnName: id
   oneToMany:  
     equipes:
       targetEntity: Equipe

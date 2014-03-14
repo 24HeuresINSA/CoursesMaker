@@ -53,7 +53,7 @@
                                 li>
                                 <li><a href="{{ path('admin_infos_pratiques') }}">Infos Pratiques</a></li>
                             {% elseif is_granted('ROLE_USER') %}
-                                <li>Bonjour {{ app.user.username }}</a></li>
+                                <li><a>Bonjour {{ app.user.username }}</a></li>
                                 <li class="active"><a href="{{ path('account', { 'id': app.user.id }) }}">Edition d'équipe</a></li>
                                 <li><a href="{{ path('infos_coureurs', { 'id': app.user.id}) }}">Informations</a></li>
                             {% endif %}
@@ -105,11 +105,13 @@
                 <p>Il y aura ici le contenu</p>
             {% endblock %}
             <hr>
-
+        </div>
             <footer>
-                <p>&copy; 24 Heures de l'INSA 2013</p>
+                <div>
+                    <p>&copy; 24 Heures de l'INSA 2013</p>
 
-                <p><strong>Plus c'est long, plus c'est bon!</strong></p>
+                    <p><strong>Plus c'est long, plus c'est bon!</strong></p>
+                </div>
             </footer>
 <style >
     .bordered th{
@@ -134,7 +136,7 @@
     }*/
 
 </style>
-        </div><!--/.fluid-container-->
+        
 
               <!-- Le javascript
       ================================================== -->

@@ -26,7 +26,6 @@ Rotis\CourseMakerBundle\Entity\Equipe:
     course:
       targetEntity: Course
       inversedBy: equipes
-      cascade: ["persist","merge"]
     categorie:
       targetEntity: Categorie
       inversedBy: equipes 

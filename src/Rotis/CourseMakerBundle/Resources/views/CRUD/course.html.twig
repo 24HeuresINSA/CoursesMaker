@@ -1,0 +1,62 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+
+{% block div %}CoursesMaker - CRUD Course{% endblock %}
+
+{% block content %}
+    <form method="post" {{ form_enctype(form) }} class="well">
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>{{ form_label(form.nom) }}</th>
+                    <td>{{ form_widget(form.nom) }}</td>
+                    <td>{{ form_errors(form.nom) }}</td>
+                </tr>
+                <tr>
+                    <th>{{ form_label(form.inscriptions_ouvertes) }}</th>
+                    <td>{{ form_widget(form.inscriptions_ouvertes) }}</td>
+                    <td>{{ form_errors(form.inscriptions_ouvertes) }}</td>
+                </tr>
+                <tr>
+                    <th>{{ form_label(form.url) }}</th>
+                    <td>{{ form_widget(form.url) }}</td>
+                    <td>{{ form_errors(form.url) }}</td>
+                </tr>
+                <tr>
+                    <th>{{ form_label(form.description) }}</th>
+                    <td>{{ form_widget(form.description) }}</td>
+                    <td>{{ form_errors(form.description) }}</td>
+                </tr>
+                <tr>
+                    <th>{{ form_label(form.datetime_debut) }}</th>
+                    <td>{{ form_widget(form.datetime_debut) }}</td>
+                    <td>{{ form_errors(form.datetime_debut) }}</td>
+                </tr>
+                <tr>
+                    <th>{{ form_label(form.datetime_fin) }}</th>
+                    <td>{{ form_widget(form.datetime_fin) }}</td>
+                    <td>{{ form_errors(form.datetime_fin) }}</td>
+                </tr>
+                <tr>
+                    <th>{{ form_label(form.categories) }}</th>
+                    <td>{{ form_widget(form.categories) }}</td>
+                    <td>{{ form_errors(form.categories) }}</td>
+                </tr>
+                <tr>
+                    <th>{{ form_label(form.edition) }}</th>
+                    <td>{{ form_widget(form.edition) }}</td>
+                    <td>{{ form_errors(form.edition) }}</td>
+                </tr>
+                <tr>
+                    <th>{{ form_label(form.type) }}</th>
+                    <td>{{ form_widget(form.type) }}</td>
+                    <td>{{ form_errors(form.type) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form_rest(form) }}</td>
+                    <td><input type="submit" class="btn btn-primary" /></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+
+{% endblock %}

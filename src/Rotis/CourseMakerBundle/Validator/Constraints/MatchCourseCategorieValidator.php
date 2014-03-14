@@ -12,7 +12,6 @@ class MatchCourseCategorieValidator extends ConstraintValidator
     public function validate($objet, Constraint $constraint)
     {
         $categories = $objet->getCourse()->getCategories();
-        var_dump($categories);die;
 
         if ($categories->contains($objet->getCategorie()) == false)
         {
