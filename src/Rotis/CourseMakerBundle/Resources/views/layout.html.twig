@@ -49,8 +49,7 @@
                             {% endif %}
 
                             {% if is_granted('ROLE_ADMIN') %}
-                                <li><a href="{{ path('admin_home') }}" class="navbar-link">Admin Home</a></
-                                li>
+                                <li><a href="{{ path('admin_home') }}" class="navbar-link">Admin Home</a></li>
                                 <li><a href="{{ path('admin_infos_pratiques') }}">Infos Pratiques</a></li>
                             {% elseif is_granted('ROLE_USER') %}
                                 <li><a>Bonjour {{ app.user.username }}</a></li>
@@ -87,8 +86,8 @@
             <div class="hero-unit">
                 <div class="row-fluid">
                     <div class="span3">
-                        <img src="{{ asset('bundles/rotiscoursemaker/img/logo_24H.png') }}" alt="24Heures" width=""
-                             height=""/>
+                        <img src="{{ asset('bundles/rotiscoursemaker/img/logo.png') }}" alt="24Heures" width=""
+                             height="">
                     </div>
                     <!-- /span -->
                     <div class="span9">
@@ -113,29 +112,6 @@
                     <p><strong>Plus c'est long, plus c'est bon!</strong></p>
                 </div>
             </footer>
-<style >
-    .bordered th{
-        border: 1px solid black;
-    }
-    .bordered tr{
-        border: 1px solid black;
-        text-align: left;
-    }
-    .bordered td{
-        border: 1px solid black;
-        text-align: left;
-    }
-    #tableJ tfoot{
-        border: none;
-    }
-  /*  #tableJ tr:last-child{
-        border:none;
-    }
-    #tableJ td{
-        border-bottom: 1px solid black;
-    }*/
-
-</style>
         
 
               <!-- Le javascript
