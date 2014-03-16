@@ -9,7 +9,7 @@
 
     <h3>Mailing de tous les joueurs</h3>
     {% for joueur in tousJoueurs %}
-        {{ joueur.getEmail() }},
+        {% if joueur.getEmail() | length > 0 %}{{ joueur.getEmail()  }},{% endif %}
     {% endfor %}
 
     <h3>Mailing par course</h3>
@@ -17,7 +17,7 @@
         <h5>{{ course.getNom() }}</h5>
         {% for equipe in course.getEquipes() %}
             {% for joueur in equipe.getJoueurs() %}
-                {{ joueur.getEmail()  }},
+                {% if joueur.getEmail() | length > 0 %}{{ joueur.getEmail()  }},{% endif %}
             {% endfor %}
         {% endfor %}
     {% endfor %}
