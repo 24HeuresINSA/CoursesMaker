@@ -8,10 +8,10 @@ Rotis\CourseMakerBundle\Entity\Tarif:
       id: true
       generator:
         strategy: AUTO
+    prixEtudiant:
+      type: integer
     prix:
       type: integer
-    etudiant:
-      type: boolean
   manyToOne:
     course:
       targetEntity: Course

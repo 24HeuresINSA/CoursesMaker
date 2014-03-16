@@ -377,7 +377,7 @@ class EquipeController extends Controller
                         $totalValidTeams++;
                     }
                     $totalTeams++;
-                    $totalCoureurs+= $equipe->getJoueurs->count();
+                    $totalCoureurs+= $equipe->getJoueurs()->count();
                 }
             }
             return $this->render('RotisCourseMakerBundle:Course:control_course.html.twig', array(

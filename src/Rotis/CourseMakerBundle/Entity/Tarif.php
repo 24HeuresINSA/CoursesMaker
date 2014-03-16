@@ -70,29 +70,6 @@ class Tarif
     }
 
     /**
-     * Set etudiant
-     *
-     * @param boolean $etudiant
-     * @return Tarif
-     */
-    public function setEtudiant($etudiant)
-    {
-        $this->etudiant = $etudiant;
-    
-        return $this;
-    }
-
-    /**
-     * Get etudiant
-     *
-     * @return boolean 
-     */
-    public function getEtudiant()
-    {
-        return $this->etudiant;
-    }
-
-    /**
      * Set categorie
      *
      * @param \Rotis\CourseMakerBundle\Entity\Categorie $categorie

@@ -147,8 +147,8 @@
 	  <thead>
 	    <tr>
 			<th>Id</th>
-			<th>Prix</th>
-			<th>Etudiant/Pas étudiant</th>
+			<th>Prix etudiant</th>
+			<th>Prix normal</th>
 			<th>Course</th>
 			<th>Categorie</th>
 			<th>Editer</th>
@@ -159,8 +159,8 @@
 	    {% for tarif in tarifs %}
 		    <tr>
 				<td>{{ tarif.id }}</td>
+				<td>{{ tarif.prixEtudiant }}</td>
 				<td>{{ tarif.prix }}</td>
-				<td>{% if tarif.etudiant %}Etudiant{% else %}Pas Etudiant{% endif %}</td>
 				<td>{{ tarif.course.nom }}</td>
 				<td>{{ tarif.categorie.nom }}</td>
 				<td><a href="{{ path('tarif_edit',{ 'id' : tarif.id}) }}"><i class="icon-edit"></i></a></td>
