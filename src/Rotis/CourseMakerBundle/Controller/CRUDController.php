@@ -200,7 +200,7 @@ class CRUDController extends Controller
 
     public function editTarifAction(Request $request, $id)
     {
-        $tarif = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:tarif')->find($id);
+        $tarif = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Tarif')->find($id);
         $form = $this->createForm(new TarifType, $tarif);
         if($request->getMethod() == 'POST')
         {

@@ -7,14 +7,14 @@
         <div class="table-responsive">
             <table class="table">
                 <tr>
+                    <th>{{ form_label(form.prixEtudiant) }}</th>
+                    <td>{{ form_widget(form.prixEtudiant) }}</td>
+                    <td>{{ form_errors(form.prixEtudiant) }}</td>
+                </tr>
+                <tr>
                     <th>{{ form_label(form.prix) }}</th>
                     <td>{{ form_widget(form.prix) }}</td>
                     <td>{{ form_errors(form.prix) }}</td>
-                </tr>
-                <tr>
-                    <th>{{ form_label(form.etudiant) }}</th>
-                    <td>{{ form_widget(form.etudiant) }}</td>
-                    <td>{{ form_errors(form.etudiant) }}</td>
                 </tr>
                 <tr>
                     <th>{{ form_label(form.categorie) }}</th>

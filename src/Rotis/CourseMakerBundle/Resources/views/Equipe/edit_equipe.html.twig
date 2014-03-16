@@ -10,7 +10,8 @@
     {% endif %}
 {% endblock %}
 {% block content %}
-
+<div ng-app="coursemaker">
+{# NB: on place le ng-app ici pour limiter l'appli angular à cette page et ne pas bloquer les soumissions de formulaires sur les autres pages(!) #}
     <h1>Informations sur l'Equipe {{ equipe.username }} </h1>
     {# TODO: ajouter des champs pour type paiement et numéro cheque #}
 
@@ -179,7 +180,7 @@
         }
         {% endif %}
     {% endif %}
-
+</div>
 <style>
     #val{
         color: green;
