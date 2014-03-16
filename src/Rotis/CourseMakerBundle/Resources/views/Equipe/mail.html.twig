@@ -2,7 +2,7 @@ Madame/Monsieur {{ joueur.prenom }} {{ joueur.nom }} bonjour,
 Par la présente nous vous confirmons votre inscription au site CoursesMaker.
 Voici vos identifiants:
 Equipe: {{ username }}
-{% if password != "0" %}
+{% if password %}
 Mot de passe: {{ password }}
 {% else %}
 Le mot de passe a été remis au chef d'équipe.

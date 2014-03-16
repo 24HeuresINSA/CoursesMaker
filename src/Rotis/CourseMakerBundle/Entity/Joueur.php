@@ -5,13 +5,22 @@ namespace Rotis\CourseMakerBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+
 /**
  * Joueur
+ *
+ * The following annotations tells the serializer to skip all properties which
+ * are not marked with expose.
+ *
+ * @ExclusionPolicy("all")
  */
 class Joueur
 {
     /**
      * @var integer
+     * @Expose
      */
     private $id;
 
@@ -37,6 +46,7 @@ class Joueur
      *     message = "mail '{{ value }}' non valide.",
      *     checkMX = true
      * )
+     * @Expose
      */
     private $email;
 
@@ -51,6 +61,7 @@ class Joueur
      * pattern="/^0[467][0-9]{8}$/",
      * message="Veuillez renseigner un numéro de téléphone valide."
      * )
+     * @Expose
      */
     private $telephone;
 
@@ -74,6 +85,10 @@ class Joueur
      */
     private $paiement_ok;
 
+    /**
+     * @var \Rotis\CourseMakerBundle\Entity\Equipe
+     */
+    private $equipe;
 
     /**
      * Get id
@@ -268,11 +283,6 @@ class Joueur
     {
         return $this->paiement_ok;
     }
-    /**
-     * @var \Rotis\CourseMakerBundle\Entity\Equipe
-     */
-    private $equipe;
-
 
     /**
      * Set equipe

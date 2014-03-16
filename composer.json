@@ -21,7 +21,9 @@
         "kriswallsmith/assetic": "1.1.*@dev",
         "doctrine/data-fixtures": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
-        "leafo/lessphp": "dev-master"
+        "leafo/lessphp": "dev-master",
+	"friendsofsymfony/jsrouting-bundle": ">=1.5.3",
+	"jms/serializer-bundle" : ">=0.13.0"
     },
     "require-dev": {
         "atoum/atoum": "dev-master",

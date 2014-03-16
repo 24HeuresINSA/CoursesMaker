@@ -22,9 +22,9 @@ class Tarif
     private $prix;
 
     /**
-     * @var boolean
+     * @var integer
      */
-    private $etudiant;
+    private $prixEtudiant;
 
     /**
      * @var \Rotis\CourseMakerBundle\Entity\Categorie
@@ -136,5 +136,28 @@ class Tarif
     public function getCourse()
     {
         return $this->course;
+    }
+
+    /**
+     * Set prixEtudiant
+     *
+     * @param integer $prixEtudiant
+     * @return Tarif
+     */
+    public function setPrixEtudiant($prixEtudiant)
+    {
+        $this->prixEtudiant = $prixEtudiant;
+
+        return $this;
+    }
+
+    /**
+     * Get prixEtudiant
+     *
+     * @return integer 
+     */
+    public function getPrixEtudiant()
+    {
+        return $this->prixEtudiant;
     }
 }

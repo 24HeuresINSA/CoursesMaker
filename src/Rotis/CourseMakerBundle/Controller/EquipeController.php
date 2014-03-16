@@ -5,17 +5,28 @@ namespace Rotis\CourseMakerBundle\Controller;
 use Rotis\CourseMakerBundle\Entity\Joueur;
 use Rotis\CourseMakerBundle\Entity\Equipe;
 use Rotis\CourseMakerBundle\Entity\Tarif;
+
 use Rotis\CourseMakerBundle\Form\Model\PlayerAddition;
+use Rotis\CourseMakerBundle\Form\Type\PlayerAdditionType;
+
+use Rotis\CourseMakerBundle\Form\Type\RegistrationType;
+use Rotis\CourseMakerBundle\Form\Model\Registration;
+
 use Rotis\CourseMakerBundle\Form\Type\AdminEditType;
+use Rotis\CourseMakerBundle\Form\Type\EditionType;
+use Rotis\CourseMakerBundle\Form\Type\RechercheType;
+
+use Rotis\CourseMakerBundle\Form\Type\OptionalDataType;
+use Rotis\CourseMakerBundle\Form\Model\OptionalData;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Rotis\CourseMakerBundle\Form\Type\RegistrationType;
-use Rotis\CourseMakerBundle\Form\Model\Registration;
-use Rotis\CourseMakerBundle\Form\Type\PlayerAdditionType;
-use Rotis\CourseMakerBundle\Form\Type\EditionType;
-use Rotis\CourseMakerBundle\Form\Type\RechercheType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\NotNull;
+
+use JMS\SerializerBundle\JMSSerializerBundle;
 
 class EquipeController extends Controller
 {
@@ -204,7 +215,9 @@ class EquipeController extends Controller
                     'notice',
                     'Votre équipe à bien été créée. Rendez vous dans l\'onglet Connexion pour avoir accès à toutes vos informations'
                 );
-                $message = \Swift_Message::newInstance();
+                if($joueur->getEmail())
+                {
+                    $message = \Swift_Message::newInstance();
                 $message->setSubject('Confirmation d\'inscription à CoursesMaker')
                     ->setFrom('courses@24heures.org')
                     ->setTo($joueur->getEmail())
@@ -215,6 +228,7 @@ class EquipeController extends Controller
                         )
                     );
                 $this->get('mailer')->send($message);
+                }
                 return $this->redirect($this->generateUrl('accueil'));
             }
         }
@@ -258,8 +272,74 @@ class EquipeController extends Controller
                 $validable = false;
             }
         }
-        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('validable' => $validable,'tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
+        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array(
+            'validable' => $validable,
+            'tarifs' => $tarifs,
+            'nombre' => $nombre,
+            'equipe' => $equipe,
+            'form' => $form->createView(),
+        ));
 
+    }
+
+    public function setOptionalDataAction(Request $request,$id)
+    {
+        if($request->getMethod() == 'POST')
+        {
+            if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')
+            && true === $this->get('security.context')->isGranted('ROLE_USER')
+            && (!method_exists($this->get('security.context')->getToken()->getUser(), 'getId')
+                || $this->get('security.context')->getToken()->getUser()->getId() != $id))
+            {
+                return new Response('error');
+            }
+            $content = json_decode($request->getContent());
+            if(is_object($content) && property_exists($content, 'id') && is_numeric($content->id) && $content->id > 0)
+            {
+                $validator = $this->get('validator');
+                $idjoueur = $content->id;
+                $joueur = $this->getDoctrine()->getManager()->getRepository('RotisCourseMakerBundle:Joueur')->find($idjoueur);
+                if(property_exists($content, 'email'))
+                {
+                    $email = $content->email;
+                    //var_dump('mail');die;
+                    $joueur->setEmail($email);
+                    if(count($validator->validate($joueur)) > 0)
+                    {
+                        $joueur->setEmail(null);
+                    }
+                    else
+                    {
+                        $message = \Swift_Message::newInstance();
+                        $message->setSubject('Confirmation d\'inscription à CoursesMaker')
+                            ->setFrom('courses@24heures.org')
+                            ->setTo($email)
+                            ->setBody(
+                                $this->renderView(
+                                    'RotisCourseMakerBundle:Equipe:mail.html.twig',
+                                    array('joueur' => $joueur, 'username' => $joueur->getEquipe()->getUsername(), 'password' => null)
+                                )
+                            );
+                        $this->get('mailer')->send($message);
+                    }
+                }
+                //var_dump('nomail');die;
+                if(property_exists($content, 'telephone'))
+                {
+                    $telephone = $content->telephone;
+                    $joueur->setTelephone($telephone);
+                    if(count($validator->validate($joueur)) > 0)
+                    {
+                        $joueur->setTelephone(null);
+                    }
+                }
+                $this->getDoctrine()->getManager()->flush();
+                $serializer = $this->get('jms_serializer');
+                $jsoncontent = $serializer->serialize($joueur, 'json');
+                return new Response($jsoncontent);
+            }
+            throw new \Exception('Something went wrong!');
+        }
     }
 
     public function listeAction($name)
@@ -560,6 +640,5 @@ class EquipeController extends Controller
         {
             return $this->redirect($this->generateUrl('accueil'));
         }
-
     }
 }

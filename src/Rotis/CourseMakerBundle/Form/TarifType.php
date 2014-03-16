@@ -12,15 +12,12 @@ class TarifType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('prix','money', array(
-            'label' => 'Tarif d\'inscription ',
+        $builder->add('prix','money',array(
+            'label' => 'Tarif d\'inscription non étudiant',
             'required' => true,
-        ));
-        $builder->add('etudiant','choice',array(
-            'choices' => array(
-                true => 'oui', false => 'non'
-                ),
-            'label' => 'Etudiant',
+        ))
+        ->add('prixEtudiant','money', array(
+            'label' => 'Tarif d\'inscription pour les étudiants',
             'required' => true,
         ))
         ->add('categorie','entity',array(

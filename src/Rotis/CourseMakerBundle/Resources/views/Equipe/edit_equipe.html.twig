@@ -39,11 +39,8 @@
             <td>{{ equipe.course.type.nom }}</td>
             <td>{{ nombre }}</td>
             <td>{% for tarif in tarifs %}
-                    {% if tarif.getEtudiant() %}
-                        {{ tarif.prix }}€ pour les étudiants
-                    {% else %}
-                        {{ tarif.prix }}€ pour les non-étudiants
-                    {% endif %}
+                    {{ tarif.prixEtudiant }}€ pour les étudiants
+                    {{ tarif.prix }}€ pour les non-étudiants
                 {% endfor %}</td>
         </tr>
         </tbody>
@@ -60,7 +57,7 @@
         {% if validable or equipe.getValide() %}<p><a class="btn" href="{{ path('admin_team_valid', { 'id': equipe.getId(), 'status': equipe.getValide() }) }}" onclick="return(confirm('Voulez-vous vraiment valider/invalider cette équipe?'));" >{% if not equipe.getValide() %}Valider l'équipe{% else %}Invalider l'équipe{% endif %} &raquo;</a></p>{% endif %}
     {% endif %}
     <br/>
-    <table class="table table-bordered" id="tableJ">
+    <table class="table table-bordered" id="tableJ" ng-controller="joueurCtrl" ng-init="nbjoueurs = {{ equipe.getJoueurs() | length }};">
         <thead>
         <tr>
             <th>Prenom</th>
@@ -76,11 +73,33 @@
         <tbody>
 
             {% for joueurs in equipe.getJoueurs() %}
-        <tr>
+        <tr ng-form="joueurs[{{ loop.index0 }}]" role="form">
             <td>{{ joueurs.prenom }}</td>
             <td>{{ joueurs.nom }}</td>
-            <td>{{ joueurs.email }}</td>
-            <td>{{ joueurs.telephone }}</td>
+            <td>{% if joueurs.email %}{{ joueurs.email }}
+            {% else %}
+                <div ng-switch="fixed[{{ loop.index0 }}].email">
+                    <div ng-switch-when="true">
+                        {[{ joueurs[{{ loop.index0 }}].email }]}
+                    </div>
+                    <div class="form-group" ng-switch-default>
+                                <input type="email" name="email" ng-model="joueurs[{{ loop.index0 }}].email" placeholder="Indiquez une adresse mail">
+                                <input type="button" class="btn btn-primary" ng-click="send({{ equipe.id }},{{ joueurs.id }}, {{ loop.index0 }})" value="Valider">
+                    </div>
+                </div>
+            {% endif %}</td>
+            <td>{% if joueurs.telephone %}{{ joueurs.telephone }}
+            {% else %}
+                <div ng-switch="fixed[{{ loop.index0 }}].telephone">
+                    <div ng-switch-when="true">
+                        {[{ joueurs[{{ loop.index0 }}].telephone }]}
+                    </div>
+                    <div class="form-group" ng-switch-default>
+                        <input type="text" name="telephone" ng-model="joueurs[{{ loop.index0 }}].telephone" placeholder="Indiquez un numéro de téléphone">
+                        <input type="button" class="btn btn-primary" ng-click="send({{ equipe.id }},{{ joueurs.id }}, {{ loop.index0 }})" value="Valider">
+                    </div>
+                </div>
+            {% endif %}</td>
             {% if joueurs.getEtudiant() %}
                 <td>Etudiant</td>
             {% else %}
@@ -123,17 +142,16 @@
                            href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueurs.id}) }}" onclick="return(confirm('Voulez-vous vraiment supprimer ce coureur?'));">Supprimer coureur</a>
                     </td>
                     {% endif %}
-
-                </tbody>
-                    <tfoot>
-                {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
-                    {% if nombre>1 %}
+        </tbody>
+        <tfoot>
+            {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if nombre>1 %}
                     <td><a class="btn btn-danger"
                            href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueurs.id}) }}" onclick="return(confirm('Voulez-vous vraiment supprimer ce coureur?'));">Supprimer coureur</a>
                     </td>
-                    {% endif %}
                 {% endif %}
             {% endif %}
+        {% endif %}
         </tr>
         {% endfor %}
 
@@ -144,29 +162,21 @@
     <br/>
     </p>
     {% if not equipe.getValide() %}
-        {% if equipe.categorie.nom != 'Solo' or nombre < 1 %}
-            {% if equipe.categorie.nom != 'Equipe' or nombre < 3 %}
-                {% if equipe.categorie.nom != 'Loisir' or nombre < 12 %}
-                    <div class="row-fluid">
-                        <div class="offset1 span10">
+        {% if nombre < equipe.categorie.nbmaxcoureurs %}
+            <div class="row-fluid">
+                <div class="offset1 span10">
+                    <form action="{{ path('edit', {'id': equipe.id }) }}" method="post" {{ form_enctype(form) }}
+                        class="well">
+                        {{ form_widget(form) }}
+                        <br/>
+                        <input type="submit" class="btn btn-primary"/>
+                     </form>
+                </div>
+            </div>
 
-                            <form action="{{ path('edit', {'id': equipe.id }) }}" method="post" {{ form_enctype(form) }}
-                                class="well">
-                                {{ form_widget(form) }}
-                                <br/>
-                                <input type="submit" class="btn btn-primary"/>
-                             </form>
-                        </div>
-                    </div>
-
-                {% else %}
-                    Equipe complete!
-                {% endif %}
-            {% else %}
-                Equipe complete!
-            {% endif %}
         {% else %}
-            Equipe complete!
+            <span class="label"><i class="icon-warning-sign"></i><h4 class="inline">&nbsp;Equipe complète</h4></span>
+        }
         {% endif %}
     {% endif %}
 

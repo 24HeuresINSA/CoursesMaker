@@ -9,3 +9,11 @@ equipe_remove_joueur:
     requirements:
         id: \d+
         idjoueur: \d+
+equipe_set_optional_data:
+    pattern: /optional/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:setOptionalData }
+    options:
+        expose: true
+    requirements:
+        id: \d+
+        _method: POST

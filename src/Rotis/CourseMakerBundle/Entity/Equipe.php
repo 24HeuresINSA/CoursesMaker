@@ -57,6 +57,21 @@ class Equipe implements AdvancedUserInterface, \Serializable
     protected $isActive;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $joueurs;
+
+    /**
+     * @var \Rotis\CourseMakerBundle\Entity\Course
+     */
+    protected $course;
+
+    /**
+     * @var \Rotis\CourseMakerBundle\Entity\Categorie
+     */
+    protected $categorie;
+
+    /**
      * Get user
      *
      * @return Equipe
@@ -119,20 +134,6 @@ class Equipe implements AdvancedUserInterface, \Serializable
     {
         return $this->valide;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $joueurs;
-
-    /**
-     * @var \Rotis\CourseMakerBundle\Entity\Course
-     */
-    protected $course;
-
-    /**
-     * @var \Rotis\CourseMakerBundle\Entity\Categorie
-     */
-    protected $categorie;
 
     /**
      * Set salt

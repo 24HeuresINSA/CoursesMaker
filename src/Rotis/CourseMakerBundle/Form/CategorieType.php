@@ -17,7 +17,7 @@ class CategorieType extends AbstractType
             'required' => true,
         ));
         $builder->add('nb_max_coureurs','number',array(
-            'label' => 'Nombre maximal de coureurs',
+            'label' => 'Nombre maximal de coureurs par equipe',
             'required' => true,
         ))
         ;
