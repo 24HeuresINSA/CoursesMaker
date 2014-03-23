@@ -19,11 +19,6 @@ admin_par_course:
     defaults: { _controller: RotisCourseMakerBundle:Equipe:listeParCourse }
     requirements:
         id: \d+
-admin_course:
-    pattern: /{idcourse}/course
-    defaults: { _controller: RotisCourseMakerBundle:Course:edit }
-    requirements:
-        idcourse: \d+
 admin_switch_ouverture:
     pattern: /editcourse/{idcourse}/{status}
     defaults: { _controller: RotisCourseMakerBundle:Course:switchOuverture, status: 0 }
