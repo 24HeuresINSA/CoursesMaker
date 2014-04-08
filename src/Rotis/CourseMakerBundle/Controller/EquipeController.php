@@ -430,15 +430,28 @@ class EquipeController extends Controller
         }
     }
 
-    public function editInfosAction($id)
+    public function passAction($id)
     {
-        $repository = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('RotisCourseMakerBundle:Equipe');
-        $equipe = $repository->find($id);
-        $form = $this->createForm(
-            new AdminEditType(),$equipe);
-        return $this->render('RotisCourseMakerBundle:Equipe:admin_edit.html.twig', array('equipe' => $equipe, 'form' => $form->createView()));
+        $user = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Equipe')->find($id);
+        $form = $this->createForm(new AdminEditType(), $user);
+        if($this->getRequest()->getMethod() == 'POST')
+        {
+            $form->bind($this->getRequest());
+            if($form->isValid())
+            {
+                $factory = $this->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($user);
+                $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+                $user->setPassword($password);
+                $this->getDoctrine()->getManager()->flush();
+                $this->get('session')->setFlash(
+                    'notice',
+                    'Equipe modifiée!'
+                );
+                return $this->redirect($this->generateUrl('account', array('id' => $id)));
+            }
+        }
+        return $this->render('RotisCourseMakerBundle:Equipe:password_edit.html.twig',array('equipe' => $user, 'form' => $form->createView()));
     }
 
     public function updateAction($id)
@@ -448,18 +461,14 @@ class EquipeController extends Controller
             ->getRepository('RotisCourseMakerBundle:Equipe');
         $em = $this->getDoctrine()->getEntityManager();
         $olduser = $repository->find($id);
-        $form = $this->createForm(new AdminEditType(), $olduser);
-        if ($this->getRequest()->getMethod() == 'POST') {
+        $form = $this->createForm(new EditionType(), $olduser);
+        if ($this->getRequest()->getMethod() == 'POST')
+        {
             $form->bind($this->getRequest());
-            if ($form->isValid()) {
-                $factory = $this->get('security.encoder_factory');
+            if ($form->isValid())
+            {
                 $registration = $form->getData();
                 $user = $registration->getUser();
-                $encoder = $factory->getEncoder($user);
-                $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
-                $user->setPassword($password);
-                //$user->addJoueur($olduser->getJoueurs());
-                $em->merge($user);
                 $em->flush();
                 $this->get('session')->setFlash(
                     'notice',
