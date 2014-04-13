@@ -63,8 +63,8 @@
                             {% elseif is_granted('ROLE_USER') %}
                                 <li><a>Bonjour {{ app.user.username }}</a></li>
                                 <li class="active"><a href="{{ path('account', { 'id': app.user.id }) }}">Edition d'équipe</a></li>
-                                <li><a href="{{ path('infos_coureurs', { 'id': app.user.id}) }}">Informations</a></li>
                             {% endif %}
+                            <li><a href="{{ path('infos_coureurs') }}">Informations</a></li>
                             <li><a href="{{ path('contact') }}">Contact</a></li>
                         </ul>
                         <ul class="nav">

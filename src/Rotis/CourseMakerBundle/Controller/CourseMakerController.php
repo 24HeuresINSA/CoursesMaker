@@ -33,5 +33,8 @@ class CourseMakerController extends Controller
         }
     }
 
-
+    public function faqAction()
+    {
+        return $this->render('RotisCourseMakerBundle:CourseMaker:faq.html.twig');
+    }
 }

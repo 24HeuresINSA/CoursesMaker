@@ -122,7 +122,7 @@
 			    <tr>
 					<td>{{ course.id }}</td>
 					<td>{{ course.nom }}</td>
-					<td>{{ course.inscriptionsouvertes }}</td>
+					<td>{% if course.inscriptionsouvertes %}Oui{% else %}Non{% endif %}</td>
 					<td>{{ course.url }}</td>
 					<td>{{ course.description }}</td>
 					<td>{{ course.datetimedebut | date('j/n/Y G:i:s') }}</td>
