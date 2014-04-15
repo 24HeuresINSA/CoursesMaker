@@ -56,7 +56,7 @@
             <p><a class="btn btn-danger" href="{{ path('admin_erase', { 'id': equipe.id }) }}" onclick="return(confirm('Voulez-vous vraiment supprimer l\'équipe?'));">Supprimer l'équipe &raquo;</a></p>
 
         {% endif %}
-        {% if validable or equipe.getValide() %}<p><a class="btn" href="{{ path('admin_team_valid', { 'id': equipe.getId(), 'status': equipe.getValide() }) }}" onclick="return(confirm('Voulez-vous vraiment valider/invalider cette équipe?'));" >{% if not equipe.getValide() %}Valider l'équipe{% else %}Invalider l'équipe{% endif %} &raquo;</a></p>{% endif %}
+        {% if validable or equipe.getValide() %}<p><a class="btn" href="{{ path('admin_team_valid', { 'id': equipe.id, 'status': equipe.valide }) }}" onclick="return(confirm('Voulez-vous vraiment valider/invalider cette équipe?'));" >{% if not equipe.getValide() %}Valider l'équipe{% else %}Invalider l'équipe{% endif %} &raquo;</a></p>{% endif %}
     {% endif %}
     <br/>
     <table class="table table-bordered" id="tableJ" ng-controller="joueurCtrl" ng-init="nbjoueurs = {{ equipe.getJoueurs() | length }};">
@@ -178,7 +178,6 @@
 
         {% else %}
             <span class="label"><i class="icon-warning-sign"></i><h4 class="inline">&nbsp;Equipe complète</h4></span>
-        }
         {% endif %}
     {% endif %}
 </div>
