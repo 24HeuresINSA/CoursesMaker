@@ -592,7 +592,7 @@ class EquipeController extends Controller
 
     public function switchTeamValidAction($id, $status)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $equipe = $em->getRepository('RotisCourseMakerBundle:Equipe')->find($id);
         $course = $equipe->getCourse();
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN'))
@@ -624,7 +624,6 @@ class EquipeController extends Controller
 
             }
         }
-        $em->merge($equipe);
         $em->flush();
         $this->get('session')->setFlash(
             'notice',
