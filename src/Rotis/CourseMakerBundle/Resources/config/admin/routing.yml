@@ -46,7 +46,7 @@ admin_team_valid:
     pattern: /validate/{id}/{status}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:switchTeamValid, status: 0 }
     requirements:
-        id: \d
+        id: \d+
 
 admin_relous:
     pattern: /admin/relous
