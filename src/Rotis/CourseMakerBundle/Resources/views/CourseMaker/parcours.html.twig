@@ -1,0 +1,23 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+
+{% block title %}CoursesMaker - Parcours{% endblock %}
+
+{% block div %}
+    <br/>
+    <h1>Parcours</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="offset1 span10">
+        <img src="{{ asset('bundles/rotiscoursemaker/img/path.png') }}" >
+            <ul>
+                <li>En vert le parcours folklo</li>
+                <li>En rouge le parcours pro</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

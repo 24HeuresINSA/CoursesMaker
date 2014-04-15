@@ -37,4 +37,9 @@ class CourseMakerController extends Controller
     {
         return $this->render('RotisCourseMakerBundle:CourseMaker:faq.html.twig');
     }
+
+    public function parcoursAction()
+    {
+        return $this->render('RotisCourseMakerBundle:CourseMaker:parcours.html.twig');
+    }
 }

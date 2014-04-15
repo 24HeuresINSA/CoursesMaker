@@ -39,3 +39,7 @@ accueil:
 infos_coureurs:
     pattern: /faq
     defaults: { _controller: RotisCourseMakerBundle:CourseMaker:faq}
+
+parcours:
+    pattern: /parcours
+    defaults: { _controller: RotisCourseMakerBundle:CourseMaker:parcours }
