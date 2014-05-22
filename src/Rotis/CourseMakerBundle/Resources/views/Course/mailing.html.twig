@@ -9,7 +9,7 @@
 
     <h3>Mailing de tous les joueurs</h3>
     {% for joueur in tousJoueurs %}
-        {% if joueur.getEmail() | length > 0 %}{{ joueur.getEmail()  }},{% endif %}
+        {% if joueur.email != null | length > 0 %}{{ joueur.email }},{% endif %}
     {% endfor %}
 
     <h3>Mailing par course</h3>

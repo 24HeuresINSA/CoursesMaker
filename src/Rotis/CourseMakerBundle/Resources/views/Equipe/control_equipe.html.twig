@@ -9,9 +9,10 @@
     Nombre total d'équipes: {{ nbTotalEquipes }} <br />
     Nombre d'équipes valides: {{ nbEquipesValides }}
 
-    <form action="{{ path('search') }}" method="post" {{ form_enctype(form) }} class="well">
-        {{ form_widget(form) }}
-        <br />
+    <form action="{{ path('admin_control', {'name': 'equipe'}) }}" method="post" {{ form_enctype(form) }} class="form-inline well">
+        <legend>Rechercher les noms des coureurs</legend>
+        {{ form_widget(form.mot) }}
+        {{ form_rest(form) }}
         <input type="submit" class="btn"/>
     </form>
 

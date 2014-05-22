@@ -23,17 +23,4 @@ class CourseController extends Controller
             'name' => 'course',
         )));
     }
-
-    public function mailingAction()
-    {
-        $listeCourses = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('RotisCourseMakerBundle:Course')
-            ->findAll();
-        $tousJoueurs = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('RotisCourseMakerBundle:Joueur')
-            ->findAll();
-        return $this->render('RotisCourseMakerBundle:Course:mailing.html.twig', array('tousJoueurs' => $tousJoueurs, 'listeCourses' => $listeCourses));
-    }
 }

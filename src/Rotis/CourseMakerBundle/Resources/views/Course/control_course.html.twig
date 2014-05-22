@@ -5,43 +5,50 @@
     <h1>Tableau de Bord</h1>
 {% endblock %}
 {% block content %}
-    <ul>
-        <table class="table table-bordered">
-            <caption>Courses</caption>
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Inscriptions</th>
-                    <th>Equipes</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for course in courses %}
-                <tr>
-                    <td>{{ course.nom }}</td>
-                    <td><a class="btn" href="{{ path('admin_switch_ouverture', {'idcourse': course.getId(), 'status': course.getInscriptionsOuvertes() }) }}">{% if course.getInscriptionsOuvertes() %}Fermer les inscriptions{% else %}Ouvrir les inscriptions{% endif %}</a></td>
-                    <td><a class="btn" href="{{ path('admin_par_course', { 'id': course.getId() }) }} ">Equipes de {{ course.nom }}</a></td>
-                    <td>{% set nbval = 0 %}
-                        {% set nbcoureurs= 0 %}
-                        <p class="aligne"><strong>Equipes valides: {% for equipe in course.getEquipes() %} {% if equipe.getValide() %}{% set nbval = nbval+1 %}{% endif %}{% set nbcoureurs = nbcoureurs+equipe.getJoueurs().count %}{% endfor %} {% if nbval < course.getEquipes().count %}<em id="ko">{{ nbval }}/{{ course.getEquipes().count }}</em>{% else %}<em id="ok">{{ nbval }}/{{ course.getEquipes().count }}</em>{% endif %}</strong></p>
-                    </td>
-                    <td><p class="aligne">&nbsp;&nbsp;&nbsp;<strong>{{ nbcoureurs }}</strong> Coureurs inscrits</p></td>
-                </tr>
-            {% endfor %}
-                <tr>
-                    <td>
-                        <p class="aligne">&nbsp;&nbsp;&nbsp;Nombre total d'équipes valides:
-                            <strong>{{ totalValidTeams }}/{{ totalTeams }}</strong></p>
-                    </td>
-                </tr>
-            <tr>
-                <td>
-                    <p class="aligne">&nbsp;&nbsp;&nbsp;Nombre total de coureurs : <strong>{{ totalCoureurs }}</strong> Coureurs inscrits</p>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </ul>
+    <div>
+        <form action="{{ path('admin_control', {'name': 'course'}) }}" method="post" {{ form_enctype(form) }} class="form-inline well">
+            <legend>Rechercher des courses</legend>
+            {{ form_widget(form.mot) }}
+            {{ form_rest(form) }}
+
+            <input type="submit" class="btn"/>
+        </form>
+    </div>
+<table class="table table-bordered">
+    <caption>Courses</caption>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Inscriptions</th>
+            <th>Equipes</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for course in courses %}
+        <tr>
+            <td>{{ course.nom }}</td>
+            <td><a class="btn" href="{{ path('admin_switch_ouverture', {'idcourse': course.getId(), 'status': course.getInscriptionsOuvertes() }) }}">{% if course.getInscriptionsOuvertes() %}Fermer les inscriptions{% else %}Ouvrir les inscriptions{% endif %}</a></td>
+            <td><a class="btn" href="{{ path('admin_par_course', { 'id': course.getId() }) }} ">Equipes de {{ course.nom }}</a></td>
+            <td>{% set nbval = 0 %}
+                {% set nbcoureurs= 0 %}
+                <p class="aligne"><strong>Equipes valides: {% for equipe in course.getEquipes() %} {% if equipe.getValide() %}{% set nbval = nbval+1 %}{% endif %}{% set nbcoureurs = nbcoureurs+equipe.getJoueurs().count %}{% endfor %} {% if nbval < course.getEquipes().count %}<em id="ko">{{ nbval }}/{{ course.getEquipes().count }}</em>{% else %}<em id="ok">{{ nbval }}/{{ course.getEquipes().count }}</em>{% endif %}</strong></p>
+            </td>
+            <td><p class="aligne">&nbsp;&nbsp;&nbsp;<strong>{{ nbcoureurs }}</strong> Coureurs inscrits</p></td>
+        </tr>
+    {% endfor %}
+        <tr>
+            <td>
+                <p class="aligne">&nbsp;&nbsp;&nbsp;Nombre total d'équipes valides:
+                    <strong>{{ totalValidTeams }}/{{ totalTeams }}</strong></p>
+            </td>
+        </tr>
+    <tr>
+        <td>
+            <p class="aligne">&nbsp;&nbsp;&nbsp;Nombre total de coureurs : <strong>{{ totalCoureurs }}</strong> Coureurs inscrits</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 <style>
     .aligne{
