@@ -91,7 +91,7 @@ class EquipeRepository extends EntityRepository implements UserProviderInterface
         return $equipes;
     }
 
-    public function findEquipesValides()
+    public function findEquipesValides($editionId)
     {
         $qb = $this
             ->createQueryBuilder('e');

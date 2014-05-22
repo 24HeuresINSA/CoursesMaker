@@ -11,6 +11,11 @@ admin_mailing:
 admin_infos_pratiques:
     pattern: /infos_pratiques
     defaults: { _controller: RotisCourseMakerBundle:CourseMaker:infos }
+
+admin_excel:
+    pattern: /excel/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Admin:excel, id : null }
+
 admin_control:
     pattern: /{name}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:liste }
@@ -49,5 +54,5 @@ admin_team_valid:
         id: \d+
 
 admin_relous:
-    pattern: /admin/relous
+    pattern: /relous
     defaults: { _controller: RotisCourseMakerBundle:Admin:relous }

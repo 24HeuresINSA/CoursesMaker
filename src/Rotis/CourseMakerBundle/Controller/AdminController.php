@@ -17,5 +17,20 @@ class AdminController extends Controller
         ));
     }
 
+    public function excelAction($id = null)
+    {
+        if(!$id)
+        {
+            $courses = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Course')->findAll();
+        }
+        else
+        {
+            $courses = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Course')->findByEdition($id);
+        }
+        return $this->render('RotisCourseMakerBundle:Admin:excel.html.twig', array(
+            'courses' => $courses,
+        ));
+    }
+
 
 }

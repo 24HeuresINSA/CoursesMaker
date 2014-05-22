@@ -38,4 +38,15 @@ class CourseRepository extends EntityRepository
         $courses = $query->getResult();
         return $courses;
     }
+
+    public function findByEdition($id)
+    {
+        $qb = $this
+            ->createQueryBuilder('c')
+            ->where('c.edition = :idEdition')
+            ->setParameter('idEdition',$id);
+        $query = $qb->getQuery();
+        $courses = $query->getResult();
+        return $courses;
+    }
 }
