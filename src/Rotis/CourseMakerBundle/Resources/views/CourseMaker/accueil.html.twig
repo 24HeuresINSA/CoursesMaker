@@ -9,6 +9,9 @@
     {% else %}
         <p><a class="btn btn-danger btn-large" href="{{ path('register') }}">Inscription &raquo;</a>  <a
             class="btn btn-success btn-large" href="{{ path('login') }}">Connexion &raquo;</a> <br/></p>
+        <div>
+            <h4><a href="{{ path('edition_numero', {'numero':40}) }}">Résultats de la 40ème édition</a></h4>
+        </div>
     {% endif %}
     {% if app.session.hasFlash('notice') %}
         <div class="flash-notice">

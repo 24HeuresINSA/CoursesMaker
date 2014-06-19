@@ -43,3 +43,13 @@ infos_coureurs:
 parcours:
     pattern: /parcours
     defaults: { _controller: RotisCourseMakerBundle:CourseMaker:parcours }
+
+course_resultat:
+    pattern: /edition/resultats/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Course:resultats }
+    requirements:
+        id: \d+
+
+edition_show:
+    pattern: /edition/{numero}
+    defaults: { _controller: RotisCourseMakerBundle:Edition:numero }
