@@ -1,0 +1,25 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+
+{% block title %}CoursesMaker - Liste des courses{% endblock %}
+{% block div %}
+    <h1>Liste des courses</h1>
+{% endblock %}
+{% block content %}
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Résultats</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for course in edition.courses %}
+            <tr>
+                <td>{{ course.nom }}</td>
+                <td><a href="{{ path('course_resultat',{'id':course.id}) }}">{{ course.nom }}.pdf</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

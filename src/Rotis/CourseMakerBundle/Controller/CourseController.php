@@ -4,6 +4,7 @@ namespace Rotis\CourseMakerBundle\Controller;
 use Rotis\CourseMakerBundle\Entity\Course;
 use Rotis\CourseMakerBundle\Entity\Joueur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -24,16 +25,46 @@ class CourseController extends Controller
         )));
     }
 
-    public function mailingAction()
+    public function resultatsAction($id)
     {
-        $listeCourses = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('RotisCourseMakerBundle:Course')
-            ->findAll();
-        $tousJoueurs = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('RotisCourseMakerBundle:Joueur')
-            ->findAll();
-        return $this->render('RotisCourseMakerBundle:Course:mailing.html.twig', array('tousJoueurs' => $tousJoueurs, 'listeCourses' => $listeCourses));
+        $course = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Course')->find($id);
+
+        if(!$course)
+        {
+            throw $this->createNotFoundException('Non trouvé');
+        }
+        $file = $id.'pdf';
+
+        $response = new Response();
+
+        $content = @file_get_contents('bundles/rotiscoursemaker/pdf/results/'.$file);
+
+        if($content)
+        {
+            $response->setContent($content);
+            $response->headers->set(
+                'Content-Type',
+                'application/pdf'
+            );
+            $response->headers->set('Content-disposition', 'filename=' . $file);
+        }
+        else
+        {
+            //cas particulier de la natation : fichier seul ATTENTION
+            if(in_array($course->getId(),array(6,7,8)))
+            {
+                $response->setContent(file_get_contents('bundles/rotiscoursemaker/pdf/results/natation.pdf'));
+                $response->headers->set(
+                    'Content-Type',
+                    'application/pdf'
+                );
+                $response->headers->set('Content-disposition', 'filename=natation.pdf');
+            }
+            else
+            {
+                throw $this->createNotFoundException('Non trouvé');
+            }
+        }
+        return $response;
     }
 }

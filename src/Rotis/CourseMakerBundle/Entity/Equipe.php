@@ -2,6 +2,7 @@
 
 namespace Rotis\CourseMakerBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
@@ -165,7 +166,7 @@ class Equipe implements AdvancedUserInterface, \Serializable
      */
     public function __construct()
     {
-        $this->joueurs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->joueurs = new ArrayCollection();
         $this->isActive = true;
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->valide = false;

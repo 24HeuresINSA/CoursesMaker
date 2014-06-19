@@ -1,0 +1,43 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+{% block title %}CoursesMaker - Admin{% endblock %}
+{% block div %}
+    <h1>Admin Home</h1>
+    <form action="{{ path('admin_home') }}" method="post" class="form-inline" {{ form_enctype(form) }}>
+        <legend>{{ form_label(form.edition) }}</legend>
+        {{ form_widget(form.edition) }}
+        {{ form_rest(form) }}
+        <input type="submit" class="btn" />
+    </form>
+{% endblock %}
+{% block content %}
+
+    <div class="span3">
+        <p><a class="btn" href="{{ path('admin_control', {'name': 'equipe', 'edition': edition.id|default('') }) }}">Afficher toutes les
+                équipes &raquo;</a></p>
+    </div><!--/span-->
+
+    <div class="span3">
+        <p><a class="btn" href="{{ path('admin_control', {'name': 'course', 'edition': edition.id|default('') }) }}">Afficher toutes les
+                courses &raquo;</a></p>
+    </div><!--/span-->
+
+    <div class="span3">
+        <p><a class="btn" href="{{ path('admin_mailing', {'edition': edition.id|default('')}) }}">Générer une liste de mailing &raquo;</a></p>
+    </div><!--/span-->
+
+    <div class="span3">
+        <p><a class="btn" href="{{ path('dashboard') }}">Accéder au dashboard d'admin &raquo;</a></p>
+    </div><!--/span-->
+
+    <div class="span3">
+        <p><a class="btn" href="{{ path('admin_relous', {'edition': edition.id|default('')}) }}">Afficher les coureurs relous &raquo;</a></p>
+    </div><!--/span-->
+
+    <div class="span3">
+
+        <p><a class="btn" href="{{ path('admin_excel', {'edition': edition.id|default('')}) }}">Afficher l'excel &raquo;</a></p>
+    </div><!--/span-->
+
+{% endblock %}
+{% block document_ready %}
+{% endblock document_ready %}

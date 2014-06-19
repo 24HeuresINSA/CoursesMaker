@@ -10,7 +10,7 @@ class EditionChoiceType extends AbstractType
     {
         $builder->add('edition','entity', array(
             'label' => 'Selectionnez l\'édition',
-            'required' => false,
+            'required' => true,
             'class' => 'RotisCourseMakerBundle:Edition',
             'property' => 'numero',
         ));
