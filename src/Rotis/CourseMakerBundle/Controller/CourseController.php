@@ -33,7 +33,7 @@ class CourseController extends Controller
         {
             throw $this->createNotFoundException('Non trouvé');
         }
-        $file = $id.'pdf';
+        $file = $id.'.pdf';
 
         $response = new Response();
 
