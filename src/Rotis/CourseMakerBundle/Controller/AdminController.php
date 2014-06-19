@@ -63,7 +63,8 @@ class AdminController extends Controller
                 $form->bind($this->getRequest());
                 if ($form->isValid()) {
                     if($form->getData() !== null){
-                        $edition = $form->getData()['edition'];
+                        $data = $form->getData();
+                        $edition = $data['edition'];
                     }
                 }
             }
