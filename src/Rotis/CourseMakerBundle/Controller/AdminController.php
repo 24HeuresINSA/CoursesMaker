@@ -165,7 +165,7 @@ class AdminController extends Controller
                 ->getManager()
                 ->getRepository('RotisCourseMakerBundle:Course')
                 ->findByEdition($edition);
-            $tousJoueurs = [];
+            $tousJoueurs = Array();
             foreach($listeCourses as $course)
             {
                 foreach($course->getEquipes() as $equipe)
