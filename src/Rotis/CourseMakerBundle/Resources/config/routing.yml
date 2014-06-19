@@ -50,6 +50,6 @@ course_resultat:
     requirements:
         id: \d+
 
-edition_show:
+edition_numero:
     pattern: /edition/{numero}
     defaults: { _controller: RotisCourseMakerBundle:Edition:numero }
