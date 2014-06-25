@@ -1,37 +1,45 @@
 rotis_course_maker_admin:
-    resource: "@RotisCourseMakerBundle/Resources/config/admin/routing.yml"
+    resource: "@RotisCourseMakerBundle/Resources/config/routing/admin.yml"
     prefix:   /admin
 
+rotis_course_maker_categorie:
+    resource: "@RotisCourseMakerBundle/Resources/config/routing/categorie.yml"
+    prefix:   /categorie
+
+rotis_course_maker_course:
+    resource: "@RotisœCourseMakerBundle/Resources/config/routing/course.yml"
+    prefix:   /course
+
+rotis_course_maker_edition:
+    resource: "@RotisCourseMakerBundle/Resources/config/routing/edition.yml"
+    prefix:   /edition
+
 rotis_course_maker_equipe:
-    resource: "@RotisCourseMakerBundle/Resources/config/equipe/routing.yml"
+    resource: "@RotisCourseMakerBundle/Resources/config/routing/equipe.yml"
     prefix:   /equipe
+
+rotis_course_maker_tarif:
+    resource: "@RotisCourseMakerBundle/Resources/config/routing/tarif.yml"
+    prefix:   /tarif
+
+rotis_course_maker_type:
+    resource: "@RotisCourseMakerBundle/Resources/config/routing/type.yml"
+    prefix:   /type
 
 login:
     pattern: /login
     defaults: { _controller: RotisCourseMakerBundle:Security:login }
+
 login_check:
     pattern: /login_check
+
 logout:
     pattern:  /logout
-register:
-    pattern: /register
-    defaults: { _controller: RotisCourseMakerBundle:Equipe:register }
-create:
-    pattern: /create
-    defaults: { _controller: RotisCourseMakerBundle:Equipe:create }
-    requirements:
-        _method: POST
-search:
-    pattern: /search
-    defaults: { _controller: RotisCourseMakerBundle:Equipe:search }
-edit:
-    pattern: /edit/{id}
-    defaults: { _controller: RotisCourseMakerBundle:Equipe:edit }
-    requirements:
-        id: \d+
+
 contact:
     pattern: /contact
     defaults: { _controller: RotisCourseMakerBundle:CourseMaker:contact }
+
 accueil:
     pattern: /
     defaults: { _controller: RotisCourseMakerBundle:CourseMaker:accueil }
@@ -44,12 +52,3 @@ parcours:
     pattern: /parcours
     defaults: { _controller: RotisCourseMakerBundle:CourseMaker:parcours }
 
-course_resultat:
-    pattern: /edition/resultats/{id}
-    defaults: { _controller: RotisCourseMakerBundle:Course:resultats }
-    requirements:
-        id: \d+
-
-edition_numero:
-    pattern: /edition/{numero}
-    defaults: { _controller: RotisCourseMakerBundle:Edition:numero }

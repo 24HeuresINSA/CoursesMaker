@@ -1,14 +1,36 @@
+register:
+    pattern: /register
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:register }
+
+create:
+    pattern: /create
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:create }
+    requirements:
+        _method: POST
+
+search:
+    pattern: /search
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:search }
+
+edit:
+    pattern: /edit/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:edit }
+    requirements:
+        id: \d+
+
 account:
     pattern: /{id}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:edit_equipe }
     requirements:
         id: \d+
+
 equipe_remove_joueur:
     pattern: /{id}/{idjoueur}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:remove_joueur}
     requirements:
         id: \d+
         idjoueur: \d+
+
 equipe_set_optional_data:
     pattern: /optional/{id}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:setOptionalData }

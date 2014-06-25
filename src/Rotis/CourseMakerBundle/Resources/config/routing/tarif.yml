@@ -1,0 +1,15 @@
+tarif_create:
+    pattern: /tarif/create
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:createTarif }
+
+tarif_edit:
+    pattern: /tarif/edit/{id}
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:editTarif }
+    requirements:
+        id: \d+
+
+tarif_remove:
+    pattern: /tarif/remove/{id}
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:removeTarif }
+    requirements:
+        id: \d+

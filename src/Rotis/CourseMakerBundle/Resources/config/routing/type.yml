@@ -1,0 +1,15 @@
+type_create:
+    pattern: /type/create
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:createType }
+
+type_edit:
+    pattern: /type/edit/{id}
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:editType }
+    requirements:
+        id: \d+
+
+type_remove:
+    pattern: /type/remove/{id}
+    defaults: { _controller: RotisCourseMakerBundle:CRUD:removeType }
+    requirements:
+        id: \d+

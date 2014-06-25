@@ -10,20 +10,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class CourseController extends Controller
 {
-    public function switchOuvertureAction($idcourse,$status)
-    {
-        $course = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('RotisCourseMakerBundle:Course')
-            ->find($idcourse);
-        $em = $this->getDoctrine()->getManager();
-        $course->setInscriptionsOuvertes(!$status);
-        $em->merge($course);
-        $em->flush();
-        return $this->redirect($this->generateUrl('admin_control', array(
-            'name' => 'course',
-        )));
-    }
+
 
     public function resultatsAction($id)
     {
@@ -66,5 +53,50 @@ class CourseController extends Controller
             }
         }
         return $response;
+    }
+
+    public function createCourseAction(Request $request)
+    {
+        $course = new Course();
+        $form = $this->createForm(new CourseType(),$course);
+        if($request->getMethod() == 'POST')
+        {
+            $form->bind($request);
+            if($form->isValid())
+            {
+                $this->getDoctrine()->getManager()->persist($course);
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirect($this->generateUrl('dashboard'));
+            }
+        }
+        return $this->render('RotisCourseMakerBundle:CRUD:course.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    public function removeCourseAction($id)
+    {
+        $course = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Course')->find($id);
+        $this->getDoctrine()->getManager()->remove($course);
+        $this->getDoctrine()->getManager()->flush();
+        return $this->redirect($this->generateUrl('dashboard'));
+    }
+
+    public function editCourseAction(Request $request, $id)
+    {
+        $course = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Course')->find($id);
+        $form = $this->createForm(new CourseType, $course);
+        if($request->getMethod() == 'POST')
+        {
+            $form->bind($request);
+            if($form->isValid())
+            {
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirect($this->generateUrl('dashboard'));
+            }
+        }
+        return $this->render('RotisCourseMakerBundle:CRUD:course.html.twig',array(
+            'form' => $form->createView(),
+        ));
     }
 }

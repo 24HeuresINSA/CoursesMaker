@@ -180,4 +180,33 @@ class AdminController extends Controller
         }
         return $this->render('RotisCourseMakerBundle:Course:mailing.html.twig', array('tousJoueurs' => $tousJoueurs, 'listeCourses' => $listeCourses));
     }
+
+    public function dashboardAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $editions = $em->getRepository('RotisCourseMakerBundle:Edition')->findAll();
+        $categories = $em->getRepository('RotisCourseMakerBundle:Categorie')->findAll();
+        $types = $em->getRepository('RotisCourseMakerBundle:Type')->findAll();
+        $courses = $em->getRepository('RotisCourseMakerBundle:Course')->findAll();
+        $tarifs = $em->getRepository('RotisCourseMakerBundle:Tarif')->findAll();
+
+        return $this->render('RotisCourseMakerBundle:CRUD:dashboard.html.twig', array(
+            'editions' => $editions, 'categories' => $categories, 'types' => $types, 'courses' => $courses, 'tarifs' => $tarifs,
+        ));
+    }
+
+    public function switchOuvertureAction($idcourse,$status)
+    {
+        $course = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Course')
+            ->find($idcourse);
+        $em = $this->getDoctrine()->getManager();
+        $course->setInscriptionsOuvertes(!$status);
+        $em->merge($course);
+        $em->flush();
+        return $this->redirect($this->generateUrl('admin_control', array(
+            'name' => 'course',
+        )));
+    }
 }

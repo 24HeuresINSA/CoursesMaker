@@ -1,15 +1,17 @@
-rotis_course_maker_admin_crud:
-    resource: "@RotisCourseMakerBundle/Resources/config/admin/crudRouting.yml"
-    prefix:   /CRUD
+dashboard:
+    pattern: /dashboard
+    defaults: { _controller: RotisCourseMakerBundle:Admin:dashboard }
 
 admin_home:
     pattern: /
     defaults: { _controller: RotisCourseMakerBundle:Admin:admin }
+
 admin_mailing:
     pattern: /generate/mailing/{edition}
     defaults: { _controller: RotisCourseMakerBundle:Admin:mailing , edition: null }
     requirements:
       edition: \d+
+
 admin_infos_pratiques:
     pattern: /infos_pratiques
     defaults: { _controller: RotisCourseMakerBundle:CourseMaker:infos }
@@ -32,22 +34,26 @@ admin_control:
     requirements:
       name: course|equipe
       edition: \d+
+
 admin_par_course:
     pattern: /course/{id}/{edition}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:listeParCourse, edition: null }
     requirements:
         id: \d+
         edition: \d+
+
 admin_switch_ouverture:
     pattern: /editcourse/{idcourse}/{status}
-    defaults: { _controller: RotisCourseMakerBundle:Course:switchOuverture, status: 0 }
+    defaults: { _controller: RotisCourseMakerBundle:Admin:switchOuverture, status: 0 }
     requirements:
         idcourse: \d+
+
 admin_erase:
     pattern: /erase/{id}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:erase }
     requirements:
         id: \d+
+
 admin_update:
     pattern: /update/{id}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:update }
@@ -56,11 +62,13 @@ admin_update:
 admin_edit_password:
     pattern: /pass/{id}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:pass }
+
 admin_team_valid:
     pattern: /validate/{id}/{status}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:switchTeamValid, status: 0 }
     requirements:
         id: \d+
+
 admin_switch_validation:
     pattern: /{id}/{objet}/{etat}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:switchVal, etat: 0 }
