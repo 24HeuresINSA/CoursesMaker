@@ -80,29 +80,39 @@ class AdminController extends Controller
         }
     }
 
-    public function listeAction($name)
+    public function listeAction($name,$edition = null)
     {
+        if(!$edition)
+        {
+            $edition = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Edition')->findLast()->getNumero();
+        }
         $form = $this->createForm(new RechercheType());
         if ($name === "equipe")
         {
             $repository = $this->getDoctrine()
                 ->getManager()
                 ->getRepository('RotisCourseMakerBundle:Equipe');
-            $listeEquipes = $repository->findAll();
+            $listeEquipes = $repository->findEdition($edition);
             $totalEquipes = count($listeEquipes);
-            $equipesValides = $repository->findEquipesValides();
+            $equipesValides = $repository->countEquipesValides($edition);
             if ($this->getRequest()->getMethod() == 'POST') {
                 $form->bind($this->getRequest());
                 if ($form->isValid()) {
-                    $mot = $form->getData();
+                    $mot = $form->get('mot')->getData();
 
-                    if (0 != $mot)
+                    if ($mot)
                     {
-                        $listeEquipes = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Joueur')->findENameJLike($mot);
+                        $listeEquipes = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Joueur')->findENameJLike($mot,$edition);
                     }
                 }
             }
-            return $this->render('RotisCourseMakerBundle:Equipe:control_equipe.html.twig', array('nbEquipesValides' => $equipesValides, 'nbTotalEquipes' => $totalEquipes, 'name' => $name, 'equipes' => $listeEquipes, 'form' => $form->createView()));
+            return $this->render('RotisCourseMakerBundle:Admin:equipes.html.twig', array(
+                'nbEquipesValides' => $equipesValides,
+                'nbTotalEquipes' => $totalEquipes,
+                'name' => $name,
+                'equipes' => $listeEquipes,
+                'edition' => $edition,
+                'form' => $form->createView()));
         }
         elseif ($name === "course")
         {
@@ -112,15 +122,15 @@ class AdminController extends Controller
                 ->getRepository('RotisCourseMakerBundle:Course');
 
 
-            $listeCourses = $repository->findAll();
+            $listeCourses = $repository->findByEdition($edition);
             if ($this->getRequest()->getMethod() == 'POST') {
 
                 $form->bind($this->getRequest());
                 if ($form->isValid()) {
-                    $mot = $form->getData();
-                    if (0 != $mot)
+                    $mot = $form->get('mot')->getData();
+                    if ($mot)
                     {
-                        $listeCourses = $repository->findLike($mot);
+                        $listeCourses = $repository->findLike($mot,$edition);
                     }
                 }
             }
@@ -140,8 +150,14 @@ class AdminController extends Controller
                 }
             }
 
-            return $this->render('RotisCourseMakerBundle:Course:control_course.html.twig', array(
-                'name' => $name, 'courses' => $listeCourses, 'totalCoureurs' => $totalCoureurs, 'totalValidTeams' => $totalValidTeams, 'totalTeams' => $totalTeams, 'form' => $form->createView(),
+            return $this->render('RotisCourseMakerBundle:Admin:courses.html.twig', array(
+                'name' => $name,
+                'courses' => $listeCourses,
+                'totalCoureurs' => $totalCoureurs,
+                'totalValidTeams' => $totalValidTeams,
+                'totalTeams' => $totalTeams,
+                'edition' => $edition,
+                'form' => $form->createView(),
             ));
 
         }
@@ -178,7 +194,7 @@ class AdminController extends Controller
                 }
             }
         }
-        return $this->render('RotisCourseMakerBundle:Course:mailing.html.twig', array('tousJoueurs' => $tousJoueurs, 'listeCourses' => $listeCourses));
+        return $this->render('RotisCourseMakerBundle:Admin:mailing.html.twig', array('tousJoueurs' => $tousJoueurs, 'listeCourses' => $listeCourses));
     }
 
     public function dashboardAction()

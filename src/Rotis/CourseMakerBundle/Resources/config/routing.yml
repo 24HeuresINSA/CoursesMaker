@@ -7,7 +7,7 @@ rotis_course_maker_categorie:
     prefix:   /categorie
 
 rotis_course_maker_course:
-    resource: "@RotisœCourseMakerBundle/Resources/config/routing/course.yml"
+    resource: "@RotisCourseMakerBundle/Resources/config/routing/course.yml"
     prefix:   /course
 
 rotis_course_maker_edition:

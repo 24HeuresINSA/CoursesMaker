@@ -7,11 +7,6 @@ create:
     defaults: { _controller: RotisCourseMakerBundle:Equipe:create }
     requirements:
         _method: POST
-
-search:
-    pattern: /search
-    defaults: { _controller: RotisCourseMakerBundle:Equipe:search }
-
 edit:
     pattern: /edit/{id}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:edit }

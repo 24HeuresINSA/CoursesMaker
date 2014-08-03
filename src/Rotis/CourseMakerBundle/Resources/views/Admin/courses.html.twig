@@ -2,11 +2,11 @@
 
 {% block title %}CoursesMaker - Choix de la Course{% endblock %}
 {% block div %}
-    <h1>Tableau de Bord</h1>
+    <h1>Courses de la {{ edition }}e édition</h1>
 {% endblock %}
 {% block content %}
     <div>
-        <form action="{{ path('admin_control', {'name': 'course'}) }}" method="post" {{ form_enctype(form) }} class="form-inline well">
+        <form action="{{ path('admin_control', {'name': 'course', 'edition' : edition }) }}" method="post" {{ form_enctype(form) }} class="form-inline well">
             <legend>Rechercher des courses</legend>
             {{ form_widget(form.mot) }}
             {{ form_rest(form) }}

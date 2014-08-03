@@ -3,7 +3,9 @@ namespace Rotis\CourseMakerBundle\Controller;
 
 use Rotis\CourseMakerBundle\Entity\Course;
 use Rotis\CourseMakerBundle\Entity\Joueur;
+use Rotis\CourseMakerBundle\Form\CourseType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;

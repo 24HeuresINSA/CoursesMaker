@@ -12,4 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class EditionRepository extends EntityRepository
 {
+    public function findLast()
+    {
+        $qb = $this->createQueryBuilder('e');
+        $qb->orderBy('e.numero','DESC')
+            ->setMaxResults(1);
+        return $qb->getQuery()->getSingleResult();
+    }
 }
