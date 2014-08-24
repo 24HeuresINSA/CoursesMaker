@@ -9,15 +9,15 @@
     {% else %}
         <p><a class="btn btn-danger btn-large" href="{{ path('register') }}">Inscription &raquo;</a>  <a
             class="btn btn-success btn-large" href="{{ path('login') }}">Connexion &raquo;</a> <br/></p>
-        <div>
-            <h4><a href="{{ path('edition_numero', {'numero':40}) }}">Résultats de la 40ème édition</a></h4>
-        </div>
     {% endif %}
+    <div>
+        {% render "RotisCourseMakerBundle:Edition:linkResults" %}
+    </div>
     {% if app.session.hasFlash('notice') %}
         <div class="flash-notice">
             <h3 class="notice">{{ app.session.flash('notice') }}</h3>
         </div>
-    {% endif %}</p>
+    {% endif %}
 {% endblock %}
 
 {% block content %}

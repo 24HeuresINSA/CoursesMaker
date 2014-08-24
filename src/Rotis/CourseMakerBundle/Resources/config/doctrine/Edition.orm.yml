@@ -11,10 +11,13 @@ Rotis\CourseMakerBundle\Entity\Edition:
     numero:
       type: string
       length: 255
+      unique: true
     date_1:
       type: date
     date_2:
       type: date
+    hasResults:
+      type: boolean
   oneToMany:
     courses:
       targetEntity: Course

@@ -8,29 +8,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class AdminController extends Controller
 {
-    public function relousAction($edition)
+    public function relousAction($edition = null)
     {
-        $coureursNoMail =  $this->getDoctrine()->getManager()->getRepository('RotisCourseMakerBundle:Joueur')->findJWithoutMail();
-        $coureursNada = $this->getDoctrine()->getManager()->getRepository('RotisCourseMakerBundle:Joueur')->fidJWithoutMailNorTel();
-
-        if(null !== $edition)
-        {
-
-            foreach($coureursNada as $key => $coureur)
-            {
-                if($coureur->getEquipe()->getCourse()->getEdition()->getId() != $edition)
-                {
-                    unset($coureursNada[$key]);
-                }
-            }
-            foreach($coureursNoMail as $key => $coureur)
-            {
-                if($coureur->getEquipe()->getCourse()->getEdition()->getId() != $edition)
-                {
-                    unset($coureursNoMail[$key]);
-                }
-            }
+        if(!$edition) {
+            $entity = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Edition')->findLast();
+            $edition = $entity->getNumero();
         }
+        $coureursNoMail =  $this->getDoctrine()->getManager()->getRepository('RotisCourseMakerBundle:Joueur')->findJWithoutMail($edition);
+        $coureursNada = $this->getDoctrine()->getManager()->getRepository('RotisCourseMakerBundle:Joueur')->fidJWithoutMailNorTel($edition);
+
         return $this->render('RotisCourseMakerBundle:Admin:relous.html.twig', array(
             'coureursNoMail' => $coureursNoMail,
             'coureursNada' => $coureursNada, 
@@ -58,20 +44,12 @@ class AdminController extends Controller
         if (true === $this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
             $form = $this->createForm(new EditionChoiceType());
-            $edition = null;
-            if ($this->getRequest()->getMethod() == 'POST') {
-                $form->bind($this->getRequest());
-                if ($form->isValid()) {
-                    if($form->getData() !== null){
-                        $data = $form->getData();
-                        $edition = $data['edition'];
-                    }
-                }
-            }
+
+            $editions = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Edition')->findAll();
 
             return $this->render('RotisCourseMakerBundle:Admin:admin.html.twig',array(
                 'form' => $form->createView(),
-                'edition' => $edition,
+                'editions' => $editions,
             ));
         }
         else
@@ -80,29 +58,39 @@ class AdminController extends Controller
         }
     }
 
-    public function listeAction($name)
+    public function listeAction($name,$edition = null)
     {
+        if(!$edition)
+        {
+            $edition = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Edition')->findLast()->getNumero();
+        }
         $form = $this->createForm(new RechercheType());
         if ($name === "equipe")
         {
             $repository = $this->getDoctrine()
                 ->getManager()
                 ->getRepository('RotisCourseMakerBundle:Equipe');
-            $listeEquipes = $repository->findAll();
+            $listeEquipes = $repository->findEdition($edition);
             $totalEquipes = count($listeEquipes);
-            $equipesValides = $repository->findEquipesValides();
+            $equipesValides = $repository->countEquipesValides($edition);
             if ($this->getRequest()->getMethod() == 'POST') {
                 $form->bind($this->getRequest());
                 if ($form->isValid()) {
-                    $mot = $form->getData();
+                    $mot = $form->get('mot')->getData();
 
-                    if (0 != $mot)
+                    if ($mot)
                     {
-                        $listeEquipes = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Joueur')->findENameJLike($mot);
+                        $listeEquipes = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Joueur')->findENameJLike($mot,$edition);
                     }
                 }
             }
-            return $this->render('RotisCourseMakerBundle:Equipe:control_equipe.html.twig', array('nbEquipesValides' => $equipesValides, 'nbTotalEquipes' => $totalEquipes, 'name' => $name, 'equipes' => $listeEquipes, 'form' => $form->createView()));
+            return $this->render('RotisCourseMakerBundle:Admin:equipes.html.twig', array(
+                'nbEquipesValides' => $equipesValides,
+                'nbTotalEquipes' => $totalEquipes,
+                'name' => $name,
+                'equipes' => $listeEquipes,
+                'edition' => $edition,
+                'form' => $form->createView()));
         }
         elseif ($name === "course")
         {
@@ -112,15 +100,15 @@ class AdminController extends Controller
                 ->getRepository('RotisCourseMakerBundle:Course');
 
 
-            $listeCourses = $repository->findAll();
+            $listeCourses = $repository->findByEdition($edition);
             if ($this->getRequest()->getMethod() == 'POST') {
 
                 $form->bind($this->getRequest());
                 if ($form->isValid()) {
-                    $mot = $form->getData();
-                    if (0 != $mot)
+                    $mot = $form->get('mot')->getData();
+                    if ($mot)
                     {
-                        $listeCourses = $repository->findLike($mot);
+                        $listeCourses = $repository->findLike($mot,$edition);
                     }
                 }
             }
@@ -140,8 +128,14 @@ class AdminController extends Controller
                 }
             }
 
-            return $this->render('RotisCourseMakerBundle:Course:control_course.html.twig', array(
-                'name' => $name, 'courses' => $listeCourses, 'totalCoureurs' => $totalCoureurs, 'totalValidTeams' => $totalValidTeams, 'totalTeams' => $totalTeams, 'form' => $form->createView(),
+            return $this->render('RotisCourseMakerBundle:Admin:courses.html.twig', array(
+                'name' => $name,
+                'courses' => $listeCourses,
+                'totalCoureurs' => $totalCoureurs,
+                'totalValidTeams' => $totalValidTeams,
+                'totalTeams' => $totalTeams,
+                'edition' => $edition,
+                'form' => $form->createView(),
             ));
 
         }
@@ -178,6 +172,41 @@ class AdminController extends Controller
                 }
             }
         }
-        return $this->render('RotisCourseMakerBundle:Course:mailing.html.twig', array('tousJoueurs' => $tousJoueurs, 'listeCourses' => $listeCourses));
+        return $this->render('RotisCourseMakerBundle:Admin:mailing.html.twig', array('tousJoueurs' => $tousJoueurs, 'listeCourses' => $listeCourses));
+    }
+
+    public function dashboardAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $editions = $em->getRepository('RotisCourseMakerBundle:Edition')->findAll();
+        $categories = $em->getRepository('RotisCourseMakerBundle:Categorie')->findAll();
+        $types = $em->getRepository('RotisCourseMakerBundle:Type')->findAll();
+        $courses = $em->getRepository('RotisCourseMakerBundle:Course')->findAll();
+        $tarifs = $em->getRepository('RotisCourseMakerBundle:Tarif')->findAll();
+        $resultats = $em->getRepository('RotisCourseMakerBundle:Resultat')->findAll();
+
+        return $this->render('RotisCourseMakerBundle:CRUD:dashboard.html.twig', array(
+            'editions' => $editions,
+            'categories' => $categories,
+            'types' => $types,
+            'courses' => $courses,
+            'tarifs' => $tarifs,
+            'resultats' => $resultats,
+        ));
+    }
+
+    public function switchOuvertureAction($idcourse,$status)
+    {
+        $course = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Course')
+            ->find($idcourse);
+        $em = $this->getDoctrine()->getManager();
+        $course->setInscriptionsOuvertes(!$status);
+        $em->merge($course);
+        $em->flush();
+        return $this->redirect($this->generateUrl('admin_control', array(
+            'name' => 'course',
+        )));
     }
 }

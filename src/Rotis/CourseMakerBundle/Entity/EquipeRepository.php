@@ -91,13 +91,33 @@ class EquipeRepository extends EntityRepository implements UserProviderInterface
         return $equipes;
     }
 
-    public function findEquipesValides()
+    public function countEquipesValides($numero = null)
     {
         $qb = $this
             ->createQueryBuilder('e');
             $qb->select('count(e.id)')
                 ->where('e.valide = true');
+        if($numero)
+        {
+            $qb->join('e.course', 'c')
+                ->join('c.edition', 'ed')
+                ->andWhere('ed.numero = :numero')
+                ->setParameter('numero',$numero);
+        }
         $count = $qb->getQuery()->getSingleScalarResult();
         return $count;
+    }
+
+    public function findEdition($numero)
+    {
+        $qb = $this->createQueryBuilder('e');
+        if($numero)
+        {
+            $qb->join('e.course', 'c')
+                ->join('c.edition', 'ed')
+                ->where('ed.numero = :numero')
+                ->setParameter('numero',$numero);
+        }
+        return $qb->getQuery()->getResult();
     }
 }

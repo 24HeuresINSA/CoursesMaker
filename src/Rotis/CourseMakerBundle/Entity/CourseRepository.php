@@ -12,14 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class CourseRepository extends EntityRepository
 {
-    public function findLike($mot)
+    public function findLike($mot,$numero = null)
     {
-        $mot["mot"] = "%".$mot["mot"]."%";
         $qb = $this
             ->createQueryBuilder('c')
             ->where('c.nom LIKE :mot')
             ->orderBy('c.nom', 'ASC')
-            ->setParameter('mot', array($mot));
+            ->setParameter('mot', '%'.$mot.'%');
+
+        if($numero)
+        {
+            $qb->join('c.edition', 'e')
+                ->andWhere('e.numero = :numero')
+                ->setParameter('numero',$numero);
+        }
 
         $query = $qb->getQuery();
         $courses = $query->getResult();
@@ -40,12 +46,13 @@ class CourseRepository extends EntityRepository
         return $courses;
     }
 
-    public function findByEdition($id)
+    public function findByEdition($numero)
     {
         $qb = $this
             ->createQueryBuilder('c')
-            ->where('c.edition = :idEdition')
-            ->setParameter('idEdition',$id);
+            ->join('c.edition','e')
+            ->where('e.numero = :numero')
+            ->setParameter('numero',$numero);
         $query = $qb->getQuery();
         $courses = $query->getResult();
         return $courses;

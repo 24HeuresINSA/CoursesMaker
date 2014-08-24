@@ -1,48 +1,46 @@
 <?php
+
 namespace Rotis\CourseMakerBundle\Controller;
 
-use Rotis\CourseMakerBundle\Entity\Course;
-use Rotis\CourseMakerBundle\Entity\Joueur;
-use Rotis\CourseMakerBundle\Form\CourseType;
+use Rotis\CourseMakerBundle\Entity\Type;
+use Rotis\CourseMakerBundle\Form\TypeType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class CourseController extends Controller
+class TypeController extends Controller
 {
     public function createAction(Request $request)
     {
-        $course = new Course();
-        $form = $this->createForm(new CourseType(),$course);
+        $type = new Type();
+        $form = $this->createForm(new TypeType(),$type);
         if($request->getMethod() == 'POST')
         {
             $form->bind($request);
             if($form->isValid())
             {
-                $this->getDoctrine()->getManager()->persist($course);
+                $this->getDoctrine()->getManager()->persist($type);
                 $this->getDoctrine()->getManager()->flush();
+
                 return $this->redirect($this->generateUrl('dashboard'));
             }
         }
-        return $this->render('RotisCourseMakerBundle:CRUD:course.html.twig', array(
+        return $this->render('RotisCourseMakerBundle:CRUD:type.html.twig', array(
             'form' => $form->createView(),
         ));
     }
 
     public function removeAction($id)
     {
-        $course = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Course')->find($id);
-        $this->getDoctrine()->getManager()->remove($course);
+        $type = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Type')->find($id);
+        $this->getDoctrine()->getManager()->remove($type);
         $this->getDoctrine()->getManager()->flush();
         return $this->redirect($this->generateUrl('dashboard'));
     }
 
     public function editAction(Request $request, $id)
     {
-        $course = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Course')->find($id);
-        $form = $this->createForm(new CourseType, $course);
+        $type = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Type')->find($id);
+        $form = $this->createForm(new TypeType(), $type);
         if($request->getMethod() == 'POST')
         {
             $form->bind($request);
@@ -52,7 +50,7 @@ class CourseController extends Controller
                 return $this->redirect($this->generateUrl('dashboard'));
             }
         }
-        return $this->render('RotisCourseMakerBundle:CRUD:course.html.twig',array(
+        return $this->render('RotisCourseMakerBundle:CRUD:type.html.twig',array(
             'form' => $form->createView(),
         ));
     }

@@ -1,0 +1,15 @@
+categorie_create:
+    pattern: /create
+    defaults: { _controller: RotisCourseMakerBundle:Categorie:create }
+
+categorie_edit:
+    pattern: /edit/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Categorie:edit }
+    requirements:
+        id: \d+
+
+categorie_remove:
+    pattern: /remove/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Categorie:remove }
+    requirements:
+        id: \d+

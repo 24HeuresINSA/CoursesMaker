@@ -1,0 +1,33 @@
+Rotis\CourseMakerBundle\Entity\Resultat:
+  type: entity
+  table: null
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nom:
+      type: string
+      length: 255
+    path:
+      type: string
+      length: 255
+      nullable: true
+    filename:
+      type: string
+      length: 255
+      nullable: true
+    file:
+
+  oneToMany:
+    courses:
+      targetEntity: Course
+      mappedBy: resultat
+
+  lifecycleCallbacks:
+      prePersist: [ preUpload ]
+      preUpdate: [ preUpload ]
+      postPersist: [ upload ]
+      postUpdate: [ upload ]
+      postRemove: [ removeUpload ]

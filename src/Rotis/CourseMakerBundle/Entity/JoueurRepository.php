@@ -15,32 +15,46 @@ use Symfony\Component\Validator\Constraints\Collection;
  */
 class JoueurRepository extends EntityRepository
 {
-    public function findENameJLike($mot)
+    public function findENameJLike($mot,$numero = null)
     {
-        $mot["mot"] = "%".$mot["mot"]."%";
         $qb = $this
             ->createQueryBuilder('j');
-            $qb->where('j.nom LIKE :mot' )
-                ->setParameter('mot', array($mot));//'%'.$mot.'%'
+            $qb->where('j.nom LIKE :mot' );
+            if($numero)
+            {
+                $qb->join('j.equipe','e')
+                    ->join('e.course','c')
+                    ->join('c.edition','ed','WITH','ed.numero = :numero')
+                    ->setParameters(array('numero' => $numero, 'mot' => $mot));
+            }
 
-        $query = $qb->getQuery();
-        $joueurs = $query->getResult();
+            /*else
+            {
+                $qb->setParameter('mot', '%'.$mot.'%');
+            }*/
+        $joueurs = $qb->getQuery()->getResult();
         $listeEquipes = new ArrayCollection();
         foreach($joueurs as $joueur)
         {
-           $Equipe = $joueur->getEquipe();
-           if(!($listeEquipes->contains($Equipe)))
+           $equipe = $joueur->getEquipe();
+           if(!($listeEquipes->contains($equipe)))
             {
-                $listeEquipes->add($Equipe);
+                $listeEquipes->add($equipe);
             }
         }
 
         return $listeEquipes;
     }
 
-    public function findJWithoutMail()
+    public function findJWithoutMail($edition = null)
     {
         $qb = $this->createQueryBuilder('j');
+        if($edition) {
+            $qb->join('j.equipe','e')
+                ->join('e.course','c')
+                ->join('c.edition','ed','WITH','ed.numero =:edition')
+                ->setParameter('edition',$edition);
+        }
         $qb->where('j.email is NULL')
             ->andWhere('j.telephone is NOT NULL');
         $query = $qb->getQuery();
@@ -48,9 +62,15 @@ class JoueurRepository extends EntityRepository
         return $joueurs;
     }
 
-    public function fidJWithoutMailNorTel()
+    public function fidJWithoutMailNorTel($edition = null)
     {
         $qb = $this->createQueryBuilder('j');
+        if($edition) {
+            $qb->join('j.equipe','e')
+                ->join('e.course','c')
+                ->join('c.edition','ed','WITH','ed.numero =:edition')
+                ->setParameter('edition',$edition);
+        }
         $qb->where('j.email is NULL')
             ->andWhere('j.telephone is NULL');
         $query = $qb->getQuery();

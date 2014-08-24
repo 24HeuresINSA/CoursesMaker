@@ -1,0 +1,21 @@
+edition_numero:
+    pattern: /{numero}
+    defaults: { _controller: RotisCourseMakerBundle:Edition:numero }
+    requirements:
+        numero: \d+
+
+edition_create:
+    pattern: /create
+    defaults: { _controller: RotisCourseMakerBundle:Edition:create }
+
+edition_edit:
+    pattern: /edit/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Edition:edit }
+    requirements:
+        id: \d+
+
+edition_remove:
+    pattern: /remove/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Edition:remove }
+    requirements:
+        id: \d+

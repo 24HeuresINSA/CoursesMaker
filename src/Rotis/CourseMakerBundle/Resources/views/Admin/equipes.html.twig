@@ -2,14 +2,14 @@
 
 {% block title %}CoursesMaker - Controle des Equipes{% endblock %}
 {% block div %}
-    <h1>Tableau de Bord</h1>
+    <h1>Equipes de la {{ edition }}e édition</h1>
 {% endblock %}
 {% block content %}
 
     Nombre total d'équipes: {{ nbTotalEquipes }} <br />
     Nombre d'équipes valides: {{ nbEquipesValides }}
 
-    <form action="{{ path('admin_control', {'name': 'equipe'}) }}" method="post" {{ form_enctype(form) }} class="form-inline well">
+    <form action="{{ path('admin_control', {'name': 'equipe', 'edition': edition}) }}" method="post" {{ form_enctype(form) }} class="form-inline well">
         <legend>Rechercher les noms des coureurs</legend>
         {{ form_widget(form.mot) }}
         {{ form_rest(form) }}

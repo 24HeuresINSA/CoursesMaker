@@ -64,6 +64,11 @@
 
         $(document).ready(function() {
             $('#registration_user_categorie').on('change', function(e) {
+                alert(categorie_course[e.target.value]);
+                if(categorie_course[e.target.value].indexOf($('#registration_user_course').find(':selected').val()) === -1) {
+                    $('#registration_user_course option[value=""]').attr('selected','selected');
+                }
+
                 $('#registration_user_course').find('option').each(function(index, value) {
                     var option = $(value);
                     var value = option.attr('value');
@@ -75,7 +80,6 @@
                             return;
                         }
                     }
-
                     option.hide();
                     option.attr('disabled', 'disabled');
                 });

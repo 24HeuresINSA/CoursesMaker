@@ -1,0 +1,20 @@
+course_create:
+    pattern: /create
+    defaults: { _controller: RotisCourseMakerBundle:Course:create }
+
+course_edit:
+    pattern: /edit/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Course:edit }
+    requirements:
+        id: \d+
+course_remove:
+    pattern: /remove/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Course:remove }
+    requirements:
+        id: \d+
+
+course_resultat:
+    pattern: /resultats/{id}
+    defaults: { _controller: RotisCourseMakerBundle:Course:resultats }
+    requirements:
+        id: \d+

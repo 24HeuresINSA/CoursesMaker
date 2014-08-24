@@ -66,6 +66,11 @@ class Course
     private $categories;
 
     /**
+     * @var \Rotis\CourseMakerBundle\Entity\Resultat
+     */
+    private $resultat;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -325,5 +330,28 @@ class Course
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Set resultat
+     *
+     * @param \Rotis\CourseMakerBundle\Entity\Resultat $resultat
+     * @return Course
+     */
+    public function setResultat(    Resultat $resultat = null)
+    {
+        $this->resultat = $resultat;
+
+        return $this;
+    }
+
+    /**
+     * Get resultat
+     *
+     * @return \Rotis\CourseMakerBundle\Entity\Resultat 
+     */
+    public function getResultat()
+    {
+        return $this->resultat;
     }
 }

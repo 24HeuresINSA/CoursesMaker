@@ -26,6 +26,9 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         webmaster: "%app_webmaster%"
+    form:
+        resources:
+            - 'RotisCourseMakerBundle:Form:fields.html.twig'
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"

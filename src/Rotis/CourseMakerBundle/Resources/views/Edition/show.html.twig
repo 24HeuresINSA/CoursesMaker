@@ -17,7 +17,7 @@
         {% for course in edition.courses %}
             <tr>
                 <td>{{ course.nom }}</td>
-                <td><a href="{{ path('course_resultat',{'id':course.id}) }}">{{ course.nom }}.pdf</a></td>
+                <td>{% if course.resultat %}<a href="{{ course.resultat.getWebPath() }}">{{ course.resultat.filename }}</a>{% else %}Résultats non publiés{% endif %}</td>
             </tr>
         {% endfor %}
         </tbody>
