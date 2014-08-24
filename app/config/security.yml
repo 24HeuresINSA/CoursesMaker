@@ -48,6 +48,7 @@ security:
         - { path: ^/faq, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/parcours, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/edition, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/course/resultats, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/equipe/register$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/equipe/create$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }

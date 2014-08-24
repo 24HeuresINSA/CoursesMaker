@@ -1,0 +1,3 @@
+{% for edition in editions %}
+    <h4><a href="{{ path('edition_numero', {'numero': edition.numero} ) }}">Résultats de la {{ edition.numero }}ème édition</a></h4>
+{% endfor %}

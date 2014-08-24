@@ -26,6 +26,14 @@ class EditionType extends AbstractType
             'required' => true,
             'label' => 'Jour de fin',
         ))
+        ->add('results','textarea',array(
+            'label' => 'Présentation des résultats',
+            'required' => false,
+        ))
+        ->add('showResults','checkbox',array(
+            'label' => 'Afficher les résultats',
+            'required' => false,
+        ));
         ;
     }
 

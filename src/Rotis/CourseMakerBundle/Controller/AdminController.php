@@ -8,29 +8,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class AdminController extends Controller
 {
-    public function relousAction($edition)
+    public function relousAction($edition = null)
     {
-        $coureursNoMail =  $this->getDoctrine()->getManager()->getRepository('RotisCourseMakerBundle:Joueur')->findJWithoutMail();
-        $coureursNada = $this->getDoctrine()->getManager()->getRepository('RotisCourseMakerBundle:Joueur')->fidJWithoutMailNorTel();
-
-        if(null !== $edition)
-        {
-
-            foreach($coureursNada as $key => $coureur)
-            {
-                if($coureur->getEquipe()->getCourse()->getEdition()->getId() != $edition)
-                {
-                    unset($coureursNada[$key]);
-                }
-            }
-            foreach($coureursNoMail as $key => $coureur)
-            {
-                if($coureur->getEquipe()->getCourse()->getEdition()->getId() != $edition)
-                {
-                    unset($coureursNoMail[$key]);
-                }
-            }
+        if(!$edition) {
+            $entity = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Edition')->findLast();
+            $edition = $entity->getNumero();
         }
+        $coureursNoMail =  $this->getDoctrine()->getManager()->getRepository('RotisCourseMakerBundle:Joueur')->findJWithoutMail($edition);
+        $coureursNada = $this->getDoctrine()->getManager()->getRepository('RotisCourseMakerBundle:Joueur')->fidJWithoutMailNorTel($edition);
+
         return $this->render('RotisCourseMakerBundle:Admin:relous.html.twig', array(
             'coureursNoMail' => $coureursNoMail,
             'coureursNada' => $coureursNada, 
@@ -58,20 +44,12 @@ class AdminController extends Controller
         if (true === $this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
             $form = $this->createForm(new EditionChoiceType());
-            $edition = null;
-            if ($this->getRequest()->getMethod() == 'POST') {
-                $form->bind($this->getRequest());
-                if ($form->isValid()) {
-                    if($form->getData() !== null){
-                        $data = $form->getData();
-                        $edition = $data['edition'];
-                    }
-                }
-            }
+
+            $editions = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Edition')->findAll();
 
             return $this->render('RotisCourseMakerBundle:Admin:admin.html.twig',array(
                 'form' => $form->createView(),
-                'edition' => $edition,
+                'editions' => $editions,
             ));
         }
         else
@@ -205,9 +183,15 @@ class AdminController extends Controller
         $types = $em->getRepository('RotisCourseMakerBundle:Type')->findAll();
         $courses = $em->getRepository('RotisCourseMakerBundle:Course')->findAll();
         $tarifs = $em->getRepository('RotisCourseMakerBundle:Tarif')->findAll();
+        $resultats = $em->getRepository('RotisCourseMakerBundle:Resultat')->findAll();
 
         return $this->render('RotisCourseMakerBundle:CRUD:dashboard.html.twig', array(
-            'editions' => $editions, 'categories' => $categories, 'types' => $types, 'courses' => $courses, 'tarifs' => $tarifs,
+            'editions' => $editions,
+            'categories' => $categories,
+            'types' => $types,
+            'courses' => $courses,
+            'tarifs' => $tarifs,
+            'resultats' => $resultats,
         ));
     }
 

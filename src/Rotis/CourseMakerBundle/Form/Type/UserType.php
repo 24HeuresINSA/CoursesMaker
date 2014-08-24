@@ -31,8 +31,10 @@ class UserType extends AbstractType
             'class' => 'RotisCourseMakerBundle:Course',
             'property'=> 'nom',
             'query_builder' => function(EntityRepository $er) {
-                return $er->createQueryBuilder('c')
-                    ->where('c.inscriptions_ouvertes = true');
+                    return $er->createQueryBuilder('c')
+                    ->where('c.inscriptions_ouvertes = true')
+
+                    ;
             },
             'empty_value'=> 'Choisissez une course',
             'required' => true,
@@ -42,7 +44,7 @@ class UserType extends AbstractType
         $builder->add('categorie', 'entity', array(
             'class' => 'RotisCourseMakerBundle:Categorie',
             'property' => 'nom',
-            'empty_value' => 'Choisissez d\'abord une catégorie',
+            'empty_value' => 'Choisissez une catégorie',
             'required' => true,
             'label' => 'Choix de la catégorie *'
         ));

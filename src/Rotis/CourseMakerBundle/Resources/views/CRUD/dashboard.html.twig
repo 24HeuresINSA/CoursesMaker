@@ -15,8 +15,9 @@
 	      	<th>Première Date</th>
 	      	<th>Seconde Date</th>
 	      	<th>Nombre de courses</th>
+            <th>Résultats</th>
 	      	<th>Editer</th>
-	      	<th>Suppression</th>
+	      	<th>Supprimer</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -27,6 +28,7 @@
 				<td>{{ edition.date1 | date('j/n/Y') }}</td>
 				<td>{{ edition.date2 | date('j/n/Y') }}</td>
 				<td>{{ edition.courses | length }}</td>
+                <td>{% if edition.hasResults %}Affichés{% else %}Pas affichés{% endif %}</td>
 				<td><a href="{{ path('edition_edit',{ 'id' : edition.id}) }}"><i class="icon-edit"></i></a></td>
 				<td><a href="{{ path('edition_remove', { 'id' : edition.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
 		    </tr>
@@ -48,7 +50,7 @@
 			<th>Nombre d'équipes</th>
 			<th>Nombre de courses</th>
 			<th>Editer</th>
-	      	<th>Suppression</th>
+	      	<th>Supprimer</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -78,7 +80,7 @@
 			<th>Nom</th>
 			<th>Nombre de courses</th>
 			<th>Editer</th>
-	      	<th>Suppression</th>
+	      	<th>Supprimer</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -114,7 +116,7 @@
 			<th>Numéro de l'édition</th>
 			<th>Type</th>
 			<th>Editer</th>
-	      	<th>Suppression</th>
+	      	<th>Supprimer</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -152,7 +154,7 @@
 			<th>Course</th>
 			<th>Categorie</th>
 			<th>Editer</th>
-	      	<th>Suppression</th>
+	      	<th>Supprimer</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -173,5 +175,35 @@
 	  </tbody>
 	</table>
 </div>
+<div>
+    <table class="table table-bordered">
+        <caption>Resultats</caption>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Fichier</th>
+            <th>Nombre de Courses</th>
+            <th>Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for resultat in resultats %}
+            <tr>
+                <td>{{ resultat.id }}</td>
+                <td>{{ resultat.nom }}</td>
+                <td><a href="{{ resultat.getWebPath() }}">{{ resultat.filename }}</a></td>
+                <td>{{ resultat.courses | length }}</td>
+                <td><a href="{{ path('resultat_remove', { 'id' : resultat.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td><a href="{{ path('resultat_create') }}"><i class="icon-plus"></i></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}
+{% block document_ready %}
+{% endblock document_ready %}

@@ -31,6 +31,9 @@ Rotis\CourseMakerBundle\Entity\Course:
     type:
       targetEntity: Type
       inversedBy: courses
+    resultat:
+      targetEntity: Resultat
+      inversedBy: courses
   manyToMany:
     categories:
       targetEntity: Categorie

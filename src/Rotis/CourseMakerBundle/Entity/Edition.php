@@ -2,6 +2,7 @@
 
 namespace Rotis\CourseMakerBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -35,6 +36,11 @@ class Edition
      * @var \Doctrine\Common\Collections\Collection
      */
     private $courses;
+
+    /**
+     * @var boolean
+     */
+    private $hasResults;
 
     /**
      * Get id
@@ -120,7 +126,7 @@ class Edition
      */
     public function __construct()
     {
-        $this->courses = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->courses = new ArrayCollection();
     }
     
     /**
@@ -129,7 +135,7 @@ class Edition
      * @param \Rotis\CourseMakerBundle\Entity\Course $courses
      * @return Edition
      */
-    public function addCourse(\Rotis\CourseMakerBundle\Entity\Course $courses)
+    public function addCourse(Course $courses)
     {
         $this->courses[] = $courses;
     
@@ -141,7 +147,7 @@ class Edition
      *
      * @param \Rotis\CourseMakerBundle\Entity\Course $courses
      */
-    public function removeCourse(\Rotis\CourseMakerBundle\Entity\Course $courses)
+    public function removeCourse(Course $courses)
     {
         $this->courses->removeElement($courses);
     }
@@ -154,5 +160,28 @@ class Edition
     public function getCourses()
     {
         return $this->courses;
+    }
+
+    /**
+     * Set hasResults
+     *
+     * @param boolean $hasResults
+     * @return Edition
+     */
+    public function setHasResults($hasResults)
+    {
+        $this->hasResults = $hasResults;
+
+        return $this;
+    }
+
+    /**
+     * Get hasResults
+     *
+     * @return boolean 
+     */
+    public function getHasResults()
+    {
+        return $this->hasResults;
     }
 }

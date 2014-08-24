@@ -3,11 +3,6 @@
 {% block title %}CoursesMaker - Liste des courses{% endblock %}
 {% block div %}
     <h1>Liste des courses</h1>
-    <p><small>Voici les résultats par catégorie de la 40eme édition des 24 heures des l'INSA.<br/>
-       Comme les années précédentes, les classements sont mixtes, et nous tenons à saluer <br/>
-       la performance des sportives féminines qui se sont particulièrement illustrées cette année.</small><br/>
-       Un grand bravo à <strong>Blandine BRELAY</strong> qui a battu le record de la catégorie Vélo solo féminin avec 607,4 km parcourus !
-    </p>
 {% endblock %}
 {% block content %}
 
@@ -22,7 +17,7 @@
         {% for course in edition.courses %}
             <tr>
                 <td>{{ course.nom }}</td>
-                <td><a href="{{ path('course_resultat',{'id':course.id}) }}">{{ course.nom }}.pdf</a></td>
+                <td>{% if course.resultat %}<a href="{{ course.resultat.getWebPath() }}">{{ course.resultat.filename }}</a>{% else %}Résultats non publiés{% endif %}</td>
             </tr>
         {% endfor %}
         </tbody>

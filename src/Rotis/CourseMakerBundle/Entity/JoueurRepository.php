@@ -24,8 +24,7 @@ class JoueurRepository extends EntityRepository
             {
                 $qb->join('j.equipe','e')
                     ->join('e.course','c')
-                    ->join('c.edition','ed')
-                    ->andWhere('ed.numero = :numero')
+                    ->join('c.edition','ed','WITH','ed.numero = :numero')
                     ->setParameters(array('numero' => $numero, 'mot' => $mot));
             }
 
@@ -47,9 +46,15 @@ class JoueurRepository extends EntityRepository
         return $listeEquipes;
     }
 
-    public function findJWithoutMail()
+    public function findJWithoutMail($edition = null)
     {
         $qb = $this->createQueryBuilder('j');
+        if($edition) {
+            $qb->join('j.equipe','e')
+                ->join('e.course','c')
+                ->join('c.edition','ed','WITH','ed.numero =:edition')
+                ->setParameter('edition',$edition);
+        }
         $qb->where('j.email is NULL')
             ->andWhere('j.telephone is NOT NULL');
         $query = $qb->getQuery();
@@ -57,9 +62,15 @@ class JoueurRepository extends EntityRepository
         return $joueurs;
     }
 
-    public function fidJWithoutMailNorTel()
+    public function fidJWithoutMailNorTel($edition = null)
     {
         $qb = $this->createQueryBuilder('j');
+        if($edition) {
+            $qb->join('j.equipe','e')
+                ->join('e.course','c')
+                ->join('c.edition','ed','WITH','ed.numero =:edition')
+                ->setParameter('edition',$edition);
+        }
         $qb->where('j.email is NULL')
             ->andWhere('j.telephone is NULL');
         $query = $qb->getQuery();

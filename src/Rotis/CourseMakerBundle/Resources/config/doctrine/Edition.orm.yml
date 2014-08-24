@@ -16,6 +16,8 @@ Rotis\CourseMakerBundle\Entity\Edition:
       type: date
     date_2:
       type: date
+    hasResults:
+      type: boolean
   oneToMany:
     courses:
       targetEntity: Course

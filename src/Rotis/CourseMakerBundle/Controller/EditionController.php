@@ -2,7 +2,10 @@
 namespace Rotis\CourseMakerBundle\Controller;
 
 
+use Rotis\CourseMakerBundle\Entity\Edition;
+use Rotis\CourseMakerBundle\Form\EditionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
 
@@ -17,7 +20,7 @@ class EditionController extends Controller
         ));
     }
 
-    public function createEditionAction(Request $request)
+    public function createAction(Request $request)
     {
         $edition = new Edition();
         $form = $this->createForm(new EditionType(),$edition);
@@ -26,6 +29,7 @@ class EditionController extends Controller
             $form->bind($request);
             if($form->isValid())
             {
+                $edition->setShowResults(false);
                 $this->getDoctrine()->getManager()->persist($edition);
                 $this->getDoctrine()->getManager()->flush();
                 return $this->redirect($this->generateUrl('dashboard'));
@@ -36,7 +40,7 @@ class EditionController extends Controller
         ));
     }
 
-    public function removeEditionAction($id)
+    public function removeAction($id)
     {
         $edition = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Edition')->find($id);
         $this->getDoctrine()->getManager()->remove($edition);
@@ -44,7 +48,7 @@ class EditionController extends Controller
         return $this->redirect($this->generateUrl('dashboard'));
     }
 
-    public function editEditionAction(Request $request, $id)
+    public function editAction(Request $request, $id)
     {
         $edition = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Edition')->find($id);
         $form = $this->createForm(new EditionType, $edition);
@@ -59,6 +63,15 @@ class EditionController extends Controller
         }
         return $this->render('RotisCourseMakerBundle:CRUD:edition.html.twig',array(
             'form' => $form->createView(),
+        ));
+    }
+
+    public function linkResultsAction()
+    {
+        $editions = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Edition')->findBy(array('hasResults' => true));
+
+        return $this->render('RotisCourseMakerBundle:Edition:link.html.twig',array(
+            'editions' => $editions,
         ));
     }
 }

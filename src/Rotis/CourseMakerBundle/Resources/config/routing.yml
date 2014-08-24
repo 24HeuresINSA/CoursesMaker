@@ -26,6 +26,10 @@ rotis_course_maker_type:
     resource: "@RotisCourseMakerBundle/Resources/config/routing/type.yml"
     prefix:   /type
 
+rotis_course_maker_resultat:
+    resource: "@RotisCourseMakerBundle/Resources/config/routing/resultat.yml"
+    prefix:   /resultat
+
 login:
     pattern: /login
     defaults: { _controller: RotisCourseMakerBundle:Security:login }

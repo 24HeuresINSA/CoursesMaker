@@ -2,11 +2,14 @@
 
 namespace Rotis\CourseMakerBundle\Controller;
 
+use Rotis\CourseMakerBundle\Entity\Type;
+use Rotis\CourseMakerBundle\Form\TypeType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class TypeController extends Controller
 {
-    public function createTypeAction(Request $request)
+    public function createAction(Request $request)
     {
         $type = new Type();
         $form = $this->createForm(new TypeType(),$type);
@@ -26,7 +29,7 @@ class TypeController extends Controller
         ));
     }
 
-    public function removeTypeAction($id)
+    public function removeAction($id)
     {
         $type = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Type')->find($id);
         $this->getDoctrine()->getManager()->remove($type);
@@ -34,10 +37,10 @@ class TypeController extends Controller
         return $this->redirect($this->generateUrl('dashboard'));
     }
 
-    public function editTypeAction(Request $request, $id)
+    public function editAction(Request $request, $id)
     {
         $type = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Type')->find($id);
-        $form = $this->createForm(new TypeType, $type);
+        $form = $this->createForm(new TypeType(), $type);
         if($request->getMethod() == 'POST')
         {
             $form->bind($request);

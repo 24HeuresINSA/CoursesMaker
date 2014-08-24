@@ -1,0 +1,32 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+
+{% block div %}CoursesMaker - CRUD Resultat{% endblock %}
+
+{% block content %}
+    <form method="post" {{ form_enctype(form) }} class="well">
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>{{ form_label(form.nom) }}</th>
+                    <td>{{ form_widget(form.nom) }}</td>
+                    <td>{{ form_errors(form.nom) }}</td>
+                </tr>
+                <tr>
+                    <th>{{ form_label(form.file) }}</th>
+                    <td>{{ form_widget(form.file) }}</td>
+                    <td>{{ form_errors(form.file) }}</td>
+                </tr>
+                <tr>
+                    <th>{{ form_label(form.courses) }}</th>
+                    <td>{{ form_widget(form.courses) }}</td>
+                    <td>{{ form_errors(form.courses) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form_rest(form) }}</td>
+                    <td><input type="submit" class="btn btn-primary" /></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+
+{% endblock %}

@@ -2,7 +2,10 @@
 namespace Rotis\CourseMakerBundle\Controller;
 
 
+use Rotis\CourseMakerBundle\Entity\Categorie;
+use Rotis\CourseMakerBundle\Form\CategorieType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
 
