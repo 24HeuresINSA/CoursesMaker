@@ -12,7 +12,7 @@ class EditionType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('numero','number', array(
+        $builder->add('numero','integer', array(
             'label' => 'Numéro de l\'édition',
             'required' => true,
         ));
@@ -30,7 +30,7 @@ class EditionType extends AbstractType
             'label' => 'Présentation des résultats',
             'required' => false,
         ))
-        ->add('showResults','checkbox',array(
+        ->add('hasResults','checkbox',array(
             'label' => 'Afficher les résultats',
             'required' => false,
         ));

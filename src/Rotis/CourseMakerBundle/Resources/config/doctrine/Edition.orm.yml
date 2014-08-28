@@ -9,13 +9,16 @@ Rotis\CourseMakerBundle\Entity\Edition:
       generator:
         strategy: AUTO
     numero:
-      type: string
+      type: integer
       length: 255
       unique: true
     date_1:
       type: date
     date_2:
       type: date
+    results:
+      type: text
+      nullable: true
     hasResults:
       type: boolean
   oneToMany:

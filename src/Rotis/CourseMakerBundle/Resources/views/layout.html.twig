@@ -30,7 +30,10 @@
     <!--Include of FOSjsRouting to share symfony routes with angular -->
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-    
+
+    {# Include datatables and bootstrap compatible version #}
+    <script src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script src="http://cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/2/dataTables.bootstrap.js"></script>
     {% block stylesheets %}
 
     {% endblock %}

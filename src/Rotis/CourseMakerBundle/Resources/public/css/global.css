@@ -13,3 +13,13 @@ table caption{
 .inline{
 	display: inline-block;
 }
+div .table-parent {
+    border: 2px #eeeeee solid;
+    padding: 10px 0 10px 0;
+    margin: 20px 0 20px 0;
+}
+
+div.toolbar {
+    float: right;
+    margin: 2px;
+}

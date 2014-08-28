@@ -1,0 +1,32 @@
+<div id="table-categorie" class="table-parent">
+    <table class="table table-bordered">
+        <caption>Categories</caption>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Nombre max de coureurs par équipe</th>
+            <th>Nombre d'équipes</th>
+            <th>Nombre de courses</th>
+            <th>Editer</th>
+            <th>Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for categorie in categories %}
+            <tr>
+                <td>{{ categorie.id }}</td>
+                <td>{{ categorie.nom }}</td>
+                <td>{{ categorie.nbmaxcoureurs }}</td>
+                <td>{{ categorie.equipes | length }}</td>
+                <td>{{ categorie.courses | length }}</td>
+                <td><a href="{{ path('categorie_edit',{ 'id' : categorie.id}) }}"><i class="icon-edit"></i></a></td>
+                <td><a href="{{ path('categorie_remove', { 'id' : categorie.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
+            </tr>
+        {% endfor %}
+        {# <tr>
+            <td><a href="{{ path('categorie_create') }}"><i class="icon-plus"></i></a></td>
+        </tr> #}
+        </tbody>
+    </table>
+</div>

@@ -18,7 +18,7 @@ class Edition
     private $id;
 
     /**
-     * @var string
+     * @var integer
      */
     private $numero;
 
@@ -36,6 +36,11 @@ class Edition
      * @var \Doctrine\Common\Collections\Collection
      */
     private $courses;
+
+    /**
+     * @var string
+     */
+    private $results;
 
     /**
      * @var boolean
@@ -183,5 +188,28 @@ class Edition
     public function getHasResults()
     {
         return $this->hasResults;
+    }
+
+    /**
+     * Set results
+     *
+     * @param string $results
+     * @return Edition
+     */
+    public function setResults($results)
+    {
+        $this->results = $results;
+
+        return $this;
+    }
+
+    /**
+     * Get results
+     *
+     * @return string 
+     */
+    public function getResults()
+    {
+        return $this->results;
     }
 }

@@ -29,7 +29,6 @@ class EditionController extends Controller
             $form->bind($request);
             if($form->isValid())
             {
-                $edition->setShowResults(false);
                 $this->getDoctrine()->getManager()->persist($edition);
                 $this->getDoctrine()->getManager()->flush();
                 return $this->redirect($this->generateUrl('dashboard'));

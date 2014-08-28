@@ -1,0 +1,28 @@
+<div id="table-type" class="table-parent">
+    <table class="table table-bordered">
+        <caption>Types</caption>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Nombre de courses</th>
+            <th>Editer</th>
+            <th>Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for type in types %}
+            <tr>
+                <td>{{ type.id }}</td>
+                <td>{{ type.nom }}</td>
+                <td>{{ type.courses | length }}</td>
+                <td><a href="{{ path('type_edit',{ 'id' : type.id}) }}"><i class="icon-edit"></i></a></td>
+                <td><a href="{{ path('type_remove', { 'id' : type.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
+            </tr>
+        {% endfor %}
+        {#<tr>
+            <td><a href="{{ path('type_create') }}"><i class="icon-plus"></i></a></td>
+        </tr> #}
+        </tbody>
+    </table>
+</div>

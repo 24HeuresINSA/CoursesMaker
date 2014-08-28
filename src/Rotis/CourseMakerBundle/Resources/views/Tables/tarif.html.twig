@@ -1,0 +1,32 @@
+<div id="table-tarif" class="table-parent">
+    <table class="table table-bordered">
+        <caption>Tarifs</caption>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Prix etudiant</th>
+            <th>Prix normal</th>
+            <th>Course</th>
+            <th>Categorie</th>
+            <th>Editer</th>
+            <th>Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for tarif in tarifs %}
+            <tr>
+                <td>{{ tarif.id }}</td>
+                <td>{{ tarif.prixEtudiant }}</td>
+                <td>{{ tarif.prix }}</td>
+                <td>{{ tarif.course.nom }}</td>
+                <td>{{ tarif.categorie.nom }}</td>
+                <td><a href="{{ path('tarif_edit',{ 'id' : tarif.id}) }}"><i class="icon-edit"></i></a></td>
+                <td><a href="{{ path('tarif_remove', { 'id' : tarif.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
+            </tr>
+        {% endfor %}
+        {#<tr>
+            <td><a href="{{ path('tarif_create') }}"><i class="icon-plus"></i></a></td>
+        </tr> #}
+        </tbody>
+    </table>
+</div>

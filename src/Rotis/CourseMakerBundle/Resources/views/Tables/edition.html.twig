@@ -1,0 +1,34 @@
+<div id="table-edition" class="table-parent">
+    <table class="table table-bordered table-striped table-hover">
+        <caption>Editions</caption>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Numéro</th>
+            <th>Première Date</th>
+            <th>Seconde Date</th>
+            <th>Nombre de courses</th>
+            <th>Résultats</th>
+            <th>Editer</th>
+            <th>Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for edition in editions %}
+            <tr>
+                <td>{{ edition.id }}</td>
+                <td>{{ edition.numero }}</td>
+                <td>{{ edition.date1 | date('j/n/Y') }}</td>
+                <td>{{ edition.date2 | date('j/n/Y') }}</td>
+                <td>{{ edition.courses | length }}</td>
+                <td>{% if edition.hasResults %}Affichés{% else %}Pas affichés{% endif %}</td>
+                <td><a href="{{ path('edition_edit',{ 'id' : edition.id}) }}"><i class="icon-edit"></i></a></td>
+                <td><a href="{{ path('edition_remove', { 'id' : edition.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
+            </tr>
+        {% endfor %}
+        {#<tr>
+            <td><a href="{{ path('edition_create') }}"><i class="icon-plus"></i></a></td>
+        </tr> #}
+        </tbody>
+    </table>
+</div>

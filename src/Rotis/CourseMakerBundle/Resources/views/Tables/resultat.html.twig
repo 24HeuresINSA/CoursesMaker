@@ -1,0 +1,28 @@
+<div id="table-resultat" class="table-parent">
+    <table class="table table-bordered">
+        <caption>Resultats</caption>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Fichier</th>
+            <th>Nombre de Courses</th>
+            <th>Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for resultat in resultats %}
+            <tr>
+                <td>{{ resultat.id }}</td>
+                <td>{{ resultat.nom }}</td>
+                <td><a href="{{ resultat.getWebPath() }}">{{ resultat.filename }}</a></td>
+                <td>{{ resultat.courses | length }}</td>
+                <td><a href="{{ path('resultat_remove', { 'id' : resultat.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
+            </tr>
+        {% endfor %}
+        {#<tr>
+            <td><a href="{{ path('resultat_create') }}"><i class="icon-plus"></i></a></td>
+        </tr> #}
+        </tbody>
+    </table>
+</div>
