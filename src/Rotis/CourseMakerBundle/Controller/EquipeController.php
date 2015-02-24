@@ -359,7 +359,7 @@ class EquipeController extends Controller
         }
     }
 
-    public function passAction($id)
+    public function updateAction($id)
     {
         $user = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Equipe')->find($id);
         $form = $this->createForm(new AdminEditType(), $user);
@@ -368,10 +368,12 @@ class EquipeController extends Controller
             $form->bind($this->getRequest());
             if($form->isValid())
             {
-                $factory = $this->get('security.encoder_factory');
-                $encoder = $factory->getEncoder($user);
-                $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
-                $user->setPassword($password);
+                if($form->getData()->getPassword() !== $user->getPassword()){
+                    $factory = $this->get('security.encoder_factory');
+                    $encoder = $factory->getEncoder($user);
+                    $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+                    $user->setPassword($password);
+                }
                 $this->getDoctrine()->getManager()->flush();
                 $this->get('session')->setFlash(
                     'notice',
@@ -380,33 +382,7 @@ class EquipeController extends Controller
                 return $this->redirect($this->generateUrl('account', array('id' => $id)));
             }
         }
-        return $this->render('RotisCourseMakerBundle:Equipe:password_edit.html.twig',array('equipe' => $user, 'form' => $form->createView()));
-    }
-
-    public function updateAction($id)
-    {
-        $repository = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('RotisCourseMakerBundle:Equipe');
-        $em = $this->getDoctrine()->getEntityManager();
-        $olduser = $repository->find($id);
-        $form = $this->createForm(new EditionType(), $olduser);
-        if ($this->getRequest()->getMethod() == 'POST')
-        {
-            $form->bind($this->getRequest());
-            if ($form->isValid())
-            {
-                $registration = $form->getData();
-                $user = $registration->getUser();
-                $em->flush();
-                $this->get('session')->setFlash(
-                    'notice',
-                    'Equipe modifiée!'
-                );
-                return $this->redirect($this->generateUrl('accueil'));
-            }
-        }
-        return $this->render('RotisCourseMakerBundle:Equipe:admin_edit.html.twig', array('equipe' => $olduser, 'form' => $form->createView()));
+        return $this->render('RotisCourseMakerBundle:Equipe:admin_edit.html.twig',array('equipe' => $user, 'form' => $form->createView()));
     }
 
     public function switchValAction($id, $etat, $objet)

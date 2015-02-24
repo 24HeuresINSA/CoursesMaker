@@ -59,9 +59,6 @@ admin_update:
     defaults: { _controller: RotisCourseMakerBundle:Equipe:update }
     requirements:
         id: \d+
-admin_edit_password:
-    pattern: /pass/{id}
-    defaults: { _controller: RotisCourseMakerBundle:Equipe:pass }
 
 admin_team_valid:
     pattern: /validate/{id}/{status}
