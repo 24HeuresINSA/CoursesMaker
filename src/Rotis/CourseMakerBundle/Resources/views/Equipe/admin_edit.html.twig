@@ -21,17 +21,18 @@
                         <tr>
                             <td>{{ form_widget(form.username) }}</td>
                         </tr>
-                        <tr>
-                            <td>{{ form_label(form.course) }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ form_widget(form.course) }}</td>
-                        </tr>
+
                         <tr>
                             <td>{{  form_label(form.categorie) }}</td>
                         </tr>
                         <tr>
                             <td>{{ form_widget(form.categorie) }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ form_label(form.course) }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ form_widget(form.course) }}</td>
                         </tr>
                     </table>
 
@@ -43,6 +44,33 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+        var categorie_course = JSON.parse('{{ categorie_course|raw }}');
 
+        $(document).ready(function() {
+            $('#user_categorie').on('change', function(e) {
+                if(categorie_course[e.target.value].indexOf($('#user_course').find(':selected').val()) === -1) {
+                    $('#user_course option[value=""]').attr('selected','selected');
+                }
+
+                $('#user_course').find('option').each(function(index, value) {
+                    var option = $(value);
+                    var value = option.attr('value');
+
+                    for (var i in categorie_course[e.target.value]) {
+                        if (categorie_course[e.target.value][i] == value) {
+                            option.show();
+                            option.removeAttr('disabled');
+                            return;
+                        }
+                    }
+                    option.hide();
+                    option.attr('disabled', 'disabled');
+                });
+                // anyway show first choice
+                $('#user_course').find('option[value=]').removeAttr('disabled');
+            });
+        });
+    </script>
 
 {% endblock %}

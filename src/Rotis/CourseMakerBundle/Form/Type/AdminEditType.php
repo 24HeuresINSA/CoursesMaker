@@ -20,6 +20,13 @@ class AdminEditType extends AbstractType
             'required' => false,
             'invalid_message' => 'La confirmation du mot de passe a échoué',
         ));
+        $builder->add('categorie', 'entity', array(
+            'class' => 'RotisCourseMakerBundle:Categorie',
+            'property' => 'nom',
+            'empty_value' => 'Choisissez une catégorie',
+            'required' => true,
+            'label' => 'Choix de la catégorie *'
+        ));
         $builder->add('course', 'entity', array(
             'class' => 'RotisCourseMakerBundle:Course',
             'property'=> 'nom',
@@ -32,14 +39,6 @@ class AdminEditType extends AbstractType
             'empty_value'=> 'Choisissez une course',
             'required' => true,
             'label' => 'Choix de la course *'
-        ));
-
-        $builder->add('categorie', 'entity', array(
-            'class' => 'RotisCourseMakerBundle:Categorie',
-            'property' => 'nom',
-            'empty_value' => 'Choisissez une catégorie',
-            'required' => true,
-            'label' => 'Choix de la catégorie *'
         ));
     }
 

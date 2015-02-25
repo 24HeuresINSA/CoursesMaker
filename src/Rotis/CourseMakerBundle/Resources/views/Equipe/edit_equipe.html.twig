@@ -2,7 +2,7 @@
 
 {% block title %}CoursesMaker - PageEquipe{% endblock %}
 {% block div %}
-    <h1>Edition</h1>
+    <h1>Informations sur l'Equipe {{ equipe.username }} </h1>
     {% if app.session.hasFlash('notice') %}
         <div class="flash-notice">
             <h3 class="notice">{{ app.session.flash('notice') }}</h3>
@@ -12,7 +12,6 @@
 {% block content %}
 <div ng-app="coursemaker">
 {# NB: on place le ng-app ici pour limiter l'appli angular à cette page et ne pas bloquer les soumissions de formulaires sur les autres pages(!) #}
-    <h1>Informations sur l'Equipe {{ equipe.username }} </h1>
     {# TODO: ajouter des champs pour type paiement et numéro cheque #}
 
     <table class="table table-bordered" id="tableEq">

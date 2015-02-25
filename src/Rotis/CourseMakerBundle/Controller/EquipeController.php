@@ -382,7 +382,21 @@ class EquipeController extends Controller
                 return $this->redirect($this->generateUrl('account', array('id' => $id)));
             }
         }
-        return $this->render('RotisCourseMakerBundle:Equipe:admin_edit.html.twig',array('equipe' => $user, 'form' => $form->createView()));
+        $categories = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Categorie')->findAll();
+
+        $coursesForCategories = array();
+
+        foreach ($categories as $categorie) {
+            $coursesForCategories[$categorie->getId()] = $categorie->getCourses()->map(function($p) {
+                return $p->getId();
+            })->toArray();
+        }
+
+        return $this->render('RotisCourseMakerBundle:Equipe:admin_edit.html.twig',array(
+            'equipe' => $user,
+            'categorie_course' => json_encode($coursesForCategories),
+            'form' => $form->createView(),
+        ));
     }
 
     public function switchValAction($id, $etat, $objet)
