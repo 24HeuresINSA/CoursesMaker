@@ -64,7 +64,6 @@
 
         $(document).ready(function() {
             $('#registration_user_categorie').on('change', function(e) {
-                alert(categorie_course[e.target.value]);
                 if(categorie_course[e.target.value].indexOf($('#registration_user_course').find(':selected').val()) === -1) {
                     $('#registration_user_course option[value=""]').attr('selected','selected');
                 }
