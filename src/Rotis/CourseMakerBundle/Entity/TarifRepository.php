@@ -12,12 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class TarifRepository extends EntityRepository
 {
-    public function findTarifByIdCourse($id)
+    public function findTarifByCourseCate($course,$cate)
     {
         $qb = $this
             ->createQueryBuilder('t')
-            ->where('t.course =:id')
-            ->setParameter('id', $id);
+            ->where('t.course =:course')
+            ->andWhere('t.categorie =:cate')
+            ->setParameters(array('course' => $course, 'cate' => $cate));
         $query = $qb->getQuery();
         $prix = $query->getResult();
         return $prix;

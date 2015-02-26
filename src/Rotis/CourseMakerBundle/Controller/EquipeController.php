@@ -79,7 +79,7 @@ class EquipeController extends Controller
         $tarifrepo = $this->getDoctrine()
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Tarif');
-        $tarifs = $tarifrepo->findTarifByIdCourse($equipe->getCourse()->getId());
+        $tarifs = $tarifrepo->findTarifByCourseCate($equipe->getCourse()->getId(),$equipe->getCategorie()->getId());
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')
             && true === $this->get('security.context')->isGranted('ROLE_USER')
             && (!method_exists($this->get('security.context')->getToken()->getUser(), 'getId')
@@ -97,7 +97,7 @@ class EquipeController extends Controller
                 $joueur->setPapiersOk(false);
                 $joueur->setPaiementOk(false)
                     ->setTailleTshirt('NA');
-                $tarif = $tarifrepo->findTarifByIdCourse($equipe->getCourse()->getId());
+                $tarif = $tarifrepo->findTarifByCourseCate($equipe->getCourse()->getId(),$equipe->getCategorie()->getId());
                 if (0 == $tarif[0]->getPrix()) {
                     $joueur->setPaiementOk(true);
                 }
@@ -195,7 +195,8 @@ class EquipeController extends Controller
                 $tarifrepo = $this->getDoctrine()
                     ->getManager()
                     ->getRepository('RotisCourseMakerBundle:Tarif');
-                $tarif = $tarifrepo->findTarifByIdCourse($user->getCourse()->getId());
+                $tarif = $tarifrepo->findTarifByCourseCate($user->getCourse()->getId(),$user->getCategorie()->getId());
+
                 if (0 == $tarif[0]->getPrix()) {
                     $joueur->setPaiementOk(true);
                 }
@@ -254,7 +255,7 @@ class EquipeController extends Controller
         $tarifrepo = $this->getDoctrine()
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Tarif');
-        $tarifs = $tarifrepo->findTarifByIdCourse($equipe->getCourse()->getId());
+        $tarifs = $tarifrepo->findTarifByCourseCate($equipe->getCourse()->getId(),$equipe->getCategorie()->getId());
         $em = $this->get('doctrine.orm.entity_manager');
         $form = $this->createForm(new PlayerAdditionType(), new PlayerAddition());
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')
@@ -415,7 +416,7 @@ class EquipeController extends Controller
         $tarifrepo = $this->getDoctrine()
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Tarif');
-        $tarifs = $tarifrepo->findTarifByIdCourse($equipe->getCourse()->getId());
+        $tarifs = $tarifrepo->findTarifByCourseCate($equipe->getCourse()->getId(),$equipe->getCategorie()->getId());
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')
             && true === $this->get('security.context')->isGranted('ROLE_USER')
             && (!method_exists($this->get('security.context')->getToken()->getUser(), 'getId')
@@ -475,7 +476,7 @@ class EquipeController extends Controller
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Tarif');
         $em = $this->getDoctrine()->getEntityManager();
-        $tarifs = $tarifrepo->findTarifByIdCourse($equipe->getCourse()->getId());
+        $tarifs = $tarifrepo->findTarifByCourseCate($equipe->getCourse()->getId(),$equipe->getCategorie()->getId());
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')
             && true === $this->get('security.context')->isGranted('ROLE_USER')
             && (!method_exists($this->get('security.context')->getToken()->getUser(), 'getId')
