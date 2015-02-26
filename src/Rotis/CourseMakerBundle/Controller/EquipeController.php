@@ -95,11 +95,10 @@ class EquipeController extends Controller
                 $registration = $form->getData();
                 $joueur = $registration->getJoueur();
                 $joueur->setPapiersOk(false);
-                $joueur->setPaiementOk(false)
-                    ->setTailleTshirt('NA');
+                $joueur->setTailleTshirt('NA');
                 $tarif = $tarifrepo->findTarifByCourseCate($equipe->getCourse()->getId(),$equipe->getCategorie()->getId());
                 if (0 == $tarif[0]->getPrix()) {
-                    $joueur->setPaiementOk(true);
+                    $joueur->setPaiement('Payé');
                 }
                 $repository = $this->getDoctrine()
                     ->getManager()
@@ -131,7 +130,7 @@ class EquipeController extends Controller
         $tousjoueurs = $equipe->getJoueurs();
         $validable = true;
         foreach($tousjoueurs as $joueur){
-            if ((!$joueur->getPapiersOk()) || (!$joueur->getPaiementOk()))
+            if ((!$joueur->getPapiersOk()) || ($joueur->getPaiement() == null))
             {
                 $validable = false;
             }
@@ -190,7 +189,6 @@ class EquipeController extends Controller
                 $user = $registration->getUser();
                 $joueur = $registration->getJoueur();
                 $joueur->setPapiersOk(false)
-                    ->setPaiementOk(false)
                     ->setTailleTshirt('NA');
                 $tarifrepo = $this->getDoctrine()
                     ->getManager()
@@ -198,7 +196,7 @@ class EquipeController extends Controller
                 $tarif = $tarifrepo->findTarifByCourseCate($user->getCourse()->getId(),$user->getCategorie()->getId());
 
                 if (0 == $tarif[0]->getPrix()) {
-                    $joueur->setPaiementOk(true);
+                    $joueur->setPaiement('Payé');
                 }
                 $repository = $this->getDoctrine()
                     ->getManager()
@@ -268,7 +266,7 @@ class EquipeController extends Controller
         $tousjoueurs = $equipe->getJoueurs();
         $validable = true;
         foreach($tousjoueurs as $joueur){
-            if ((!$joueur->getPapiersOk()) || (!$joueur->getPaiementOk()))
+            if ((!$joueur->getPapiersOk()) || ($joueur->getPaiement() == null))
             {
                 $validable = false;
             }
@@ -437,10 +435,10 @@ class EquipeController extends Controller
 
             if (true == $etat) //Si l'on a true, cela signifie que le paiement a été validé -> on souhaite annuler la validation
             {
-                $lejoueur->setPaiementOk(false);
+                $lejoueur->setPaiement('');
             }
             if (false == $etat) {
-                $lejoueur->setPaiementOk(true);
+                $lejoueur->setPaiement('Payé au local');
             }
         }
         $em->merge($lejoueur);
@@ -452,7 +450,7 @@ class EquipeController extends Controller
         $tousjoueurs = $equipe->getJoueurs();
         $validable = true;
         foreach($tousjoueurs as $joueur){
-            if ((!$joueur->getPapiersOk()) || (!$joueur->getPaiementOk()))
+            if ((!$joueur->getPapiersOk()) || ($joueur->getPaiement() == null))
             {
                 $validable = false;
             }
@@ -501,7 +499,7 @@ class EquipeController extends Controller
         $tousjoueurs = $equipe->getJoueurs();
         $validable = true;
         foreach($tousjoueurs as $joueur){
-            if ((!$joueur->getPapiersOk()) || (!$joueur->getPaiementOk()))
+            if ((!$joueur->getPapiersOk()) || ($joueur->getPaiement() == null))
             {
                 $validable = false;
             }

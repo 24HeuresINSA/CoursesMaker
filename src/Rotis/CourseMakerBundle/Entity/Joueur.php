@@ -81,9 +81,9 @@ class Joueur
     private $papiers_ok;
 
     /**
-     * @var boolean
+     * @var string
      */
-    private $paiement_ok;
+    private $paiement;
 
     /**
      * @var \Rotis\CourseMakerBundle\Entity\Equipe
@@ -260,30 +260,6 @@ class Joueur
     {
         return $this->papiers_ok;
     }
-
-    /**
-     * Set paiement_ok
-     *
-     * @param boolean $paiementOk
-     * @return Joueur
-     */
-    public function setPaiementOk($paiementOk)
-    {
-        $this->paiement_ok = $paiementOk;
-    
-        return $this;
-    }
-
-    /**
-     * Get paiement_ok
-     *
-     * @return boolean 
-     */
-    public function getPaiementOk()
-    {
-        return $this->paiement_ok;
-    }
-
     /**
      * Set equipe
      *
@@ -305,5 +281,28 @@ class Joueur
     public function getEquipe()
     {
         return $this->equipe;
+    }
+
+    /**
+     * Set paiement
+     *
+     * @param string $paiement
+     * @return Joueur
+     */
+    public function setPaiement($paiement)
+    {
+        $this->paiement = $paiement;
+
+        return $this;
+    }
+
+    /**
+     * Get paiement
+     *
+     * @return string 
+     */
+    public function getPaiement()
+    {
+        return $this->paiement;
     }
 }

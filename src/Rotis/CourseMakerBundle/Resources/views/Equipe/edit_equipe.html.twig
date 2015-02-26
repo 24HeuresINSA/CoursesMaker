@@ -13,38 +13,40 @@
 <div ng-app="coursemaker">
 {# NB: on place le ng-app ici pour limiter l'appli angular à cette page et ne pas bloquer les soumissions de formulaires sur les autres pages(!) #}
     {# TODO: ajouter des champs pour type paiement et numéro cheque #}
+    <div class="row-fluid">
+        <div class="span12">
 
-    <table class="table table-bordered" id="tableEq">
-        <thead>
-        <tr>
-            <th>Nom d'équipe</th>
-            <th>Statut</th>
-            <th>Course</th>
-            <th>Dans la catégorie</th>
-            <th>Type</th>
-            <th>Nombre de coureurs inscrits</th>
-            <th>Tarifs</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>{{ equipe.username }}</td>
-            <td>{% if equipe.getValide() %}
-                    <p id="val"><strong>Valide</strong></p>
-                {% else %}
-                    Pas encore valide
-                {% endif %}</td>
-            <td>{{ equipe.course.nom }}</td>
-            <td>{{ equipe.categorie.nom }}</td>
-            <td>{{ equipe.course.type.nom }}</td>
-            <td>{{ nombre }}</td>
-            <td>{% for tarif in tarifs %}
-                    {{ tarif.prixEtudiant }}€ pour les étudiants
-                    {{ tarif.prix }}€ pour les non-étudiants
-                {% endfor %}</td>
-        </tr>
-        </tbody>
-    </table>
+            <table class="table table-bordered" id="tableEq">
+                <thead>
+                <tr>
+                    <th>Nom d'équipe</th>
+                    <th>Statut</th>
+                    <th>Course</th>
+                    <th>Dans la catégorie</th>
+                    <th>Type</th>
+                    <th>Nombre de coureurs inscrits</th>
+                    <th>Tarifs</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ equipe.username }}</td>
+                    <td>{% if equipe.getValide() %}
+                            <p id="val"><strong>Valide</strong></p>
+                        {% else %}
+                            Pas encore valide
+                        {% endif %}</td>
+                    <td>{{ equipe.course.nom }}</td>
+                    <td>{{ equipe.categorie.nom }}</td>
+                    <td>{{ equipe.course.type.nom }}</td>
+                    <td>{{ nombre }}</td>
+                    <td>{% for tarif in tarifs %}
+                            {{ tarif.prixEtudiant }}€ pour les étudiants
+                            {{ tarif.prix }}€ pour les non-étudiants
+                        {% endfor %}</td>
+                </tr>
+                </tbody>
+            </table>
 
 
     <br/>
@@ -57,110 +59,123 @@
         {% if validable or equipe.getValide() %}<p><a class="btn" href="{{ path('admin_team_valid', { 'id':equipe.id,'status':equipe.valide }) }}" onclick="return(confirm('Voulez-vous vraiment valider/invalider cette équipe?'));" >{% if not equipe.getValide() %}Valider l'équipe{% else %}Invalider l'équipe{% endif %} &raquo;</a></p>{% endif %}
     {% endif %}
     <br/>
-    <table class="table table-bordered" id="tableJ" ng-controller="joueurCtrl" ng-init="nbjoueurs = {{ equipe.getJoueurs() | length }};">
-        <thead>
-        <tr>
-            <th>Prenom</th>
-            <th>Nom</th>
-            <th>Email</th>
-            <th>Telephone</th>
-            <th>Statut</th>
-          {# Pas de Tshirt cette annee #} {# <th>T-Shirt</th> #}
-            <th>Papiers</th>
-            <th>Paiement</th>
-        </tr>
-        </thead>
-        <tbody>
+        <div class="row-fluid">
+            <div class="span12" ng-controller="TeamController" ng-init="nbjoueurs = {{ equipe.getJoueurs() | length }};">
+                <table class="table table-bordered" id="tableJ">
+                    <thead>
+                    <tr>
+                        <th>Prenom</th>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Telephone</th>
+                        <th>Statut</th>
+                      {# Pas de Tshirt cette annee #} {# <th>T-Shirt</th> #}
+                        <th>Papiers</th>
+                        <th>Paiement</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-            {% for joueurs in equipe.getJoueurs() %}
-        <tr ng-form="joueurs[{{ loop.index0 }}]" role="form">
-            <td>{{ joueurs.prenom }}</td>
-            <td>{{ joueurs.nom }}</td>
-            <td>{% if joueurs.email %}{{ joueurs.email }}
-            {% else %}
-                <div ng-switch="fixed[{{ loop.index0 }}].email">
-                    <div ng-switch-when="true">
-                        {[{ joueurs[{{ loop.index0 }}].email }]}
+                        {% for joueur in equipe.joueurs %}
+                        <tr ng-controller="JoueurController" ng-init="joueur.id = {{ joueur.id }}">
+                            <td>{{ joueur.prenom }}</td>
+                            <td>{{ joueur.nom }}</td>
+                            <td>{% if joueur.email %}{{ joueur.email }}
+                            {% else %}
+                                <div ng-switch="fixed.email">
+                                    <div ng-switch-when="true">
+                                        {[{ joueur.email }]}
+                                    </div>
+                                    <div class="form-group" ng-switch-default>
+                                                <input type="email" name="email" ng-model="joueur.email" placeholder="Indiquez une adresse mail">
+                                                <input type="button" class="btn btn-primary" ng-click="send({{ equipe.id }},{{ joueur.id }})" value="Valider">
+                                    </div>
+                                </div>
+                            {% endif %}
+                            </td>
+                            <td>
+                                {% if joueur.telephone %}
+                                    {{ joueur.telephone }}
+                                {% else %}
+                                <div ng-switch="fixed.telephone">
+                                    <div ng-switch-when="true">
+                                        {[{ joueur.telephone }]}
+                                    </div>
+                                    <div class="form-group" ng-switch-default>
+                                        <input type="text" name="telephone" ng-model="joueur.telephone" placeholder="Indiquez un numéro de téléphone">
+                                        <input type="button" class="btn btn-primary" ng-click="send({{ equipe.id }},{{ joueur.id }})" value="Valider">
+                                    </div>
+                                </div>
+                                {% endif %}</td>
+                                {% if joueur.getEtudiant() %}
+                                <td>
+                                    Etudiant <a class="btn">Upload carte étudiant</a>
+
+                                </td>
+
+                            {% else %}
+                                <td>Pas Etudiant</td>
+                            {% endif %}
+                           {#Pas de Tshirt cette annee#}{# <td>{{ joueurs.getTailleTshirt }}</td>#}
+                            {% if joueur.getPapiersOk() %}
+                                <td>Certificat médical reçu</td>
+                            {% else %}
+                                <td>
+                                    En attente du certificat médical
+                                    <a class="btn">Upload certif</a>
+                                </td>
+                            {% endif %}
+                            <td>{{ joueur.paiement | default('En attente') }}{% if not joueur.paiement %}<a class="btn" ng-click="toggleChecked()" ng-class="{'btn-primary':joueur.checked}"ng-model="joueur.checked"><i class="icon-plus-sign"></i></a> {% endif %}</td>
+                            {% if equipe.getValide() %}
+                            {% else %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    {% if joueur.getPapiersOk() %}
+                                        <td><a class="btn btn-danger"
+                                           href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':joueur.getPapiersOk(), 'objet': 'certificat'}) }}">Invalider certificat</a>
+                                        </td>
+                                    {% else %}
+                                        <td><a class="btn btn-success"
+                                           href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':joueur.getPapiersOk(), 'objet': 'certificat'}) }}" >Valider certificat</a>
+                                        </td>
+                                    {% endif %}
+                                    {% if joueur.paiement != '' %}
+                                    <td><a class="btn btn-danger"
+                                           href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':true, 'objet': 'paiement'}) }}">Invalider paiement</a></td>
+                                    {% else %}
+                                    <td><a class="btn btn-success"
+                                           href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':false, 'objet': 'paiement'}) }}">Valider paiement</a></td>
+                                    {% endif %}
+                                    {% if nombre>1 %}
+                                    <td><a class="btn"
+                                           href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueur.id}) }}" onclick="return(confirm('Voulez-vous vraiment supprimer ce coureur?'));">Supprimer coureur</a>
+                                    </td>
+                                    {% endif %}
+
+                                {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    {% if nombre>1 %}
+                                        <td><a class="btn btn-danger"
+                                               href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueur.id}) }}" onclick="return(confirm('Voulez-vous vraiment supprimer ce coureur?'));">Supprimer coureur</a>
+                                        </td>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="row-fluid">
+                    <div class="span6">
                     </div>
-                    <div class="form-group" ng-switch-default>
-                                <input type="email" name="email" ng-model="joueurs[{{ loop.index0 }}].email" placeholder="Indiquez une adresse mail">
-                                <input type="button" class="btn btn-primary" ng-click="send({{ equipe.id }},{{ joueurs.id }}, {{ loop.index0 }})" value="Valider">
+                    <div ng-if="count.joueurs.length > 0" class="span6">
+                        <a class="pull-right btn btn-large btn-primary" >Payer en ligne</a>
                     </div>
                 </div>
-            {% endif %}</td>
-            <td>{% if joueurs.telephone %}{{ joueurs.telephone }}
-            {% else %}
-                <div ng-switch="fixed[{{ loop.index0 }}].telephone">
-                    <div ng-switch-when="true">
-                        {[{ joueurs[{{ loop.index0 }}].telephone }]}
-                    </div>
-                    <div class="form-group" ng-switch-default>
-                        <input type="text" name="telephone" ng-model="joueurs[{{ loop.index0 }}].telephone" placeholder="Indiquez un numéro de téléphone">
-                        <input type="button" class="btn btn-primary" ng-click="send({{ equipe.id }},{{ joueurs.id }}, {{ loop.index0 }})" value="Valider">
-                    </div>
-                </div>
-            {% endif %}</td>
-            {% if joueurs.getEtudiant() %}
-                <td>Etudiant</td>
-            {% else %}
-                <td>Pas Etudiant</td>
-            {% endif %}
-           {#Pas de Tshirt cette annee#}{# <td>{{ joueurs.getTailleTshirt }}</td>#}
-            {% if joueurs.getPapiersOk() %}
-                <td>Certificat médical reçu</td>
-            {% else %}
-                <td>En attente du certificat médical {% if joueurs.getEtudiant() %}
-                        et/ou de la carte étudiant
-                    {% endif %}</td>
-            {% endif %}
-            {% if joueurs.getPaiementOk() %}
-                <td>Paiement Validé</td>
-            {% else %}
-                <td>En attente de paiement</td>
-            {% endif %}
-            {% if equipe.getValide() %}
-            {% else %}
-                {% if is_granted('ROLE_ADMIN') %}
-                    {% if joueurs.getPapiersOk() %}
-                        <td><a class="btn btn-danger"
-                           href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPapiersOk(), 'objet': 'certificat'}) }}">Invalider certificat</a>
-                        </td>
-                    {% else %}
-                        <td><a class="btn btn-success"
-                           href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPapiersOk(), 'objet': 'certificat'}) }}" >Valider certificat</a>
-                        </td>
-                    {% endif %}
-                    {% if joueurs.getPaiementOk() %}
-                    <td><a class="btn btn-danger"
-                           href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPaiementOk(), 'objet': 'paiement'}) }}">Invalider paiement</a></td>
-                    {% else %}
-                    <td><a class="btn btn-success"
-                           href="{{ path('admin_switch_validation', {'id':joueurs.id, 'etat':joueurs.getPaiementOk(), 'objet': 'paiement'}) }}">Valider paiement</a></td>
-                    {% endif %}
-                    {% if nombre>1 %}
-                    <td><a class="btn"
-                           href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueurs.id}) }}" onclick="return(confirm('Voulez-vous vraiment supprimer ce coureur?'));">Supprimer coureur</a>
-                    </td>
-                    {% endif %}
-        </tbody>
-        <tfoot>
-            {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
-                {% if nombre>1 %}
-                    <td><a class="btn btn-danger"
-                           href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueurs.id}) }}" onclick="return(confirm('Voulez-vous vraiment supprimer ce coureur?'));">Supprimer coureur</a>
-                    </td>
-                {% endif %}
-            {% endif %}
-        {% endif %}
-        </tr>
-        {% endfor %}
-
-            </tfoot>
-    </table>
-
+            </div>
+        </div>
+        </div>
+        </div>
 
     <br/>
-    </p>
     {% if not equipe.getValide() %}
         {% if nombre < equipe.categorie.nbmaxcoureurs %}
             <div class="row-fluid">

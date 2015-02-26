@@ -65,7 +65,7 @@
                                 <li><a href="{{ path('admin_infos_pratiques') }}">Infos Pratiques</a></li>
                             {% elseif is_granted('ROLE_USER') %}
                                 <li><a>Bonjour {{ app.user.username }}</a></li>
-                                <li class="active"><a href="{{ path('account', { 'id': app.user.id }) }}">Edition d'équipe</a></li>
+                                <li class="active"><a href="{{ path('account', { 'id': app.user.id }) }}">Equipe</a></li>
                             {% endif %}
                             <li><a href="{{ path('infos_coureurs') }}">Informations</a></li>
                             <li><a href="{{ path('contact') }}">Contact</a></li>

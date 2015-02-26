@@ -18,7 +18,7 @@
                     <td>{{ coureur.prenom }}</td>
                     <td>{{ equipe.username }}</td>
                     <td>{{ course.nom }}</td>
-                    <td>{% if coureur.paiementok %}Oui{% else %}Non{% endif %}</td>
+                    <td>{{ coureur.paiement | default('En attente') }}</td>
                     <td>{% if coureur.papiersok %}Oui{% else %}Non{% endif %}</td>
                 </tr>
             {% endfor %}
