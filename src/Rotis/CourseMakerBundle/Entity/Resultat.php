@@ -4,7 +4,6 @@ namespace Rotis\CourseMakerBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -36,7 +35,7 @@ class Resultat
     private $filename;
 
     /**
-     * @var UploadedFile
+     * @var file
      *
      * @Assert\File(maxSize="6000000")
      */
@@ -131,10 +130,10 @@ class Resultat
     /**
      * Set file
      *
-     * @param UploadedFile $file
+     * @param file $file
      * @return Resultat
      */
-    public function setFile(UploadedFile $file)
+    public function setFile($file)
     {
         $this->file = $file;
 
@@ -144,7 +143,7 @@ class Resultat
     /**
      * Get file
      *
-     * @return UploadedFile
+     * @return file
      */
     public function getFile()
     {
