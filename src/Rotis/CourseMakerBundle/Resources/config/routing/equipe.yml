@@ -34,3 +34,13 @@ equipe_set_optional_data:
     requirements:
         id: \d+
         _method: POST
+
+upload:
+    pattern: /upload/{joueur}/{type}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:upload }
+    options:
+        expose: true
+    requirements:
+        joueur: \d+
+        type: certif|carte
+        _method: POST

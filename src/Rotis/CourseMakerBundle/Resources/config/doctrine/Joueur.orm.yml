@@ -30,6 +30,8 @@ Rotis\CourseMakerBundle\Entity\Joueur:
       length: '5'
     papiers_ok:
       type: boolean
+    carte_ok:
+      type: boolean
     paiement:
       type: string
       nullable: true
@@ -37,4 +39,13 @@ Rotis\CourseMakerBundle\Entity\Joueur:
     equipe:
       targetEntity: Equipe
       inversedBy: joueurs
+  oneToOne:
+    carte:
+      targetEntity: Carte
+      mappedBy: joueur
+      cascade: [ 'remove' ]
+    certif:
+      targetEntity: Certif
+      mappedBy: joueur
+      cascade: [ 'remove' ]
   lifecycleCallbacks: {  }

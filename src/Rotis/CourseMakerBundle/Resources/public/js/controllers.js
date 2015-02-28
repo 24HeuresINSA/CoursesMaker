@@ -28,6 +28,7 @@ coursemakerControllers.controller('JoueurController', ['$scope','$http',
     function($scope,$http){
         $scope.joueur = {};
         $scope.fixed = {};
+        $scope.finished = {carte:false,certif:false};
 
 
         $scope.$watch('joueur',function(){
@@ -86,4 +87,21 @@ coursemakerControllers.controller('JoueurController', ['$scope','$http',
                     console.log('error');
                 });
         };
+
+        $scope.upload = function(idjoueur,type)
+        {
+            var fd =  new FormData();
+            fd.append('file',$scope.file);
+            $http.post(Routing.generate('upload', { joueur:idjoueur, type: type }),fd,
+                {
+                    transformRequest:angular.identity,
+                    headers:{'Content-Type':undefined}
+                })
+                .success(function(d){
+                    if(d.id == idjoueur){
+                        $scope.finished[type] = true;
+
+                    }
+                })
+        }
 }]);

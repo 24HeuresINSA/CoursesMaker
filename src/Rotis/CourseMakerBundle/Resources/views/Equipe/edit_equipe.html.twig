@@ -61,7 +61,7 @@
     <br/>
         <div class="row-fluid">
             <div class="span12" ng-controller="TeamController" ng-init="nbjoueurs = {{ equipe.getJoueurs() | length }};">
-                <table class="table table-bordered" id="tableJ">
+                <table class="table table-bordered table-condensed" id="tableJ">
                     <thead>
                     <tr>
                         <th>Prenom</th>
@@ -70,8 +70,11 @@
                         <th>Telephone</th>
                         <th>Statut</th>
                       {# Pas de Tshirt cette annee #} {# <th>T-Shirt</th> #}
-                        <th>Papiers</th>
+                        <th>Certificat</th>
                         <th>Paiement</th>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <th>Validations</th>
+                        {% endif %}
                     </tr>
                     </thead>
                     <tbody>
@@ -106,29 +109,74 @@
                                         <input type="button" class="btn btn-primary" ng-click="send({{ equipe.id }},{{ joueur.id }})" value="Valider">
                                     </div>
                                 </div>
-                                {% endif %}</td>
+                                {% endif %}
+                            </td>
                                 {% if joueur.getEtudiant() %}
                                 <td>
-                                    Etudiant <a class="btn">Upload carte étudiant</a>
+                                    <div ng-switch="finished.carte">
+                                        Etudiant
+                                        {% if joueur.getCarteOk() %}
+                                            <p>Carte étudiant validée</p>
+                                        {% else %}
+                                            {% if joueur.getCarte() %}
+                                                <p>En attente de validation</p>
+                                                <a href="{{ joueur.carte.getWebPath() }}">{{ joueur.carte.filename }}</a>
+                                            {% else %}
+                                                <p>En attente de la carte étudiant</p>
+                                                <form>
+                                                    <input type="file" file-input="file" />
+                                                    <br/>
+                                                    <a ng-switch-when="false" class="btn btn-primary" ng-click="upload({{ joueur.id }},'carte')">Uploader</a>
+                                                </form>
 
+                                                <span ng-switch-when="true" class="label label-success">Upload terminé</span>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
                                 </td>
 
                             {% else %}
-                                <td>Pas Etudiant</td>
+                                <td><p>Pas Etudiant</p></td>
                             {% endif %}
                            {#Pas de Tshirt cette annee#}{# <td>{{ joueurs.getTailleTshirt }}</td>#}
-                            {% if joueur.getPapiersOk() %}
-                                <td>Certificat médical reçu</td>
-                            {% else %}
+                                {% if joueur.getPapiersOk() %}
+                                    <td><p>Certificat médical validé</p></td>
+                                {% else %}
                                 <td>
-                                    En attente du certificat médical
-                                    <a class="btn">Upload certif</a>
+                                    {% if joueur.getCertif() %}
+                                    <p>En attente de validation</p>
+                                    <a href="{{ joueur.certif.getWebPath() }}">{{ joueur.certif.filename }}</a>
+                                    {% else %}
+                                    <div ng-switch="finished.certif">
+                                        <p>En attente du certificat médical</p>
+                                        <form>
+                                            <input type="file" file-input="file" />
+                                            <br/>
+                                            <a ng-switch-when="false" class="btn btn-primary" ng-click="upload({{ joueur.id }},'certif')">Uploader</a>
+                                        </form>
+                                        <span ng-switch-when="true" class="label label-success">Upload terminé</span>
+                                    </div>
+
                                 </td>
+                                    {% endif %}
                             {% endif %}
                             <td>{{ joueur.paiement | default('En attente') }}{% if not joueur.paiement %}<a class="btn" ng-click="toggleChecked()" ng-class="{'btn-primary':joueur.checked}"ng-model="joueur.checked"><i class="icon-plus-sign"></i></a> {% endif %}</td>
                             {% if equipe.getValide() %}
                             {% else %}
                                 {% if is_granted('ROLE_ADMIN') %}
+                                    {% if joueur.etudiant %}
+                                        {% if joueur.getCarteOk() %}
+                                            <td><a class="btn btn-danger"
+                                                   href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':joueur.getCarteOk(), 'objet': 'carte'}) }}">Invalider carte</a>
+                                            </td>
+                                        {% else %}
+                                            <td><a class="btn btn-success"
+                                                   href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':joueur.getCarteOk(), 'objet': 'carte'}) }}">Valider carte</a>
+                                            </td>
+                                        {% endif %}
+                                    {% else %}
+                                        <td></td>
+                                    {% endif %}
                                     {% if joueur.getPapiersOk() %}
                                         <td><a class="btn btn-danger"
                                            href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':joueur.getPapiersOk(), 'objet': 'certificat'}) }}">Invalider certificat</a>

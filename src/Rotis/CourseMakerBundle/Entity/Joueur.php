@@ -2,6 +2,7 @@
 
 namespace Rotis\CourseMakerBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -78,6 +79,11 @@ class Joueur
     /**
      * @var boolean
      */
+    private $carte_ok;
+
+    /**
+     * @var boolean
+     */
     private $papiers_ok;
 
     /**
@@ -89,6 +95,18 @@ class Joueur
      * @var \Rotis\CourseMakerBundle\Entity\Equipe
      */
     private $equipe;
+
+    /**
+     * @var \Rotis\CourseMakerBundle\Entity\Carte
+     * @Expose
+     */
+    private $carte;
+
+    /**
+     * @var \Rotis\CourseMakerBundle\Entity\Certif
+     * @Expose
+     */
+    private $certif;
 
     /**
      * Get id
@@ -260,6 +278,31 @@ class Joueur
     {
         return $this->papiers_ok;
     }
+
+
+    /**
+     * Set carte_ok
+     *
+     * @param boolean $carteOk
+     * @return Joueur
+     */
+    public function setCarteOk($carteOk)
+    {
+        $this->carte_ok = $carteOk;
+
+        return $this;
+    }
+
+    /**
+     * Get carte_ok
+     *
+     * @return boolean
+     */
+    public function getCarteOk()
+    {
+        return $this->carte_ok;
+    }
+
     /**
      * Set equipe
      *
@@ -304,5 +347,51 @@ class Joueur
     public function getPaiement()
     {
         return $this->paiement;
+    }
+
+    /**
+     * Set carte
+     *
+     * @param \Rotis\CourseMakerBundle\Entity\Carte $carte
+     * @return Joueur
+     */
+    public function setCarte(Carte $carte = null)
+    {
+        $this->carte = $carte;
+
+        return $this;
+    }
+
+    /**
+     * Get carte
+     *
+     * @return \Rotis\CourseMakerBundle\Entity\Carte 
+     */
+    public function getCarte()
+    {
+        return $this->carte;
+    }
+
+    /**
+     * Set certif
+     *
+     * @param \Rotis\CourseMakerBundle\Entity\Certif $certif
+     * @return Joueur
+     */
+    public function setCertif(Certif $certif = null)
+    {
+        $this->certif = $certif;
+
+        return $this;
+    }
+
+    /**
+     * Get certif
+     *
+     * @return \Rotis\CourseMakerBundle\Entity\Certif 
+     */
+    public function getCertif()
+    {
+        return $this->certif;
     }
 }

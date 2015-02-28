@@ -2,6 +2,8 @@
 namespace Rotis\CourseMakerBundle\Controller;
 
 
+use Rotis\CourseMakerBundle\Entity\Carte;
+use Rotis\CourseMakerBundle\Entity\Certif;
 use Rotis\CourseMakerBundle\Entity\Joueur;
 use Rotis\CourseMakerBundle\Entity\Equipe;
 use Rotis\CourseMakerBundle\Entity\Tarif;
@@ -69,7 +71,9 @@ class EquipeController extends Controller
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Equipe');
         $em = $this->getDoctrine()->getEntityManager();
+        // forms creation
         $form = $this->createForm(new PlayerAdditionType(), new PlayerAddition());
+
         $equipe = $repository->find($id);
         if ($equipe->getValide())
         {
@@ -94,7 +98,8 @@ class EquipeController extends Controller
                 $factory = $this->get('security.encoder_factory');
                 $registration = $form->getData();
                 $joueur = $registration->getJoueur();
-                $joueur->setPapiersOk(false);
+                $joueur->setPapiersOk(false)
+                    ->setCarteOk(false);
                 $joueur->setTailleTshirt('NA');
                 $tarif = $tarifrepo->findTarifByCourseCate($equipe->getCourse()->getId(),$equipe->getCategorie()->getId());
                 if (0 == $tarif[0]->getPrix()) {
@@ -189,6 +194,7 @@ class EquipeController extends Controller
                 $user = $registration->getUser();
                 $joueur = $registration->getJoueur();
                 $joueur->setPapiersOk(false)
+                    ->setCarteOk(false)
                     ->setTailleTshirt('NA');
                 $tarifrepo = $this->getDoctrine()
                     ->getManager()
@@ -255,7 +261,10 @@ class EquipeController extends Controller
             ->getRepository('RotisCourseMakerBundle:Tarif');
         $tarifs = $tarifrepo->findTarifByCourseCate($equipe->getCourse()->getId(),$equipe->getCategorie()->getId());
         $em = $this->get('doctrine.orm.entity_manager');
+
+        // form creations
         $form = $this->createForm(new PlayerAdditionType(), new PlayerAddition());
+
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')
             && true === $this->get('security.context')->isGranted('ROLE_USER')
             && (!method_exists($this->get('security.context')->getToken()->getUser(), 'getId')
@@ -290,7 +299,7 @@ class EquipeController extends Controller
             && (!method_exists($this->get('security.context')->getToken()->getUser(), 'getId')
                 || $this->get('security.context')->getToken()->getUser()->getId() != $id))
             {
-                return new Response('error');
+                throw new AccessDeniedException();
             }
             $content = json_decode($request->getContent());
             if(is_object($content) && property_exists($content, 'id') && is_numeric($content->id) && $content->id > 0)
@@ -422,13 +431,15 @@ class EquipeController extends Controller
         ) {
             return $this->redirect($this->generateUrl('accueil'));
         }
+        // form creations
         $form = $this->createForm(new PlayerAdditionType(), new PlayerAddition());
+
+        //
         if ('certificat' === $objet) {
             if (true == $etat) //Si l'on a true, cela signifie que le certificat a été validé -> on souhaite annuler la validation
             {
                 $lejoueur->setPapiersOk(false);
-            }
-            if (false == $etat) {
+            } elseif (false == $etat) {
                 $lejoueur->setPapiersOk(true);
             }
         } elseif ('paiement' === $objet) {
@@ -436,10 +447,18 @@ class EquipeController extends Controller
             if (true == $etat) //Si l'on a true, cela signifie que le paiement a été validé -> on souhaite annuler la validation
             {
                 $lejoueur->setPaiement('');
-            }
-            if (false == $etat) {
+            } elseif (false == $etat) {
                 $lejoueur->setPaiement('Payé au local');
             }
+        } elseif ('carte' === $objet) {
+            if (true == $etat) //Si l'on a true, cela signifie que la carte a été validée -> on souhaite annuler la validation
+            {
+                $lejoueur->setCarteOk(false);
+            } elseif (false == $etat) {
+                $lejoueur->setCarteOk(true);
+            }
+        } else {
+            throw $this->createNotFoundException('Objet non trouvé');
         }
         $em->merge($lejoueur);
         $em->flush();
@@ -482,7 +501,12 @@ class EquipeController extends Controller
         ) {
             return $this->redirect($this->generateUrl('accueil'));
           }
+
+        // forms creation
         $form = $this->createForm(new PlayerAdditionType(), new PlayerAddition());
+
+        //
+
         if (true == $equipe->getJoueurs()->contains($joueur))
         {
             $equipe->removeJoueur($joueur);
@@ -547,7 +571,59 @@ class EquipeController extends Controller
             'notice',
             'Action effectuée'
         );
-        return $this->render('RotisCourseMakerBundle:CourseMaker:accueil.html.twig');
+        return $this->redirect($this->generateUrl('edit', array('id' => $id)));
 
+    }
+
+    public function uploadAction($joueur,$type)
+    {
+        $owner = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Joueur')->find($joueur);
+        if(!$this->get('security.context')->isGranted('ROLE_ADMIN') && (null === $owner || $this->get('security.context')->getToken()->getUser() !== $owner->getEquipe())){
+            throw new AccessDeniedException;
+        }
+        $certif = new Certif();
+
+        $carte = new Carte();
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        if($this->getRequest()->isMethod('POST')){
+            if($type === 'certif'){
+                $file = $this->getRequest()->files->get('file');
+
+                $certif->setFile($file);
+                $certif->setJoueur($owner);
+                $em->persist($certif);
+                $em->flush();
+
+                $this->get('session')->setFlash(
+                    'notice',
+                    'Upload réussi'
+                );
+
+                $serializer = $this->get('jms_serializer');
+                $jsoncontent = $serializer->serialize($owner, 'json');
+                return new Response($jsoncontent);
+            }
+
+            if($type === 'carte'){
+                $file = $this->getRequest()->files->get('file');
+                $carte->setFile($file);
+                $carte->setJoueur($owner);
+                $em->persist($carte);
+                $em->flush();
+
+                $this->get('session')->setFlash(
+                    'notice',
+                    'Upload réussi'
+                );
+
+                $serializer = $this->get('jms_serializer');
+                $jsoncontent = $serializer->serialize($owner, 'json');
+                return new Response($jsoncontent);
+            }
+        }
+        throw new AccessDeniedException();
     }
 }

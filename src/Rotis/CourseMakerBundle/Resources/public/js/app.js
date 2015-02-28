@@ -1,5 +1,5 @@
 var coursemaker = angular.module('coursemaker', [
-	'coursemakerControllers',
+	'coursemakerControllers', 'coursemakerServices',
 	]);
 
 coursemaker.config(['$interpolateProvider', function($interpolateProvider){
