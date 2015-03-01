@@ -120,7 +120,14 @@
                                         {% else %}
                                             {% if joueur.getCarte() %}
                                                 <p>En attente de validation</p>
-                                                <a href="{{ joueur.carte.getWebPath() }}">{{ joueur.carte.filename }}</a>
+                                                <a ng-hide="finished.carte" href="{{ joueur.carte.getWebPath() }}">{{ joueur.carte.filename }}</a>
+                                                <form>
+                                                    <input type="file" file-input="file" />
+                                                    <br/>
+                                                    <a ng-switch-when="false" class="btn btn-primary" ng-click="upload({{ joueur.id }},'carte')">Changer</a>
+                                                </form>
+
+                                                <span ng-switch-when="true" class="label label-success">Upload terminé</span>
                                             {% else %}
                                                 <p>En attente de la carte étudiant</p>
                                                 <form>
@@ -145,16 +152,24 @@
                                 <td>
                                     {% if joueur.getCertif() %}
                                     <p>En attente de validation</p>
-                                    <a href="{{ joueur.certif.getWebPath() }}">{{ joueur.certif.filename }}</a>
+                                    <a ng-hide="finished.certif" href="{{ joueur.certif.getWebPath() }}">{{ joueur.certif.filename }}</a>
+
+                                    <form>
+                                        <input type="file" file-input="file" />
+                                        <br/>
+                                        <a class="btn btn-primary" ng-click="upload({{ joueur.id }},'certif')">Changer</a>
+                                    </form>
+                                    <span ng-show="finished.certif" class="label label-success">Upload terminé</span>
+
                                     {% else %}
-                                    <div ng-switch="finished.certif">
+                                    <div>
                                         <p>En attente du certificat médical</p>
                                         <form>
                                             <input type="file" file-input="file" />
                                             <br/>
-                                            <a ng-switch-when="false" class="btn btn-primary" ng-click="upload({{ joueur.id }},'certif')">Uploader</a>
+                                            <a class="btn btn-primary" ng-click="upload({{ joueur.id }},'certif')">Uploader</a>
                                         </form>
-                                        <span ng-switch-when="true" class="label label-success">Upload terminé</span>
+                                        <span ng-show="finished.certif" class="label label-success">Upload terminé</span>
                                     </div>
 
                                 </td>
@@ -164,47 +179,44 @@
                             {% if equipe.getValide() %}
                             {% else %}
                                 {% if is_granted('ROLE_ADMIN') %}
+                                    <td>
                                     {% if joueur.etudiant %}
                                         {% if joueur.getCarteOk() %}
-                                            <td><a class="btn btn-danger"
+                                            <a class="btn btn-danger btn-block"
                                                    href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':joueur.getCarteOk(), 'objet': 'carte'}) }}">Invalider carte</a>
-                                            </td>
                                         {% else %}
-                                            <td><a class="btn btn-success"
+                                            <a class="btn btn-success btn-block"
                                                    href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':joueur.getCarteOk(), 'objet': 'carte'}) }}">Valider carte</a>
-                                            </td>
+
                                         {% endif %}
                                     {% else %}
-                                        <td></td>
                                     {% endif %}
                                     {% if joueur.getPapiersOk() %}
-                                        <td><a class="btn btn-danger"
+                                        <a class="btn btn-danger btn-block"
                                            href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':joueur.getPapiersOk(), 'objet': 'certificat'}) }}">Invalider certificat</a>
-                                        </td>
                                     {% else %}
-                                        <td><a class="btn btn-success"
+                                        <a class="btn btn-success btn-block"
                                            href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':joueur.getPapiersOk(), 'objet': 'certificat'}) }}" >Valider certificat</a>
-                                        </td>
                                     {% endif %}
                                     {% if joueur.paiement != '' %}
-                                    <td><a class="btn btn-danger"
-                                           href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':true, 'objet': 'paiement'}) }}">Invalider paiement</a></td>
+                                    <a class="btn btn-danger btn-block"
+                                           href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':true, 'objet': 'paiement'}) }}">Invalider paiement</a>
                                     {% else %}
-                                    <td><a class="btn btn-success"
-                                           href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':false, 'objet': 'paiement'}) }}">Valider paiement</a></td>
+                                    <a class="btn btn-success btn-block"
+                                           href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':false, 'objet': 'paiement'}) }}">Valider paiement</a>
                                     {% endif %}
                                     {% if nombre>1 %}
-                                    <td><a class="btn"
+                                    <a class="btn btn-block"
                                            href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueur.id}) }}" onclick="return(confirm('Voulez-vous vraiment supprimer ce coureur?'));">Supprimer coureur</a>
+                                    {% endif %}
                                     </td>
-                                    {% endif %}
-
                                 {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    <td>
                                     {% if nombre>1 %}
-                                        <td><a class="btn btn-danger"
+                                        <a class="btn btn-danger btn-block"
                                                href="{{ path('equipe_remove_joueur', {'id':equipe.id, 'idjoueur':joueur.id}) }}" onclick="return(confirm('Voulez-vous vraiment supprimer ce coureur?'));">Supprimer coureur</a>
-                                        </td>
                                     {% endif %}
+                                    </td>
                                 {% endif %}
                             {% endif %}
                         </tr>

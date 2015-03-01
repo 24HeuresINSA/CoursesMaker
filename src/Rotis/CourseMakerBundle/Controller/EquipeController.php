@@ -592,6 +592,12 @@ class EquipeController extends Controller
             if($type === 'certif'){
                 $file = $this->getRequest()->files->get('file');
 
+                if($owner->getCertif()){
+                    $old = $owner->getCertif();
+                    $owner->setCertif(null);
+                    $em->remove($old);
+                    $em->flush();
+                }
                 $certif->setFile($file);
                 $certif->setJoueur($owner);
                 $em->persist($certif);
@@ -609,6 +615,14 @@ class EquipeController extends Controller
 
             if($type === 'carte'){
                 $file = $this->getRequest()->files->get('file');
+
+
+                if($owner->getCarte()){
+                    $old = $owner->getCarte();
+                    $owner->setCarte(null);
+                    $em->remove($old);
+                    $em->flush();
+                }
                 $carte->setFile($file);
                 $carte->setJoueur($owner);
                 $em->persist($carte);
