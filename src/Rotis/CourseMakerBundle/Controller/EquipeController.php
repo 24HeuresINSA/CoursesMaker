@@ -640,4 +640,43 @@ class EquipeController extends Controller
         }
         throw new AccessDeniedException();
     }
+
+    public function payAction($equipe,$joueurs)
+    {
+        $arrayJoueurs = explode('-',$joueurs);
+
+        $prix = 0;
+        foreach($arrayJoueurs as $id)
+        {
+            $joueur = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Joueur')->find($id);
+            $equipe = $joueur->getEquipe();
+            $tarif = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Tarif')->findTarifByCourseCate($equipe->getCourse(),$equipe->getCategorie());
+
+            if($joueur->getEtudiant()){
+                $prix += $tarif->getPrixEtudiant();
+            } else {
+                $prix += $tarif->getPrix();
+            }
+        }
+        var_dump($prix);die;
+
+        $base = "https://plus.payname.fr/api";
+        $token = 'FpZHnb7gymKnfc2T2mQIzocYqJIC86SM';
+        //initialisation de session curl
+        $cSession = curl_init();
+        $options = array(
+            //url
+            CURLOPT_URL            => ($base.'?token='.$token.'&amount='.$prix.'&back_url='.$this->generateUrl('account',array('id' => $equipe),true)),
+            //récupérer la réponse dans une chaine
+            CURLOPT_RETURNTRANSFER => true,
+            //définir le type de données attendues : tableau json
+            CURLOPT_HTTPHEADER => array('Content-type: application/json')
+        );
+        //setting options
+        curl_setopt_array( $cSession, $options );
+
+        //Json result au format string
+        $answer = json_decode(curl_exec($cSession));
+        curl_close($cSession);
+    }
 }
