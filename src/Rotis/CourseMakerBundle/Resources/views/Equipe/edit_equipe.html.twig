@@ -40,10 +40,10 @@
                     <td>{{ equipe.categorie.nom }}</td>
                     <td>{{ equipe.course.type.nom }}</td>
                     <td>{{ nombre }}</td>
-                    <td>{% for tarif in tarifs %}
+                    <td>{% if tarif %}
                             {{ tarif.prixEtudiant }}€ pour les étudiants
                             {{ tarif.prix }}€ pour les non-étudiants
-                        {% endfor %}</td>
+                        {% endif %}</td>
                 </tr>
                 </tbody>
             </table>
@@ -58,7 +58,8 @@
         {% endif %}
         {% if validable or equipe.getValide() %}<p><a class="btn" href="{{ path('admin_team_valid', { 'id':equipe.id,'status':equipe.valide }) }}" onclick="return(confirm('Voulez-vous vraiment valider/invalider cette équipe?'));" >{% if not equipe.getValide() %}Valider l'équipe{% else %}Invalider l'équipe{% endif %} &raquo;</a></p>{% endif %}
     {% endif %}
-    <br/>
+            <p><a class="btn" href="{{ path('team_pay_check', { 'equipe': equipe.id }) }}">Vérifier les paiements &raquo;</a></p>
+
         <div class="row-fluid">
             <div class="span12" ng-controller="TeamController" ng-init="nbjoueurs = {{ equipe.getJoueurs() | length }};">
                 <table class="table table-bordered table-condensed" id="tableJ">
@@ -175,7 +176,28 @@
                                 </td>
                                     {% endif %}
                             {% endif %}
-                            <td>{{ joueur.paiement | default('En attente') }}{% if not joueur.paiement %}<a class="btn" ng-click="toggleChecked()" ng-class="{'btn-primary':joueur.checked}"ng-model="joueur.checked"><i class="icon-plus-sign"></i></a> {% endif %}</td>
+                            <td>
+                            {% if not joueur.getPaiementOk() %}
+                                En attente
+                                {% for paiement in joueur.getPaiements() %}
+                                    {% if paiement.statut != 'finished' %}
+                                        Paiement {{ paiement.hash }}
+                                    {% endif %}
+                                {% endfor %}
+                                <a class="btn" ng-click="toggleChecked()" ng-class="{'btn-primary':joueur.checked}" ng-model="joueur.checked"><i class="icon-plus-sign"></i></a>
+                            {% else %}
+                                Payé.
+                                {% for paiement in joueur.getPaiements() %}
+                                    {% if paiement.statut == 'finished' %}
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            <a href="https://plus.payname.fr/paiements/{{ paiement.hash }}">Lien paiement {{ paiement.hash }}</a>
+                                        {% else %}
+                                            en ligne {{ paiement.hash }}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            </td>
                             {% if equipe.getValide() %}
                             {% else %}
                                 {% if is_granted('ROLE_ADMIN') %}
@@ -198,7 +220,7 @@
                                         <a class="btn btn-success btn-block"
                                            href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':joueur.getPapiersOk(), 'objet': 'certificat'}) }}" >Valider certificat</a>
                                     {% endif %}
-                                    {% if joueur.paiement != '' %}
+                                    {% if joueur.getPaiementOk() != '' %}
                                     <a class="btn btn-danger btn-block"
                                            href="{{ path('admin_switch_validation', {'id':joueur.id, 'etat':true, 'objet': 'paiement'}) }}">Invalider paiement</a>
                                     {% else %}
@@ -227,7 +249,7 @@
                     <div class="span6">
                     </div>
                     <div ng-if="count.joueurs.length > 0" class="span6">
-                        <a class="pull-right btn btn-large btn-primary" >Payer en ligne</a>
+                        <a class="pull-right btn btn-large btn-primary" ng-click="pay({{ equipe.id }})">Payer en ligne</a>
                     </div>
                 </div>
             </div>

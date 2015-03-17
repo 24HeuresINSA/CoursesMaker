@@ -44,3 +44,23 @@ upload:
         joueur: \d+
         type: certif|carte
         _method: POST
+
+pay:
+    pattern: /pay/{equipe}/{joueurs}
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:pay }
+    options:
+        expose: true
+    requirements:
+      equipe: \d+
+
+pay_check:
+    pattern: /pay/{equipe}/check
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:payCheck }
+    requirements:
+      equipe: \d+
+
+team_pay_check:
+    pattern: /pay/{equipe}/check/all
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:teamCheck }
+    requirements:
+      equipe: \d+

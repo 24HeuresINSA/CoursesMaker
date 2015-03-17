@@ -1,0 +1,35 @@
+Rotis\CourseMakerBundle\Entity\Log:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        ip:
+            type: string
+            length: 255
+        message:
+            type: string
+            length: 255
+        navigateur:
+            type: string
+            length: 255
+        session:
+            type: string
+            length: 255
+        date:
+            type: datetime
+        errorCode:
+            type: string
+            length: 255
+            nullable: true
+
+    manyToOne:
+        paiement:
+            targetEntity: Paiement
+            inversedBy: logs
+
+    lifecycleCallbacks: {  }

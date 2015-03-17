@@ -28,16 +28,19 @@ Rotis\CourseMakerBundle\Entity\Joueur:
     taille_tshirt:
       type: string
       length: '5'
+    paiement_ok:
+      type: boolean
     papiers_ok:
       type: boolean
     carte_ok:
       type: boolean
-    paiement:
-      type: string
-      nullable: true
   manyToOne:
     equipe:
       targetEntity: Equipe
+      inversedBy: joueurs
+  manyToMany:
+    paiements:
+      targetEntity: Paiement
       inversedBy: joueurs
   oneToOne:
     carte:

@@ -87,11 +87,6 @@ class Joueur
     private $papiers_ok;
 
     /**
-     * @var string
-     */
-    private $paiement;
-
-    /**
      * @var \Rotis\CourseMakerBundle\Entity\Equipe
      */
     private $equipe;
@@ -327,29 +322,6 @@ class Joueur
     }
 
     /**
-     * Set paiement
-     *
-     * @param string $paiement
-     * @return Joueur
-     */
-    public function setPaiement($paiement)
-    {
-        $this->paiement = $paiement;
-
-        return $this;
-    }
-
-    /**
-     * Get paiement
-     *
-     * @return string 
-     */
-    public function getPaiement()
-    {
-        return $this->paiement;
-    }
-
-    /**
      * Set carte
      *
      * @param \Rotis\CourseMakerBundle\Entity\Carte $carte
@@ -393,5 +365,78 @@ class Joueur
     public function getCertif()
     {
         return $this->certif;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $paiements;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->paiements = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add paiements
+     *
+     * @param \Rotis\CourseMakerBundle\Entity\Paiement $paiements
+     * @return Joueur
+     */
+    public function addPaiement(\Rotis\CourseMakerBundle\Entity\Paiement $paiements)
+    {
+        $this->paiements[] = $paiements;
+
+        return $this;
+    }
+
+    /**
+     * Remove paiements
+     *
+     * @param \Rotis\CourseMakerBundle\Entity\Paiement $paiements
+     */
+    public function removePaiement(\Rotis\CourseMakerBundle\Entity\Paiement $paiements)
+    {
+        $this->paiements->removeElement($paiements);
+    }
+
+    /**
+     * Get paiements
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPaiements()
+    {
+        return $this->paiements;
+    }
+    /**
+     * @var boolean
+     */
+    private $paiement_ok;
+
+
+    /**
+     * Set paiement_ok
+     *
+     * @param boolean $paiementOk
+     * @return Joueur
+     */
+    public function setPaiementOk($paiementOk)
+    {
+        $this->paiement_ok = $paiementOk;
+
+        return $this;
+    }
+
+    /**
+     * Get paiement_ok
+     *
+     * @return boolean 
+     */
+    public function getPaiementOk()
+    {
+        return $this->paiement_ok;
     }
 }

@@ -2,11 +2,12 @@
 namespace Rotis\CourseMakerBundle\Controller;
 
 
+use Doctrine\ORM\UnexpectedResultException;
+use mageekguy\atoum\tools\diffs\variable;
 use Rotis\CourseMakerBundle\Entity\Carte;
 use Rotis\CourseMakerBundle\Entity\Certif;
-use Rotis\CourseMakerBundle\Entity\Joueur;
-use Rotis\CourseMakerBundle\Entity\Equipe;
-use Rotis\CourseMakerBundle\Entity\Tarif;
+use Rotis\CourseMakerBundle\Entity\Log;
+use Rotis\CourseMakerBundle\Entity\Paiement;
 
 use Rotis\CourseMakerBundle\Form\Model\PlayerAddition;
 use Rotis\CourseMakerBundle\Form\Type\PlayerAdditionType;
@@ -15,18 +16,13 @@ use Rotis\CourseMakerBundle\Form\Type\RegistrationType;
 use Rotis\CourseMakerBundle\Form\Model\Registration;
 
 use Rotis\CourseMakerBundle\Form\Type\AdminEditType;
-use Rotis\CourseMakerBundle\Form\Type\EditionType;
 use Rotis\CourseMakerBundle\Form\Type\RechercheType;
-
-use Rotis\CourseMakerBundle\Form\Type\OptionalDataType;
-use Rotis\CourseMakerBundle\Form\Model\OptionalData;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints\NotNull;
 
 use JMS\SerializerBundle\JMSSerializerBundle;
 
@@ -83,7 +79,7 @@ class EquipeController extends Controller
         $tarifrepo = $this->getDoctrine()
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Tarif');
-        $tarifs = $tarifrepo->findTarifByCourseCate($equipe->getCourse()->getId(),$equipe->getCategorie()->getId());
+        $tarif = $tarifrepo->findTarifByCourseCate($equipe->getCourse(),$equipe->getCategorie());
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')
             && true === $this->get('security.context')->isGranted('ROLE_USER')
             && (!method_exists($this->get('security.context')->getToken()->getUser(), 'getId')
@@ -99,12 +95,10 @@ class EquipeController extends Controller
                 $registration = $form->getData();
                 $joueur = $registration->getJoueur();
                 $joueur->setPapiersOk(false)
-                    ->setCarteOk(false);
+                    ->setCarteOk(false)
+                    ->setPaiementOk(false);
                 $joueur->setTailleTshirt('NA');
-                $tarif = $tarifrepo->findTarifByCourseCate($equipe->getCourse()->getId(),$equipe->getCategorie()->getId());
-                if (0 == $tarif[0]->getPrix()) {
-                    $joueur->setPaiement('Payé');
-                }
+                $tarif = $tarifrepo->findTarifByCourseCate($equipe->getCourse(),$equipe->getCategorie());
                 $repository = $this->getDoctrine()
                     ->getManager()
                     ->getRepository('RotisCourseMakerBundle:Equipe');
@@ -135,12 +129,12 @@ class EquipeController extends Controller
         $tousjoueurs = $equipe->getJoueurs();
         $validable = true;
         foreach($tousjoueurs as $joueur){
-            if ((!$joueur->getPapiersOk()) || ($joueur->getPaiement() == null))
+            if ((!$joueur->getPapiersOk()) || ($joueur->getPaiements()->count() == 0))
             {
                 $validable = false;
             }
         }
-        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('validable' => $validable, 'tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
+        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('validable' => $validable, 'tarif' => $tarif, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
     }
 
     public function eraseAction($id)
@@ -201,9 +195,6 @@ class EquipeController extends Controller
                     ->getRepository('RotisCourseMakerBundle:Tarif');
                 $tarif = $tarifrepo->findTarifByCourseCate($user->getCourse()->getId(),$user->getCategorie()->getId());
 
-                if (0 == $tarif[0]->getPrix()) {
-                    $joueur->setPaiement('Payé');
-                }
                 $repository = $this->getDoctrine()
                     ->getManager()
                     ->getRepository('RotisCourseMakerBundle:Equipe');
@@ -259,7 +250,7 @@ class EquipeController extends Controller
         $tarifrepo = $this->getDoctrine()
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Tarif');
-        $tarifs = $tarifrepo->findTarifByCourseCate($equipe->getCourse()->getId(),$equipe->getCategorie()->getId());
+        $tarif = $tarifrepo->findTarifByCourseCate($equipe->getCourse(),$equipe->getCategorie());
         $em = $this->get('doctrine.orm.entity_manager');
 
         // form creations
@@ -275,14 +266,14 @@ class EquipeController extends Controller
         $tousjoueurs = $equipe->getJoueurs();
         $validable = true;
         foreach($tousjoueurs as $joueur){
-            if ((!$joueur->getPapiersOk()) || ($joueur->getPaiement() == null))
+            if ((!$joueur->getPapiersOk()) || ($joueur->getPaiements()->count() == 0))
             {
                 $validable = false;
             }
         }
         return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array(
             'validable' => $validable,
-            'tarifs' => $tarifs,
+            'tarif' => $tarif,
             'nombre' => $nombre,
             'equipe' => $equipe,
             'form' => $form->createView(),
@@ -423,7 +414,7 @@ class EquipeController extends Controller
         $tarifrepo = $this->getDoctrine()
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Tarif');
-        $tarifs = $tarifrepo->findTarifByCourseCate($equipe->getCourse()->getId(),$equipe->getCategorie()->getId());
+        $tarif = $tarifrepo->findTarifByCourseCate($equipe->getCourse(),$equipe->getCategorie());
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')
             && true === $this->get('security.context')->isGranted('ROLE_USER')
             && (!method_exists($this->get('security.context')->getToken()->getUser(), 'getId')
@@ -446,9 +437,9 @@ class EquipeController extends Controller
 
             if (true == $etat) //Si l'on a true, cela signifie que le paiement a été validé -> on souhaite annuler la validation
             {
-                $lejoueur->setPaiement('');
+                $lejoueur->setPaiementOk(false);
             } elseif (false == $etat) {
-                $lejoueur->setPaiement('Payé au local');
+                $lejoueur->setPaiementOk(true);
             }
         } elseif ('carte' === $objet) {
             if (true == $etat) //Si l'on a true, cela signifie que la carte a été validée -> on souhaite annuler la validation
@@ -469,12 +460,12 @@ class EquipeController extends Controller
         $tousjoueurs = $equipe->getJoueurs();
         $validable = true;
         foreach($tousjoueurs as $joueur){
-            if ((!$joueur->getPapiersOk()) || ($joueur->getPaiement() == null))
+            if ((!$joueur->getPapiersOk()) || ($joueur->getPaiements()->count() == 0))
             {
                 $validable = false;
             }
         }
-        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('validable' => $validable, 'tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
+        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('validable' => $validable, 'tarif' => $tarif, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
     }
 
     public function remove_joueurAction($id, $idjoueur)
@@ -493,7 +484,7 @@ class EquipeController extends Controller
             ->getManager()
             ->getRepository('RotisCourseMakerBundle:Tarif');
         $em = $this->getDoctrine()->getEntityManager();
-        $tarifs = $tarifrepo->findTarifByCourseCate($equipe->getCourse()->getId(),$equipe->getCategorie()->getId());
+        $tarif = $tarifrepo->findTarifByCourseCate($equipe->getCourse(),$equipe->getCategorie());
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')
             && true === $this->get('security.context')->isGranted('ROLE_USER')
             && (!method_exists($this->get('security.context')->getToken()->getUser(), 'getId')
@@ -523,12 +514,12 @@ class EquipeController extends Controller
         $tousjoueurs = $equipe->getJoueurs();
         $validable = true;
         foreach($tousjoueurs as $joueur){
-            if ((!$joueur->getPapiersOk()) || ($joueur->getPaiement() == null))
+            if ((!$joueur->getPapiersOk()) || ($joueur->getPaiements()->count() == 0))
             {
                 $validable = false;
             }
         }
-        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('validable' => $validable, 'tarifs' => $tarifs, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
+        return $this->render('RotisCourseMakerBundle:Equipe:edit_equipe.html.twig', array('validable' => $validable, 'tarif' => $tarif, 'nombre' => $nombre, 'equipe' => $equipe, 'form' => $form->createView()));
 
     }
 
@@ -646,37 +637,214 @@ class EquipeController extends Controller
         $arrayJoueurs = explode('-',$joueurs);
 
         $prix = 0;
+
+        $em = $this->getDoctrine()->getManager();
+
+        $paiement = new Paiement();
+
         foreach($arrayJoueurs as $id)
         {
             $joueur = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Joueur')->find($id);
-            $equipe = $joueur->getEquipe();
-            $tarif = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Tarif')->findTarifByCourseCate($equipe->getCourse(),$equipe->getCategorie());
+            $team = $joueur->getEquipe();
+            if($equipe != $team->getId()){
+                throw new AccessDeniedException;
+            }
+            $tarif = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Tarif')->findTarifByCourseCate($team->getCourse(),$team->getCategorie());
+
 
             if($joueur->getEtudiant()){
                 $prix += $tarif->getPrixEtudiant();
             } else {
                 $prix += $tarif->getPrix();
             }
+            $joueur->addPaiement($paiement);
         }
-        var_dump($prix);die;
+        $paiement->setMontant($prix)
+            ->setStatut('creating');
+        $em->persist($paiement);
+        $em->flush();
 
         $base = "https://plus.payname.fr/api";
+
+        $payUrl = $base.'/creer-un-paiement';
         $token = 'FpZHnb7gymKnfc2T2mQIzocYqJIC86SM';
+        $backUrl = $this->generateUrl('pay_check',array('id' => $paiement->getId(),'equipe' => $equipe),true);
+        // construction du form
+        $fields = array(
+            'token' => $token,
+            'amount' => $prix,
+            //'back_url' => $backUrl,
+        );
+
+        $postData = '';
+        foreach($fields as $key => $val)
+        {
+            $postData .= $key. '=' .$val.'&';
+        }
+        $postData = rtrim($postData, '&');
+
+        $log = $this->createLog($this->getRequest(),'access creer-un-paiement');
+
+        $paiement->addLog($log);
+
+
+        $em->persist($log);
+        $em->flush();
+
         //initialisation de session curl
         $cSession = curl_init();
         $options = array(
             //url
-            CURLOPT_URL            => ($base.'?token='.$token.'&amount='.$prix.'&back_url='.$this->generateUrl('account',array('id' => $equipe),true)),
-            //récupérer la réponse dans une chaine
+            CURLOPT_URL            => $payUrl,
+
+            //Post data length
+            CURLOPT_POST => count($fields),
+
+            //Post data
+            CURLOPT_POSTFIELDS => $postData,
+
             CURLOPT_RETURNTRANSFER => true,
-            //définir le type de données attendues : tableau json
-            CURLOPT_HTTPHEADER => array('Content-type: application/json')
+        );
+        //var_dump($payUrl.'?token='.$token.'&amount='.$prix);die;
+        //setting options
+        curl_setopt_array( $cSession, $options );
+
+        //Json result au format string
+        $answer = json_decode(curl_exec($cSession), true);
+
+        curl_close($cSession);
+
+        if(is_array($answer)){
+            if($answer['success']){
+                // redirection sur link + store data
+                $paiement->setLien($answer['link'])
+                    ->setStatut('created')
+                    ->setHash($answer['hash']);
+                $log = $this->createLog($this->getRequest(),'success creer-un-paiement');
+                $paiement->addLog($log);
+                return new Response($paiement->getLien());
+            } else{
+                $log = $this->createLog($this->getRequest(),$answer['errorMsg'],$answer['errorCode']);
+                $this->addLog($paiement,$log);
+            }
+        } else {
+
+            // erreur contact site : creer log manuel et return error
+            $log = $this->createLog($this->getRequest(),'erreur creer-un-paiement');
+            $this->addLog($paiement,$log);
+        }
+        return new Response();
+    }
+
+    // lancer pour checker un paiement
+    public function payCheckAction($id,$equipe)
+    {
+        $paiement = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Paiement')->find($id);
+
+        $this->checkPaiement($paiement);
+
+        return $this->redirect($this->generateUrl('account',array('id' => $equipe)));
+    }
+
+    public function teamCheckAction($equipe)
+    {
+        $team = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Equipe')->find($equipe);
+        $pToCheck = array();
+        foreach($team->getJoueurs() as $joueur)
+        {
+            $paiements = $joueur->getPaiements();
+            if(count($this->getDoctrine()->getRepository('RotisCourseMakerBundle:Paiement')->findByStatut($joueur,'finished')) === 0)
+            {
+                foreach($paiements as $pay){
+                    if(!in_array($pay->getId(),$pToCheck)){
+                        $pToCheck[] = $pay->getId();
+                    }
+                }
+            }
+        }
+        foreach($pToCheck as $pId)
+        {
+            $paiement = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Paiement')->find($pId);
+            $this->checkPaiement($paiement);
+        }
+        return $this->redirect($this->generateUrl('account',array('id' => $equipe)));
+    }
+
+    private function createLog(Request $request,$message,$errorCode = null)
+    {
+        $log = new Log();
+        $log->setDate(new \DateTime("now"))
+            ->setIp($request->getClientIp())
+            ->setNavigateur($request->headers->get('User-Agent'))
+            ->setMessage($message)
+            ->setSession($request->getSession()->getId())
+            ->setErrorCode($errorCode);
+        return $log;
+    }
+
+    private function addLog(Paiement $paiement,Log $log)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $paiement->addLog($log);
+        $em->persist($log);
+        $em->flush();
+    }
+
+    private function checkPaiement(Paiement $paiement)
+    {
+        $base = "https://plus.payname.fr/api";
+
+
+        $checkUrl = $base.'/paiement-information?';
+        $token = 'FpZHnb7gymKnfc2T2mQIzocYqJIC86SM';
+        $fields = array(
+            'token' => $token,
+            'hash' => $paiement->getHash(),
+        );
+
+        foreach($fields as $key => $val)
+        {
+            $checkUrl .= $key. '=' .$val.'&';
+        }
+        $checkUrl = rtrim($checkUrl, '&');
+
+        //initialisation de session curl
+        $cSession = curl_init();
+        $options = array(
+            //url
+            CURLOPT_URL            => $checkUrl,
+
+            CURLOPT_RETURNTRANSFER => true,
         );
         //setting options
         curl_setopt_array( $cSession, $options );
 
         //Json result au format string
-        $answer = json_decode(curl_exec($cSession));
+        $answer = json_decode(curl_exec($cSession), true);
         curl_close($cSession);
+
+        // permet de checker le changement de statut ou non
+        $oldStatut = $paiement->getStatut();
+
+        if(is_array($answer)){
+            if($answer['success']){
+                $paiement->setStatut($answer['status']);
+                if($paiement->getStatut() === 'finished'){
+                    foreach($paiement->getJoueurs() as $joueur)
+                    {
+                        $joueur->setPaiementOk(true);
+                    }
+                }
+                $log = $this->createLog($this->getRequest(),'check statut');
+                $this->addLog($paiement,$log);
+            } else{
+                $log = $this->createLog($this->getRequest(),'failed check statut');
+                $this->addLog($paiement,$log);
+            }
+        } else{
+            $log = $this->createLog($this->getRequest(),'failed request check statut');
+            $this->addLog($paiement,$log);
+        }
     }
 }

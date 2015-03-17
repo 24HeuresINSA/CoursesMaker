@@ -15,7 +15,7 @@ class AdminController extends Controller
             $edition = $entity->getNumero();
         }
         $coureursNoMail =  $this->getDoctrine()->getManager()->getRepository('RotisCourseMakerBundle:Joueur')->findJWithoutMail($edition);
-        $coureursNada = $this->getDoctrine()->getManager()->getRepository('RotisCourseMakerBundle:Joueur')->fidJWithoutMailNorTel($edition);
+        $coureursNada = $this->getDoctrine()->getManager()->getRepository('RotisCourseMakerBundle:Joueur')->findJWithoutMailNorTel($edition);
 
         return $this->render('RotisCourseMakerBundle:Admin:relous.html.twig', array(
             'coureursNoMail' => $coureursNoMail,

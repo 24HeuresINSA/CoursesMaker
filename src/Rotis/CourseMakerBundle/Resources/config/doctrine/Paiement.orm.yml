@@ -1,0 +1,37 @@
+Rotis\CourseMakerBundle\Entity\Paiement:
+    type: entity
+    table: null
+    repositoryClass: Rotis\CourseMakerBundle\Entity\PaiementRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        statut:
+            type: string
+            length: 255
+        hash:
+            type: string
+            length: 255
+            nullable: true
+        montant:
+            type: integer
+        lien:
+            type: string
+            length: 255
+            nullable: true
+    oneToMany:
+        logs:
+            targetEntity: Log
+            mappedBy: paiement
+
+    manyToMany:
+        joueurs:
+            targetEntity: Joueur
+            mappedBy: paiements
+
+
+    lifecycleCallbacks: {  }

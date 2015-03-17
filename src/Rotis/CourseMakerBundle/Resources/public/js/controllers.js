@@ -16,12 +16,26 @@ coursemakerControllers.controller('TeamController', ['$scope','$http',
                 return elem.id;
             }).join('-');
 
-            /* TODO: générer la route de paiement
-            $scope.route = Routing.generate('inscrit_create', { sessionId: $scope.path });
-            console.log($scope.route);*/
 
         },true);
 
+        $scope.pay = function(equipe){
+            $scope.route = Routing.generate('pay', { equipe: equipe, joueurs: $scope.path });
+
+            $http.post($scope.route)
+                .success(function(data){
+                    if(data){
+                        if(data.indexOf('http') > -1){
+                            window.location.href = data;
+                        } else {
+                            alert(data);
+                        }
+                    }
+                })
+                .error(function(){
+                    console.log('error');
+                });
+        }
     }]);
 
 coursemakerControllers.controller('JoueurController', ['$scope','$http',

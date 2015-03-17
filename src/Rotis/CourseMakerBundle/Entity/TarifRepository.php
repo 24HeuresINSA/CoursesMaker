@@ -20,7 +20,7 @@ class TarifRepository extends EntityRepository
             ->andWhere('t.categorie =:cate')
             ->setParameters(array('course' => $course, 'cate' => $cate));
         $query = $qb->getQuery();
-        $prix = $query->getResult();
+        $prix = $query->getSingleResult();
         return $prix;
     }
 }

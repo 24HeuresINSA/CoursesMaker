@@ -62,7 +62,7 @@ class JoueurRepository extends EntityRepository
         return $joueurs;
     }
 
-    public function fidJWithoutMailNorTel($edition = null)
+    public function findJWithoutMailNorTel($edition = null)
     {
         $qb = $this->createQueryBuilder('j');
         if($edition) {
