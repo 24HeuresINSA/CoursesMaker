@@ -181,7 +181,7 @@ class Log
      * @param \Rotis\CourseMakerBundle\Entity\Paiement $paiement
      * @return Log
      */
-    public function setPaiement(\Rotis\CourseMakerBundle\Entity\Paiement $paiement = null)
+    public function setPaiement(Paiement $paiement = null)
     {
         $this->paiement = $paiement;
 

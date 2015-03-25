@@ -6,6 +6,7 @@ use Doctrine\ORM\UnexpectedResultException;
 use mageekguy\atoum\tools\diffs\variable;
 use Rotis\CourseMakerBundle\Entity\Carte;
 use Rotis\CourseMakerBundle\Entity\Certif;
+use Rotis\CourseMakerBundle\Entity\Equipe;
 use Rotis\CourseMakerBundle\Entity\Log;
 use Rotis\CourseMakerBundle\Entity\Paiement;
 
@@ -19,6 +20,7 @@ use Rotis\CourseMakerBundle\Form\Type\AdminEditType;
 use Rotis\CourseMakerBundle\Form\Type\RechercheType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
@@ -664,25 +666,6 @@ class EquipeController extends Controller
         $em->persist($paiement);
         $em->flush();
 
-        $base = "https://plus.payname.fr/api";
-
-        $payUrl = $base.'/creer-un-paiement';
-        $token = 'FpZHnb7gymKnfc2T2mQIzocYqJIC86SM';
-        $backUrl = $this->generateUrl('pay_check',array('id' => $paiement->getId(),'equipe' => $equipe),true);
-        // construction du form
-        $fields = array(
-            'token' => $token,
-            'amount' => $prix,
-            //'back_url' => $backUrl,
-        );
-
-        $postData = '';
-        foreach($fields as $key => $val)
-        {
-            $postData .= $key. '=' .$val.'&';
-        }
-        $postData = rtrim($postData, '&');
-
         $log = $this->createLog($this->getRequest(),'access creer-un-paiement');
 
         $paiement->addLog($log);
@@ -691,49 +674,9 @@ class EquipeController extends Controller
         $em->persist($log);
         $em->flush();
 
-        //initialisation de session curl
-        $cSession = curl_init();
-        $options = array(
-            //url
-            CURLOPT_URL            => $payUrl,
+        $link = $this->pay($paiement,$equipe);
 
-            //Post data length
-            CURLOPT_POST => count($fields),
-
-            //Post data
-            CURLOPT_POSTFIELDS => $postData,
-
-            CURLOPT_RETURNTRANSFER => true,
-        );
-        //var_dump($payUrl.'?token='.$token.'&amount='.$prix);die;
-        //setting options
-        curl_setopt_array( $cSession, $options );
-
-        //Json result au format string
-        $answer = json_decode(curl_exec($cSession), true);
-
-        curl_close($cSession);
-
-        if(is_array($answer)){
-            if($answer['success']){
-                // redirection sur link + store data
-                $paiement->setLien($answer['link'])
-                    ->setStatut('created')
-                    ->setHash($answer['hash']);
-                $log = $this->createLog($this->getRequest(),'success creer-un-paiement');
-                $paiement->addLog($log);
-                return new Response($paiement->getLien());
-            } else{
-                $log = $this->createLog($this->getRequest(),$answer['errorMsg'],$answer['errorCode']);
-                $this->addLog($paiement,$log);
-            }
-        } else {
-
-            // erreur contact site : creer log manuel et return error
-            $log = $this->createLog($this->getRequest(),'erreur creer-un-paiement');
-            $this->addLog($paiement,$log);
-        }
-        return new Response();
+        return new Response($link);
     }
 
     // lancer pour checker un paiement
@@ -782,7 +725,7 @@ class EquipeController extends Controller
         return $log;
     }
 
-    private function addLog(Paiement $paiement,Log $log)
+    private function payLog(Paiement $paiement,Log $log)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -793,11 +736,14 @@ class EquipeController extends Controller
 
     private function checkPaiement(Paiement $paiement)
     {
-        $base = "https://plus.payname.fr/api";
 
+        if(! ($this->container->hasParameter('payment.baseUrl') && $this->container->hasParameter('payment.checkUrl') && $this->container->hasParameter('payment.token')) ){
+            throw new InvalidConfigurationException;
+        }
 
-        $checkUrl = $base.'/paiement-information?';
-        $token = 'FpZHnb7gymKnfc2T2mQIzocYqJIC86SM';
+        $checkUrl = $this->container->getParameter('payment.baseUrl').$this->container->getParameter('payment.checkUrl').'?';
+        $token = $this->container->getParameter('payment.token');
+
         $fields = array(
             'token' => $token,
             'hash' => $paiement->getHash(),
@@ -837,14 +783,82 @@ class EquipeController extends Controller
                     }
                 }
                 $log = $this->createLog($this->getRequest(),'check statut');
-                $this->addLog($paiement,$log);
+                $this->payLog($paiement,$log);
             } else{
                 $log = $this->createLog($this->getRequest(),'failed check statut');
-                $this->addLog($paiement,$log);
+                $this->payLog($paiement,$log);
             }
         } else{
             $log = $this->createLog($this->getRequest(),'failed request check statut');
-            $this->addLog($paiement,$log);
+            $this->payLog($paiement,$log);
         }
+    }
+
+    private function pay(Paiement $paiement, $equipe)
+    {
+        if(! ($this->container->hasParameter('payment.baseUrl') && $this->container->hasParameter('payment.payUrl') && $this->container->hasParameter('payment.token')) ){
+            throw new InvalidConfigurationException;
+        }
+
+        $payUrl = $this->container->getParameter('payment.baseUrl').$this->container->getParameter('payment.payUrl');
+        $token = $this->container->getParameter('payment.token');
+
+        $backUrl = $this->generateUrl('pay_check',array('id' => $paiement->getId(),'equipe' => $equipe),true);
+        // construction du form
+        $fields = array(
+            'token' => $token,
+            'amount' => $paiement->getMontant(),
+            //'back_url' => $backUrl,
+        );
+
+        $postData = '';
+        foreach($fields as $key => $val)
+        {
+            $postData .= $key. '=' .$val.'&';
+        }
+        $postData = rtrim($postData, '&');
+
+
+        //initialisation de session curl
+        $cSession = curl_init();
+        $options = array(
+            //url
+            CURLOPT_URL            => $payUrl,
+
+            //Post data length
+            CURLOPT_POST => count($fields),
+
+            //Post data
+            CURLOPT_POSTFIELDS => $postData,
+
+            CURLOPT_RETURNTRANSFER => true,
+        );
+        //var_dump($payUrl.'?token='.$token.'&amount='.$prix);die;
+        //setting options
+        curl_setopt_array( $cSession, $options );
+
+        //Json result au format string
+        $answer = json_decode(curl_exec($cSession), true);
+        curl_close($cSession);
+
+        if(is_array($answer)){
+            if($answer['success']){
+                // redirection sur link + store data
+                $paiement->setLien($answer['link'])
+                    ->setStatut('created')
+                    ->setHash($answer['hash']);
+                $log = $this->createLog($this->getRequest(),'success creer-un-paiement');
+                $this->payLog($paiement,$log);
+            } else{
+                $log = $this->createLog($this->getRequest(),$answer['errorMsg'],$answer['errorCode']);
+                $this->payLog($paiement,$log);
+            }
+        } else {
+
+            // erreur contact site : creer log manuel et return error
+            $log = $this->createLog($this->getRequest(),'erreur creer-un-paiement');
+            $this->payLog($paiement,$log);
+        }
+        return $paiement->getLien();
     }
 }

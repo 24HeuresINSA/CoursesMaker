@@ -18,3 +18,9 @@ parameters:
 
     app_webmaster: 24h
     admin_password: PASSWORD FOR ADMIN USER
+
+# Payment site data
+    payment.token:
+    payment.baseUrl:
+    payment.payUrl:
+    payment.checkUrl:

@@ -162,9 +162,13 @@ class Paiement
      * @param \Rotis\CourseMakerBundle\Entity\Log $logs
      * @return Paiement
      */
-    public function addLog(\Rotis\CourseMakerBundle\Entity\Log $logs)
+    public function addLog(Log $logs)
     {
         $this->logs[] = $logs;
+        foreach($logs as $log)
+        {
+            $log->setPaiement();
+        }
 
         return $this;
     }
