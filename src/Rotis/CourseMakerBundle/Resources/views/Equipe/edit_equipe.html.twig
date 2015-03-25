@@ -59,7 +59,6 @@
         {% if validable or equipe.getValide() %}<p><a class="btn" href="{{ path('admin_team_valid', { 'id':equipe.id,'status':equipe.valide }) }}" onclick="return(confirm('Voulez-vous vraiment valider/invalider cette équipe?'));" >{% if not equipe.getValide() %}Valider l'équipe{% else %}Invalider l'équipe{% endif %} &raquo;</a></p>{% endif %}
     {% endif %}
             <p><a class="btn" href="{{ path('team_pay_check', { 'equipe': equipe.id }) }}">Vérifier les paiements &raquo;</a></p>
-
         <div class="row-fluid">
             <div class="span12" ng-controller="TeamController" ng-init="nbjoueurs = {{ equipe.getJoueurs() | length }};">
                 <table class="table table-bordered table-condensed" id="tableJ">
@@ -181,12 +180,12 @@
                                 En attente
                                 {% for paiement in joueur.getPaiements() %}
                                     {% if paiement.statut != 'finished' %}
-                                        Paiement {{ paiement.hash }}
+                                        Paiement <a href="{{ paiement.lien }}">{{ paiement.hash }}</a>
                                     {% endif %}
                                 {% endfor %}
                                 <a class="btn" ng-click="toggleChecked()" ng-class="{'btn-primary':joueur.checked}" ng-model="joueur.checked"><i class="icon-plus-sign"></i></a>
                             {% else %}
-                                Payé.
+                                Payé
                                 {% for paiement in joueur.getPaiements() %}
                                     {% if paiement.statut == 'finished' %}
                                         {% if is_granted('ROLE_ADMIN') %}
