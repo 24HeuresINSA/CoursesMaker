@@ -808,7 +808,7 @@ class EquipeController extends Controller
         $fields = array(
             'token' => $token,
             'amount' => $paiement->getMontant(),
-            //'back_url' => $backUrl,
+            'back_url' => $backUrl,
         );
 
         $postData = '';
