@@ -47,6 +47,9 @@ class Joueur
      *     message = "mail '{{ value }}' non valide.",
      *     checkMX = true
      * )
+     * @Assert\NotBlank(
+     *      message = "Cette case ne peut être laissée vide"
+     * )
      * @Expose
      */
     private $email;
