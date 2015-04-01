@@ -31,41 +31,30 @@
             <h3>Documents nécessaires à la validation de l'inscription:</h3>
             <ul>
                 <li>Le paiement par coureur</li>
-                <li>Un <strong>certificat médical</strong> portant la mention "autorise la pratique de 'sport en question'
+                <li>Un <strong>certificat médical</strong> portant la mention "autorise la pratique du 'sport en question'
                     en compétition ".  la mention <strong>en compétition</strong> est obligatoire, sans quoi nous nous
                     verrons obligés de rejeter votre certificat, de même le sport autorisé à la pratique doit être
-                    celui de la course.</li>
+                    celui de la course. Le certificat doit avoir moins d'un an d'ancienneté à compter du jour de l'évènement.</li>
                 <li>Pour les sportifs licenciés, il est possible de fournir une photocopie de votre
                     <strong>licence en cours de validité</strong> à la place du certificat médical</li>
                 <li>Si vous êtes étudiant, une photocopie de votre carte étudiant.</li>
             </ul>
 
-            <h2>Comment fonctionnent les équipes?</h2>
+            <h2>Comment fonctionnent les catégories?</h2>
             <ul>
-                <li>Equipe 'Solo' : A toi seul de relever le défi de tenir 24 heures</li>
-                <li>Equipe 'Equipe' : La course se fait à 2 ou 3 coureurs, chacun porte un dossard. Un seul membre de l'équipe est sur le circuit à la fois.</li>
-                <li>Equipe 'Loisir' : La course se fait de 4 à 12 coureurs, l'équipe n'a qu'un seul dossard et comme pour la course Equipe, un seule membre de l'équipe est sur le circuit à la fois</li>
+                {% for tarif in tarifs %}
+                    <li>Catégorie {{ tarif.categorie.nom }} : {{ tarif.categorie.nbMaxCoureurs }} participants</li>
+                {% endfor %}
+                <li>Pour les courses en équipes, un seul participant court à la fois sur le circuit</li>
+                <li>Nous fournissons un dossard par coureur pour les courses "pro" et un dossard par équipe pour les courses "loisir"</li>
             </ul>
 
             <h2>Combien ça coûte?</h2>
-            <p>Pour les courses vélo et triathlon en Solo, Equipe ou bien hors catégorie les prix sont :</p>
             <ul>
-                <li>20 € par personne</li>
-                <li>15 € pour les étudiants</li>
+                {% for tarif in tarifs%}
+                    <li><strong>Course {{ tarif.course.nom }}</strong> : <strong>{{ tarif.prixEtudiant }}€</strong> pour les étudiants, <strong>{{ tarif.prix }}€</strong> pour les autres</li>
+                {% endfor %}
             </ul>
-            <p>Pour la Course à pied Solo ou Equipe:</p>
-            <ul>
-                <li>15 € par personne</li>
-                <li>10 € pour les étudiants</li>
-            </ul>
-
-            <p>Pour le Défi Natation en Solo ou Equipe:</p>
-            <ul>
-                <li>10 € par personne</li>
-                <li>5 € pour les étudiants</li>
-            </ul>
-            <p>Pour les équipes 'Loisir' toutes les courses sont à 5 € par personne.</p>
-            <p>Les courses Folklo sont Gratuites</p>
 
             <h2>Comment je viens ?</h2>
             <p>Il est possible de venir en voiture, un accès sera ouvert jusqu'au samedi 12h00.
@@ -78,13 +67,13 @@
             <h2>Les Folklo c'est quoi ?</h2>
             <p>Faire la course en folklo ça sert à mettre l'ambiance!<br/>
                Viens avec ton vélo déguisé ou toi déguisé sur ton vélo, si tu es un pro du bricolage, tu peux même
-                faire un véhicule pour plusieurs personnes, décoré, stylisé, bonne ambiance assuré.
-                Pour les véhicule folklo, un parcours alternatif (beaucoup plus court) sera mis en place.</p>
+                faire un véhicule pour plusieurs personnes, décoré, stylisé, bonne ambiance assurée.
+                Pour les véhicules folklos, un parcours alternatif (beaucoup plus court) sera mis en place.</p>
 
             <h2>Moi j'ai un vélo mais c'est pas vraiment un vélo, je fais quoi ?</h2>
             <p>Ceci s'adresse à toi propriétaire d'un vélo couché, run bike ou autre. La catégorie hors catégorie
                 est faite pour toi ! Grace à cette catégorie tu pourra participer à la course vélo et au triathlon
-                et bénéficier d'un classement à part!</p>
+                et compétiter au sein d'un classement à part!</p>
 
             <h2><a href="{{ asset('bundles/rotiscoursemaker/pdf/rules.pdf') }}">Règlement des courses</a></h2>
         </div>

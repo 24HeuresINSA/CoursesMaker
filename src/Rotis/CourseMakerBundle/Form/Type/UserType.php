@@ -14,7 +14,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('username','text',array(
-            'label' => 'Nom de l\'équipe *',
+            'label' => 'Login / Nom de l\'équipe *',
             'required' => true,
         ));
         $builder->add('password', 'repeated', array(
@@ -24,7 +24,7 @@ class UserType extends AbstractType
            'invalid_message' => 'La confirmation du mot de passe a échoué',
            'required' => true,
             'first_options'  => array('label' => 'Mot de passe *'),
-            'second_options' => array('label' => 'Confirmation')
+            'second_options' => array('label' => 'Confirmation du mdp *')
         ));
 
         $builder->add('course', 'entity', array(

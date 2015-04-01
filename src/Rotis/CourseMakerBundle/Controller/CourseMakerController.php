@@ -23,7 +23,12 @@ class CourseMakerController extends Controller
 
     public function faqAction()
     {
-        return $this->render('RotisCourseMakerBundle:CourseMaker:faq.html.twig');
+        $edition = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Edition')->findLast();
+
+        $tarifs = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Tarif')->findTarifsByEdition($edition->getId());
+        return $this->render('RotisCourseMakerBundle:CourseMaker:faq.html.twig',array(
+            'tarifs' => $tarifs,
+        ));
     }
 
     public function parcoursAction()

@@ -23,3 +23,11 @@ div.toolbar {
     float: right;
     margin: 2px;
 }
+#val{
+    color: green;
+    display: inline;
+}
+#pasval{
+    color: red;
+    display: inline;
+}

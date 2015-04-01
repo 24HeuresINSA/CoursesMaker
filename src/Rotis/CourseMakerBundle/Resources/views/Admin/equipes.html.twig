@@ -16,20 +16,109 @@
         <input type="submit" class="btn"/>
     </form>
 
-    <ul>
-        {% for equipe in equipes %}
-            <li><a href="{{ path('account', { 'id': equipe.id }) }} ">{{ equipe.username }}</a> {% if equipe.getValide() %}<p id="val">Valide</p>{% else %}<p id="pasval">Pas Valide</p>{% endif %}</li>
-        {% endfor %}
-    </ul>
+    <table>
+        <tbody>
+        {% for equipe in equipes if not equipe.valide %}
+            <tr>
+                <td>
+                    <a href="{{ path('account', { 'id': equipe.id }) }} ">{{ equipe.username }}</a>
+                </td>
+                <td>
+                    {% if equipe.getValide() %}
+                        <p id="val">Valide</p>
+                    {% else %}
+                        <p id="pasval">Pas Valide</p>
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle btn btn-large btn-primary" data-toggle="collapse"><i class="icon-plus"></i></a>
+                        </div>
+                        <div class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Prénom</th>
+                                            <th>Mail</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for joueur in equipe.joueurs %}
+                                            <tr>
+                                                <td>{{ joueur.nom }}</td>
+                                                <td>{{ joueur.prenom }}</td>
+                                                <td>{{ joueur.email | default('') }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
 
-<style>
-    #val{
-        color: green;
-        display: inline;
-    }
-    #pasval{
-        color: red;
-        display: inline;
-    }
-</style>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <table>
+        <tbody>
+            {% for equipe in equipes if equipe.valide %}
+                <tr>
+                    <td>
+                        <a href="{{ path('account', { 'id': equipe.id }) }} ">{{ equipe.username }}</a>
+                    </td>
+                    <td>
+                        {% if equipe.getValide() %}
+                            <p id="val">Valide</p>
+                        {% else %}
+                            <p id="pasval">Pas Valide</p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle btn btn-large btn-primary" data-toggle="collapse"><i class="icon-plus"></i></a>
+                            </div>
+                            <div class="accordion-body collapse">
+                                <div class="accordion-inner">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Prénom</th>
+                                            <th>Mail</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for joueur in equipe.joueurs %}
+                                            <tr>
+                                                <td>{{ joueur.nom }}</td>
+                                                <td>{{ joueur.prenom }}</td>
+                                                <td>{{ joueur.email | default('') }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block document_ready %}
+    <script>
+        $(document).ready(function(){
+            $('.accordion-toggle').on('click',function(){
+                $(this).parents('.accordion-group').find(".collapse").collapse("toggle");
+            });
+        })
+    </script>
 {% endblock %}

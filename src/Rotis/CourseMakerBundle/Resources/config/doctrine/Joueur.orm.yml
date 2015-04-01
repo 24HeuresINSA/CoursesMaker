@@ -30,10 +30,13 @@ Rotis\CourseMakerBundle\Entity\Joueur:
       length: '5'
     paiement_ok:
       type: boolean
+      nullable : true
     papiers_ok:
       type: boolean
+      nullable: true
     carte_ok:
       type: boolean
+      nullable: true
   manyToOne:
     equipe:
       targetEntity: Equipe

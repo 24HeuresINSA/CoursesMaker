@@ -23,4 +23,14 @@ class TarifRepository extends EntityRepository
         $prix = $query->getSingleResult();
         return $prix;
     }
+
+    public function findTarifsByEdition($edition)
+    {
+        $qb = $this
+            ->createQueryBuilder('t')
+            ->join('t.course','c')
+            ->join('c.edition','e','WITH','e.id = :edition')
+            ->setParameter('edition',$edition);
+        return $qb->getQuery()->getResult();
+    }
 }

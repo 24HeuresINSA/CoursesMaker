@@ -19,7 +19,8 @@ class JoueurRepository extends EntityRepository
     {
         $qb = $this
             ->createQueryBuilder('j');
-            $qb->where('j.nom LIKE :mot' );
+            $qb->where('j.nom LIKE :mot' )
+                ->orWhere('j.prenom LIKE :mot');
             if($numero)
             {
                 $qb->join('j.equipe','e')
