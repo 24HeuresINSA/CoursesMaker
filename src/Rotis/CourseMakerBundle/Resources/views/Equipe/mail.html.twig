@@ -1,20 +1,25 @@
 Madame/Monsieur {{ joueur.prenom }} {{ joueur.nom }} bonjour,
 Par la présente nous vous confirmons votre inscription au site CoursesMaker.
-Voici vos identifiants:
-Equipe: {{ username }}
+Voici vos identifiants <strong>à conserver</strong>:
+Login/Equipe: {{ username }}
 {% if password %}
 Mot de passe: {{ password }}
 {% else %}
 Le mot de passe a été remis au chef d'équipe.
 {% endif %}
 
-Merci de nous faire parvenir avant le 15 mai 2013 les documents suivants nécessaires à la validation de votre inscription :
-- certificat médical en cours de validité ou photocopie d'une license sportive en cours de validité
+Merci de nous faire parvenir avant le 11 mai 2015 les documents suivants nécessaires à la validation de votre inscription :
+- certificat médical en cours de validité (date postérieure au 25 Mai 2014) ou photocopie d'une license sportive en cours de validité
 - règlement des frais d'inscriptions
 {% if joueur.getEtudiant() %}
 - photocopie de la carte étudiant
 {% endif %}
-au Club des 24 Heures de l'INSA
+
+Directement sur le site courses.24heures.org en vous connectant via vos identifiants
+
+ou à l'adresse suivante :
+
+Club des 24 Heures de l'INSA
 20 av Albert Einstein Rdc Bâtiment D
 69621 Villeurbanne Cedex
 

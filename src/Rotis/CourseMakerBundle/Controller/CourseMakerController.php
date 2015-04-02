@@ -16,11 +16,6 @@ class CourseMakerController extends Controller
         return $this->render('RotisCourseMakerBundle:CourseMaker:contact.html.twig');
     }
 
-    public function infosAction()
-    {
-        return $this->render('RotisCourseMakerBundle:CourseMaker:infos.html.twig');
-    }
-
     public function faqAction()
     {
         $edition = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Edition')->findLast();

@@ -9,14 +9,14 @@
     Nombre total d'équipes: {{ nbTotalEquipes }} <br />
     Nombre d'équipes valides: {{ nbEquipesValides }}
 
-    <form action="{{ path('admin_control', {'name': 'equipe', 'edition': edition}) }}" method="post" {{ form_enctype(form) }} class="form-inline well">
+    <form action="{{ path('admin_liste', {'name': 'equipe', 'edition': edition}) }}" method="post" {{ form_enctype(form) }} class="form-inline well">
         <legend>Rechercher les noms des coureurs</legend>
         {{ form_widget(form.mot) }}
         {{ form_rest(form) }}
         <input type="submit" class="btn"/>
     </form>
 
-    <table>
+    <table class="table table-condensed table-responsive">
         <tbody>
         {% for equipe in equipes if not equipe.valide %}
             <tr>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="accordion-body collapse">
                             <div class="accordion-inner">
-                                <table>
+                                <table class="table table-condensed table-responsive">
                                     <thead>
                                         <tr>
                                             <th>Nom</th>
@@ -62,54 +62,50 @@
                 </td>
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
-    <table>
-        <tbody>
-            {% for equipe in equipes if equipe.valide %}
-                <tr>
-                    <td>
-                        <a href="{{ path('account', { 'id': equipe.id }) }} ">{{ equipe.username }}</a>
-                    </td>
-                    <td>
-                        {% if equipe.getValide() %}
-                            <p id="val">Valide</p>
-                        {% else %}
-                            <p id="pasval">Pas Valide</p>
-                        {% endif %}
-                    </td>
-                    <td>
-                        <div class="accordion-group">
-                            <div class="accordion-heading">
-                                <a class="accordion-toggle btn btn-large btn-primary" data-toggle="collapse"><i class="icon-plus"></i></a>
-                            </div>
-                            <div class="accordion-body collapse">
-                                <div class="accordion-inner">
-                                    <table>
-                                        <thead>
+        {% for equipe in equipes if equipe.valide %}
+            <tr>
+                <td>
+                    <a href="{{ path('account', { 'id': equipe.id }) }} ">{{ equipe.username }}</a>
+                </td>
+                <td>
+                    {% if equipe.getValide() %}
+                        <p id="val">Valide</p>
+                    {% else %}
+                        <p id="pasval">Pas Valide</p>
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle btn btn-large btn-primary" data-toggle="collapse"><i class="icon-plus"></i></a>
+                        </div>
+                        <div class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>Prénom</th>
+                                        <th>Mail</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for joueur in equipe.joueurs %}
                                         <tr>
-                                            <th>Nom</th>
-                                            <th>Prénom</th>
-                                            <th>Mail</th>
+                                            <td>{{ joueur.nom }}</td>
+                                            <td>{{ joueur.prenom }}</td>
+                                            <td>{{ joueur.email | default('') }}</td>
                                         </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for joueur in equipe.joueurs %}
-                                            <tr>
-                                                <td>{{ joueur.nom }}</td>
-                                                <td>{{ joueur.prenom }}</td>
-                                                <td>{{ joueur.email | default('') }}</td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
 
-                                </div>
                             </div>
                         </div>
-                    </td>
-                </tr>
-            {% endfor %}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 {% endblock %}

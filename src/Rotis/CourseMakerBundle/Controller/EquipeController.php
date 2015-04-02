@@ -268,7 +268,7 @@ class EquipeController extends Controller
         $tousjoueurs = $equipe->getJoueurs();
         $validable = true;
         foreach($tousjoueurs as $joueur){
-            if ((!$joueur->getPapiersOk()) || ($joueur->getPaiements()->count() == 0))
+            if ((!$joueur->getPapiersOk()) || (!$joueur->getPaiementOk()))
             {
                 $validable = false;
             }
@@ -340,23 +340,6 @@ class EquipeController extends Controller
                 return new Response($jsoncontent);
             }
             throw new \Exception('Something went wrong!');
-        }
-    }
-
-    public function listeParCourseAction($id)
-    {
-        $repository = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('RotisCourseMakerBundle:Equipe');
-        $listeEquipes = $repository->findByJoinedCourseId($id);
-        $repocourse = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('RotisCourseMakerBundle:Course');
-        $course = $repocourse->find($id);
-        if (count($listeEquipes) > 0) {
-            return $this->render('RotisCourseMakerBundle:Equipe:equipe_par_course.html.twig', array('existence' => true, 'equipes' => $listeEquipes, 'course' => $course));
-        } else {
-            return $this->render('RotisCourseMakerBundle:Equipe:equipe_par_course.html.twig', array('existence' => false, 'course' => $course));
         }
     }
 

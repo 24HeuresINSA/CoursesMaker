@@ -1,0 +1,122 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+
+{% block title %}CoursesMaker - Equipes par course{% endblock %}
+{% block div %}
+    <h1>Equipes participant à la course {{ course.getNom() }}</h1>
+{% endblock %}
+{% block content %}
+
+        <p>
+        Nombre d'équipes : {{ countTotal }} <br/>
+        Nombre d'équipes valides : {{ countValid }}
+        </p>
+
+    <table class="table table-condensed table-responsive">
+        <tbody>
+            {% for equipe in equipes if not equipe.valide %}
+                <tr>
+                    <td>
+                        <a href="{{ path('account', { 'id': equipe.id }) }} ">{{ equipe.username }}</a>
+                        {% if equipe.getValide() %}
+                            <p id="val">Valide</p>
+                        {% else %}
+                            <p id="pasval">Pas Valide</p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle btn btn-large btn-default" data-toggle="collapse"><i class="icon-plus"></i></a>
+                            </div>
+                            <div class="accordion-body collapse">
+                                <div class="accordion-inner">
+                                    <table class="table table-condensed table-responsive">
+                                        <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Prénom</th>
+                                            <th>Mail</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for joueur in equipe.joueurs %}
+                                            <tr>
+                                                <td>{{ joueur.nom }}</td>
+                                                <td>{{ joueur.prenom }}</td>
+                                                <td>{{ joueur.email | default('') }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            {% for equipe in equipes if equipe.valide %}
+                <tr>
+                    <td>
+                        <a href="{{ path('account', { 'id': equipe.id }) }} ">{{ equipe.username }}</a>
+                        {% if equipe.getValide() %}
+                            <p id="val">Valide</p>
+                        {% else %}
+                            <p id="pasval">Pas Valide</p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle btn btn-large btn-primary" data-toggle="collapse"><i class="icon-plus"></i></a>
+                            </div>
+                            <div class="accordion-body collapse">
+                                <div class="accordion-inner">
+                                    <table class="table table-condensed table-responsive">
+                                        <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Prénom</th>
+                                            <th>Mail</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for joueur in equipe.joueurs %}
+                                            <tr>
+                                                <td>{{ joueur.nom }}</td>
+                                                <td>{{ joueur.prenom }}</td>
+                                                <td>{{ joueur.email | default('') }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div>
+        Début de la course: {{ course.getDatetimeDebut()| date('Y-m-d H:i') }} <br/>
+        Fin: {{ course.getDatetimeFin()| date('Y-m-d H:i:s') }} <br/>
+        Etat des inscriptions:
+        {% if course.getInscriptionsOuvertes() %}
+            Ouvertes
+        {% else %}
+            Fermées
+        {% endif %}
+    </div>
+{% endblock %}
+{% block document_ready %}
+    <script>
+        $(document).ready(function(){
+            $('.accordion-toggle').on('click',function(){
+                $(this).parents('.accordion-group').find(".collapse").collapse("toggle");
+            });
+        })
+    </script>
+{% endblock %}

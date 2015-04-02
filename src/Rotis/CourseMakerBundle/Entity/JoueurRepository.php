@@ -78,4 +78,28 @@ class JoueurRepository extends EntityRepository
         $joueurs = $query->getResult();
         return $joueurs;
     }
+
+    public function countCoureurs($edition = null)
+    {
+        $qb = $this->createQueryBuilder('j');
+        $qb->select('count(j.id)');
+        if($edition){
+            $qb->join('j.equipe','e')
+                ->join('e.course','c')
+                ->join('c.edition','ed','WITH','ed.numero =:edition')
+                ->setParameter('edition',$edition);
+        }
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countCoureursByCourse($course)
+    {
+        $qb = $this->createQueryBuilder('j');
+        $qb->select('count(j.id)');
+        $qb->join('j.equipe','e')
+            ->join('e.course','c','WITH','c.id =:course')
+            ->setParameter('course',$course);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

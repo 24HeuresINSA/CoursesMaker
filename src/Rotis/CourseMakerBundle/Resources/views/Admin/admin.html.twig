@@ -20,11 +20,11 @@
                 {% for edition in editions %}
                     <div class="tab-pane row" id="{{ edition.id }}">
                         <div class="span4">
-                            <p><a class="btn" href="{{ path('admin_control', {'name': 'equipe', 'edition': edition.numero|default('') }) }}">Afficher toutes les
+                            <p><a class="btn" href="{{ path('admin_liste', {'name': 'equipe', 'edition': edition.numero|default('') }) }}">Afficher toutes les
                                     équipes &raquo;</a></p>
                         </div><!--/span-->
                         <div class="span4">
-                            <p><a class="btn" href="{{ path('admin_control', {'name': 'course', 'edition': edition.numero|default('') }) }}">Afficher toutes les
+                            <p><a class="btn" href="{{ path('admin_liste', {'name': 'course', 'edition': edition.numero|default('') }) }}">Afficher toutes les
                                     courses &raquo;</a></p>
                         </div><!--/span-->
                         <div class="span4">

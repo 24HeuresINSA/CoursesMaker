@@ -14,7 +14,7 @@ admin_mailing:
 
 admin_infos_pratiques:
     pattern: /infos_pratiques
-    defaults: { _controller: RotisCourseMakerBundle:CourseMaker:infos }
+    defaults: { _controller: RotisCourseMakerBundle:Admin:infos }
 
 admin_excel:
     pattern: /excel/{edition}
@@ -28,7 +28,7 @@ admin_relous:
     requirements:
       edition: \d+
 
-admin_control:
+admin_liste:
     pattern: /{name}/{edition}
     defaults: { _controller: RotisCourseMakerBundle:Admin:liste, edition: null }
     requirements:
@@ -37,7 +37,7 @@ admin_control:
 
 admin_par_course:
     pattern: /course/{id}/{edition}
-    defaults: { _controller: RotisCourseMakerBundle:Equipe:listeParCourse, edition: null }
+    defaults: { _controller: RotisCourseMakerBundle:Admin:listeParCourse, edition: null }
     requirements:
         id: \d+
         edition: \d+

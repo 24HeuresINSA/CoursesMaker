@@ -39,6 +39,11 @@ class AdminController extends Controller
     }
 
 
+    public function infosAction()
+    {
+        return $this->render('RotisCourseMakerBundle:Admin:infos.html.twig');
+    }
+
     public function adminAction()
     {
         if (true === $this->get('security.context')->isGranted('ROLE_ADMIN'))
@@ -112,21 +117,9 @@ class AdminController extends Controller
                     }
                 }
             }
-            $totalValidTeams = 0;
-            $totalTeams = 0;
-            $totalCoureurs = 0;
-            foreach($listeCourses as $course)
-            {
-                foreach($course->getEquipes() as $equipe)
-                {
-                    if($equipe->getValide())
-                    {
-                        $totalValidTeams++;
-                    }
-                    $totalTeams++;
-                    $totalCoureurs+= $equipe->getJoueurs()->count();
-                }
-            }
+            $totalValidTeams = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Equipe')->countEquipesValides($edition);
+            $totalTeams = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Equipe')->countEquipes($edition);
+            $totalCoureurs = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Joueur')->countCoureurs($edition);
 
             return $this->render('RotisCourseMakerBundle:Admin:courses.html.twig', array(
                 'name' => $name,
@@ -139,6 +132,31 @@ class AdminController extends Controller
             ));
 
         }
+    }
+
+
+    public function listeParCourseAction($id,$edition)
+    {
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Equipe');
+        $listeEquipes = $repository->findByJoinedCourseId($id);
+        $repocourse = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Course');
+        $course = $repocourse->find($id);
+
+        $countValid = $repository->countEquipesValidesByCourse($course->getId());
+        $countTotal = $repository->countEquipesByCourse($course->getId());
+        $countCoureurs = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Joueur')->countCoureursByCourse($course->getId());
+
+        return $this->render('RotisCourseMakerBundle:Admin:equipes_par_course.html.twig', array(
+            'equipes' => $listeEquipes,
+            'course' => $course,
+            'countValid' => $countValid,
+            'countTotal' => $countTotal,
+            'countCoureurs' => $countCoureurs,
+        ));
     }
 
     public function mailingAction($edition)
