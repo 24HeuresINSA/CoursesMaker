@@ -62,8 +62,18 @@
                             {% endif %}
 
                             {% if is_granted('ROLE_ADMIN') %}
-                                <li><a href="{{ path('admin_home') }}" class="navbar-link">Admin Home</a></li>
-                                <li><a href="{{ path('admin_infos_pratiques') }}">Infos Pratiques</a></li>
+                                <li>
+                                    <div class="btn-group">
+                                        <a class="btn dropdown-toggle btn-inverse" data-toggle="dropdown" href="#">
+                                            Admin
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('admin_home') }}">Home</a></li>
+                                            <li><a href="{{ path('admin_infos_pratiques') }}">Tutoriels</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
                             {% elseif is_granted('ROLE_USER') %}
                                 <li><a>Bonjour {{ app.user.username }}</a></li>
                                 <li class="active"><a href="{{ path('account', { 'id': app.user.id }) }}">Equipe</a></li>

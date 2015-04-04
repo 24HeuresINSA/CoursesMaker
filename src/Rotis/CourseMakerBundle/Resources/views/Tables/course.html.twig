@@ -5,14 +5,14 @@
         <tr>
             <th>Id</th>
             <th>Nom</th>
+            <th>Numéro de l'édition</th>
             <th>Inscriptions ouvertes</th>
             <th>Lien d'informations</th>
             <th>Description</th>
             <th>Début</th>
             <th>Fin</th>
-            <th>Nombre de catégories</th>
             <th>Nombre d'équipes</th>
-            <th>Numéro de l'édition</th>
+            <th>Catégories</th>
             <th>Type</th>
             <th>Editer</th>
             <th>Supprimer</th>
@@ -23,14 +23,22 @@
             <tr>
                 <td>{{ course.id }}</td>
                 <td>{{ course.nom }}</td>
+                <td>{{ course.edition.numero }}</td>
                 <td>{% if course.inscriptionsouvertes %}Oui{% else %}Non{% endif %}</td>
                 <td>{{ course.url }}</td>
                 <td>{{ course.description }}</td>
                 <td>{{ course.datetimedebut | date('j/n/Y G:i:s') }}</td>
                 <td>{{ course.datetimefin | date('j/n/Y G:i:s') }}</td>
-                <td>{{ course.categories | length }}</td>
                 <td>{{ course.equipes | length }}</td>
-                <td>{{ course.edition.numero }}</td>
+                <td>
+                    {% for categorie in course.categories %}
+                        {% if loop.last %}
+                            {{ categorie.nom }}
+                        {% else %}
+                            {{ categorie.nom }},
+                        {% endif %}
+                    {% endfor %}
+                </td>
                 <td>{{ course.type.nom }}</td>
                 <td><a href="{{ path('course_edit',{ 'id' : course.id}) }}"><i class="icon-edit"></i></a></td>
                 <td><a href="{{ path('course_remove', { 'id' : course.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>

@@ -6,7 +6,7 @@
             <th>Id</th>
             <th>Nom</th>
             <th>Fichier</th>
-            <th>Nombre de Courses</th>
+            <th>Courses</th>
             <th>Supprimer</th>
         </tr>
         </thead>
@@ -16,7 +16,15 @@
                 <td>{{ resultat.id }}</td>
                 <td>{{ resultat.nom }}</td>
                 <td><a href="{{ resultat.getWebPath() }}">{{ resultat.filename }}</a></td>
-                <td>{{ resultat.courses | length }}</td>
+                <td>
+                    {% for course in resultat.courses %}
+                        {% if loop.last %}
+                            {{ course.nom }} ({{ course.edition.numero }}e)
+                        {% else %}
+                            {{ course.nom }} ({{ course.edition.numero }}e) ,
+                        {% endif %}
+                    {% endfor %}
+                </td>
                 <td><a href="{{ path('resultat_remove', { 'id' : resultat.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
             </tr>
         {% endfor %}
