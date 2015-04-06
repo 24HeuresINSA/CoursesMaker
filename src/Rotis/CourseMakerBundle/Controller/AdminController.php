@@ -225,6 +225,7 @@ class AdminController extends Controller
         $em->flush();
         return $this->redirect($this->generateUrl('admin_liste', array(
             'name' => 'course',
+            'edition' => $course->getEdition()->getNumero(),
         )));
     }
 }
