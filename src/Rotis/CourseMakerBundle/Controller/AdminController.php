@@ -223,7 +223,7 @@ class AdminController extends Controller
         $course->setInscriptionsOuvertes(!$status);
         $em->merge($course);
         $em->flush();
-        return $this->redirect($this->generateUrl('admin_control', array(
+        return $this->redirect($this->generateUrl('admin_liste', array(
             'name' => 'course',
         )));
     }
