@@ -142,6 +142,7 @@ class Carte
 
     /**
      * @ORM\PrePersist()
+     * @ORM\PreUpdate()
      */
     public function preUpload()
     {

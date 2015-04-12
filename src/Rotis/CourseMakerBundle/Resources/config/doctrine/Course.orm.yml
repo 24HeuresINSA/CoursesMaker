@@ -49,5 +49,6 @@ Rotis\CourseMakerBundle\Entity\Course:
   oneToMany:  
     equipes:
       targetEntity: Equipe
+      cascade: ['remove']
       mappedBy: course
   lifecycleCallbacks: {  }

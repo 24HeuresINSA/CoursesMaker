@@ -32,6 +32,7 @@ class TarifType extends AbstractType
             'property' => 'nom',
             'required' => true,
             'multiple' => false,
+            'group_by' => 'edition.numero',
             'label' => 'Choix de la course',
         ))
         ;

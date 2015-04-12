@@ -142,6 +142,7 @@ class Certif
 
     /**
      * @ORM\PrePersist()
+     * @ORM\PreUpdate()
      */
     public function preUpload()
     {

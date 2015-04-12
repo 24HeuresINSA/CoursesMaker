@@ -33,4 +33,5 @@ Rotis\CourseMakerBundle\Entity\Equipe:
     joueurs:
       targetEntity: Joueur
       mappedBy: equipe
+      cascade: ['remove']
   lifecycleCallbacks: {  }

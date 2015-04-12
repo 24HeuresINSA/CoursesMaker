@@ -142,7 +142,6 @@ class EquipeController extends Controller
     public function eraseAction($id)
     {
         $repository = $this->getDoctrine()
-            ->getManager()
             ->getRepository('RotisCourseMakerBundle:Equipe');
 
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') || (NULL == ($repository->find($id))))
@@ -169,12 +168,12 @@ class EquipeController extends Controller
             $em->flush();
             $listeEquipes = $repository->findAll();
             $totalEquipes = count($listeEquipes);
-            $equipesValides = $repository->findEquipesValides();
+            $equipesValides = $repository->countEquipesValides();
             $this->get('session')->setFlash(
                 'notice',
                 'Suppression de l\'équipe réalisée'
             );
-            return $this->render('RotisCourseMakerBundle:Equipe:control_equipe.html.twig', array('nbEquipesValides' => $equipesValides, 'nbTotalEquipes' => $totalEquipes, 'name' => "equipe", 'equipes' => $listeEquipes, 'form' => $form->createView()));
+            return $this->render('RotisCourseMakerBundle:Admin:equipes.html.twig', array('nbEquipesValides' => $equipesValides, 'nbTotalEquipes' => $totalEquipes, 'name' => "equipe", 'equipes' => $listeEquipes, 'form' => $form->createView()));
         }
     }
 
