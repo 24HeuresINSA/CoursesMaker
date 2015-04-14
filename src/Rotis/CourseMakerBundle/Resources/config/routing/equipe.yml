@@ -54,7 +54,7 @@ pay:
       equipe: \d+
 
 pay_check:
-    pattern: /pay/{equipe}/check
+    pattern: /pay/{equipe}/check/{id}
     defaults: { _controller: RotisCourseMakerBundle:Equipe:payCheck }
     requirements:
       equipe: \d+

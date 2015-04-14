@@ -662,7 +662,7 @@ class EquipeController extends Controller
     }
 
     // lancer pour checker un paiement
-    public function payCheckAction($id,$equipe)
+    public function payCheckAction($equipe,$id)
     {
         $paiement = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Paiement')->find($id);
 
