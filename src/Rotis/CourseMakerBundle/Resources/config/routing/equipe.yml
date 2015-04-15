@@ -7,15 +7,10 @@ create:
     defaults: { _controller: RotisCourseMakerBundle:Equipe:create }
     requirements:
         _method: POST
-edit:
-    pattern: /edit/{id}
-    defaults: { _controller: RotisCourseMakerBundle:Equipe:edit }
-    requirements:
-        id: \d+
 
 account:
     pattern: /{id}
-    defaults: { _controller: RotisCourseMakerBundle:Equipe:edit_equipe }
+    defaults: { _controller: RotisCourseMakerBundle:Equipe:edit }
     requirements:
         id: \d+
 
@@ -58,6 +53,7 @@ pay_check:
     defaults: { _controller: RotisCourseMakerBundle:Equipe:payCheck }
     requirements:
       equipe: \d+
+      id: \d+
 
 team_pay_check:
     pattern: /pay/{equipe}/check/all

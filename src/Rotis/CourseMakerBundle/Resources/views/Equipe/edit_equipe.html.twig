@@ -261,7 +261,7 @@
         {% if nombre < equipe.categorie.nbmaxcoureurs %}
             <div class="row-fluid">
                 <div class="offset1 span10">
-                    <form action="{{ path('edit', {'id': equipe.id }) }}" method="post" {{ form_enctype(form) }}
+                    <form action="{{ path('account', {'id': equipe.id }) }}" method="post" {{ form_enctype(form) }}
                         class="well">
                         {{ form_widget(form) }}
                         <br/>
