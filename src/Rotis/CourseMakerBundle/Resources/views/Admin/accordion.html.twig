@@ -1,0 +1,28 @@
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a class="accordion-toggle btn btn-large btn-primary" data-toggle="collapse"><i class="icon-plus"></i></a>
+    </div>
+    <div class="accordion-body collapse">
+        <div class="accordion-inner">
+            <table>
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Mail</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for joueur in joueurs %}
+                    <tr>
+                        <td>{{ joueur.nom }}</td>
+                        <td>{{ joueur.prenom }}</td>
+                        <td>{{ joueur.email | default('') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

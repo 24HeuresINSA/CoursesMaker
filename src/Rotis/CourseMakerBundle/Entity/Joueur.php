@@ -104,6 +104,11 @@ class Joueur
     private $certif;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $paiements;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -366,10 +371,6 @@ class Joueur
     {
         return $this->certif;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $paiements;
 
     /**
      * Constructor

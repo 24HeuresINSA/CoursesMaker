@@ -31,34 +31,10 @@
                     {% endif %}
                 </td>
                 <td>
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle btn btn-large btn-primary" data-toggle="collapse"><i class="icon-plus"></i></a>
-                        </div>
-                        <div class="accordion-body collapse">
-                            <div class="accordion-inner">
-                                <table class="table table-condensed table-responsive">
-                                    <thead>
-                                        <tr>
-                                            <th>Nom</th>
-                                            <th>Prénom</th>
-                                            <th>Mail</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for joueur in equipe.joueurs %}
-                                            <tr>
-                                                <td>{{ joueur.nom }}</td>
-                                                <td>{{ joueur.prenom }}</td>
-                                                <td>{{ joueur.email | default('') }}</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
-                    </div>
+                    {% include 'RotisCourseMakerBundle:Admin:accordion.html.twig' with { 'joueurs': equipe.joueurs } %}
+                </td>
+                <td>
+                    <span class="badge badge-important">{{ news(equipe) }}</span>
                 </td>
             </tr>
         {% endfor %}
@@ -75,34 +51,10 @@
                     {% endif %}
                 </td>
                 <td>
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle btn btn-large btn-primary" data-toggle="collapse"><i class="icon-plus"></i></a>
-                        </div>
-                        <div class="accordion-body collapse">
-                            <div class="accordion-inner">
-                                <table>
-                                    <thead>
-                                    <tr>
-                                        <th>Nom</th>
-                                        <th>Prénom</th>
-                                        <th>Mail</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for joueur in equipe.joueurs %}
-                                        <tr>
-                                            <td>{{ joueur.nom }}</td>
-                                            <td>{{ joueur.prenom }}</td>
-                                            <td>{{ joueur.email | default('') }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
-                    </div>
+                    {% include 'RotisCourseMakerBundle:Admin:accordion.html.twig' with { 'joueurs': equipe.joueurs } %}
+                </td>
+                <td>
+                    <span class="badge badge-important">{{ news(equipe) }}</span>
                 </td>
             </tr>
         {% endfor %}
