@@ -109,6 +109,11 @@ class Joueur
     private $paiements;
 
     /**
+     * @var boolean
+     */
+    private $paiement_ok;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -412,11 +417,6 @@ class Joueur
     {
         return $this->paiements;
     }
-    /**
-     * @var boolean
-     */
-    private $paiement_ok;
-
 
     /**
      * Set paiement_ok

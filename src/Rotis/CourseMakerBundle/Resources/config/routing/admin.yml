@@ -16,9 +16,15 @@ admin_infos_pratiques:
     pattern: /infos_pratiques
     defaults: { _controller: RotisCourseMakerBundle:Admin:infos }
 
-admin_excel:
-    pattern: /excel/{edition}
-    defaults: { _controller: RotisCourseMakerBundle:Admin:excel, edition : null }
+admin_classeur:
+    pattern: /classeur/{edition}
+    defaults: { _controller: RotisCourseMakerBundle:Admin:classeur, edition : null }
+    requirements:
+      edition: \d+
+
+admin_export:
+    pattern: /export/{edition}
+    defaults: { _controller: RotisCourseMakerBundle:Admin:export, edition: null }
     requirements:
       edition: \d+
 

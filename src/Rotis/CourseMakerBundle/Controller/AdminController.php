@@ -5,6 +5,7 @@ namespace Rotis\CourseMakerBundle\Controller;
 use Rotis\CourseMakerBundle\Form\Type\EditionChoiceType;
 use Rotis\CourseMakerBundle\Form\Type\RechercheType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AdminController extends Controller
 {
@@ -23,19 +24,37 @@ class AdminController extends Controller
         ));
     }
 
-    public function excelAction($edition = null)
+    public function classeurAction($edition = null)
     {
         if(!$edition)
         {
-            $courses = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Course')->findAll();
+            $numero = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Edition')->findLast();
+
+            $export = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Equipe')->export($numero);
         }
         else
         {
-            $courses = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Course')->findByEdition($edition);
+            $export = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Equipe')->export($edition);
         }
-        return $this->render('RotisCourseMakerBundle:Admin:excel.html.twig', array(
-            'courses' => $courses,
+        return $this->render('RotisCourseMakerBundle:Admin:classeur.html.twig', array(
+            'export' => $export,
+            'edition' => $edition,
         ));
+    }
+
+    public function exportAction($edition = null)
+    {
+        if(!$edition)
+        {
+            $numero = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Edition')->findLast();
+
+            $export = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Equipe')->export($numero);
+        }
+        else
+        {
+            $export = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Equipe')->export($edition);
+        }
+        return new JsonResponse($export);
     }
 
 

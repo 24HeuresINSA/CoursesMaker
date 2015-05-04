@@ -1,0 +1,72 @@
+{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+{% block title %}CoursesMaker - Export{% endblock %}
+{% block div %}
+    <h1>Classeur</h1>
+{% endblock %}
+{% block content %}
+<div>
+    <table class="table table-bordered table-condensed table-hover table-bordered table-striped">
+        <thead>
+        <tr>
+            <th><span class="pull-left">Equipe</span></th>
+            <th><span class="pull-left">Nom</span></th>
+            <th><span class="pull-left">Prénom</span></th>
+            <th><span class="pull-left">Course</span></th>
+            <th><span class="pull-left">Certif</span></th>
+            <th><span class="pull-left">Carte étudiant</span></th>
+            <th><span class="pull-left">Payé</span></th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for line in export %}
+                <tr>
+                    <td>{{ line.equipe }}</td>
+                    <td>{{ line.nom }}</td>
+                    <td>{{ line.prenom }}</td>
+                    <td>{{ line.course }}</td>
+                    <td>
+                        {% if line.certif %}
+                        <i class="icon-ok-circle">
+                        {% else %}
+                            <i class="icon-remove-circle">
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if line.etudiant %}
+                            {% if line.carte %}
+                                <i class="icon-ok-circle">
+                            {% else %}
+                                <i class="icon-remove-circle">
+                            {% endif %}
+                        {% else %}
+                            Pas étudiant
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if line.paiement %}
+                            <i class="icon-ok-circle">
+                        {% else %}
+                            <i class="icon-remove-circle">
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="{{ path('admin_export', { 'edition': edition }) }}">export JSON</a>
+</div>
+{% endblock %}
+{% block document_ready %}
+    <script>
+        $(document).ready(function() {
+            $(".table").dataTable( {
+                "info": false,
+                "dom": '<"toolbar">f<t>lp',
+                "lengthMenu": [20,50,100,500],
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ éléments"
+                }
+            });
+        });
+    </script>
+{% endblock document_ready %}

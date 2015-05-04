@@ -156,4 +156,26 @@ class EquipeRepository extends EntityRepository implements UserProviderInterface
         }
         return $qb->getQuery()->getResult();
     }
+
+    public function export($numero)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT ed.id, '
+                . 'e.username equipe, '
+                . 'j.nom nom, '
+                . 'j.prenom prenom, '
+                . 'c.nom course, '
+                . 'j.papiers_ok certif, '
+                . 'j.etudiant etudiant, '
+                . 'j.carte_ok carte, '
+                . 'j.paiement_ok paiement  '
+                . 'FROM RotisCourseMakerBundle:Edition ed '
+                . 'JOIN RotisCourseMakerBundle:Course c WITH c.edition = ed.id '
+                . 'JOIN RotisCourseMakerBundle:Equipe e WITH e.course = c.id '
+                . 'JOIN RotisCourseMakerBundle:Joueur j WITH j.equipe = e.id '
+                . 'WHERE ed.numero = :numero'
+            )->setParameter('numero',$numero)
+            ->getResult();
+    }
 }
