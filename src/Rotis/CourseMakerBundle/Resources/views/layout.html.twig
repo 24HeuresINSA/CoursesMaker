@@ -18,6 +18,9 @@
     <!-- Personnal css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rotiscoursemaker/css/global.css') }}" />
 
+    {# Include datatables and bootstrap compatible version #}
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/tabletools/2.2.4/css/dataTables.tableTools.css" />
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="{{ asset('bundles/rotiscoursemaker/bootstrap/js/bootstrap.min.js') }}"></script>
@@ -35,6 +38,7 @@
     {# Include datatables and bootstrap compatible version #}
     <script src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
     <script src="http://cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/2/dataTables.bootstrap.js"></script>
+    <script src="http://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tableTools.min.js"></script>
     {% block stylesheets %}
 
     {% endblock %}
@@ -130,8 +134,8 @@
         </div>
             <footer>
                 <div>
-                    <p>&copy; 24 Heures de l'INSA 2015</p>
-
+                    <p class="inline pull-right">En partenariat avec <a href="http://terrederunning.com/#/home"><img src="{{ asset('bundles/rotiscoursemaker/img/logo_tdr.jpg') }}" alt="TerredeRunning"></a></p>
+                    <p><strong>&copy; 24 Heures de l'INSA 2015</strong></p>
                     <p><strong>Plus c'est long, plus c'est bon!</strong></p>
                 </div>
             </footer>

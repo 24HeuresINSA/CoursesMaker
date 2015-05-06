@@ -1,6 +1,7 @@
 <?php
 namespace Rotis\CourseMakerBundle\Form\Type;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -13,6 +14,11 @@ class EditionChoiceType extends AbstractType
             'required' => true,
             'class' => 'RotisCourseMakerBundle:Edition',
             'property' => 'numero',
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('ed')
+                    ->orderBy('ed.numero','DESC')
+                    ;
+            }
         ));
     }
 

@@ -26,17 +26,17 @@
                     <td>{{ line.course }}</td>
                     <td>
                         {% if line.certif %}
-                        <i class="icon-ok-circle">
+                        <i class="icon-ok-circle"></i>
                         {% else %}
-                            <i class="icon-remove-circle">
+                            <i class="icon-remove-circle"></i>
                         {% endif %}
                     </td>
                     <td>
                         {% if line.etudiant %}
                             {% if line.carte %}
-                                <i class="icon-ok-circle">
+                                <h1><i class="icon-ok-circle"></i>
                             {% else %}
-                                <i class="icon-remove-circle">
+                                <i class="icon-remove-circle"></i>
                             {% endif %}
                         {% else %}
                             Pas étudiant
@@ -44,9 +44,9 @@
                     </td>
                     <td>
                         {% if line.paiement %}
-                            <i class="icon-ok-circle">
+                            <i class="icon-ok-circle"></i>
                         {% else %}
-                            <i class="icon-remove-circle">
+                            <i class="icon-remove-circle"></i>
                         {% endif %}
                     </td>
                 </tr>
@@ -59,14 +59,20 @@
 {% block document_ready %}
     <script>
         $(document).ready(function() {
-            $(".table").dataTable( {
+            var table = $(".table").dataTable( {
                 "info": false,
                 "dom": '<"toolbar">f<t>lp',
                 "lengthMenu": [20,50,100,500],
                 "oLanguage": {
                     "sLengthMenu": "_MENU_ éléments"
+                },
+                "tableTools": {
+                    "sSwfPath": "/swf/copy_csv_xls_pdf.swf"
                 }
             });
+            var tt = new $.fn.dataTable.TableTools( table );
+
+            $( tt.fnContainer() ).insertBefore('div.dataTables_wrapper');
         });
     </script>
 {% endblock document_ready %}
