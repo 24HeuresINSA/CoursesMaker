@@ -6,7 +6,7 @@
 {% endblock %}
 {% block content %}
     <div>
-        <form action="{{ path('admin_liste', {'name': 'course', 'edition' : edition }) }}" method="post" {{ form_enctype(form) }} class="form-inline well">
+        <form action="{{ path('admin_liste', {'name': 'courses', 'edition' : edition }) }}" method="post" {{ form_enctype(form) }} class="form-inline well">
             <legend>Rechercher des courses</legend>
             {{ form_widget(form.mot) }}
             {{ form_rest(form) }}

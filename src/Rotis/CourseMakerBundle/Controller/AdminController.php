@@ -89,7 +89,7 @@ class AdminController extends Controller
             $edition = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Edition')->findLast()->getNumero();
         }
         $form = $this->createForm(new RechercheType());
-        if ($name === "equipe")
+        if ($name === "equipes")
         {
             $repository = $this->getDoctrine()
                 ->getManager()
@@ -116,7 +116,7 @@ class AdminController extends Controller
                 'edition' => $edition,
                 'form' => $form->createView()));
         }
-        elseif ($name === "course")
+        elseif ($name === "courses")
         {
 
             $repository = $this->getDoctrine()

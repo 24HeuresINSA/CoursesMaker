@@ -97,7 +97,7 @@ class EquipeController extends Controller
                 'notice',
                 'Suppression de l\'équipe réalisée'
             );
-            return $this->render('RotisCourseMakerBundle:Admin:equipes.html.twig', array('nbEquipesValides' => $equipesValides, 'nbTotalEquipes' => $totalEquipes, 'name' => "equipe", 'equipes' => $listeEquipes, 'form' => $form->createView()));
+            return $this->render('RotisCourseMakerBundle:Admin:equipes.html.twig', array('nbEquipesValides' => $equipesValides, 'nbTotalEquipes' => $totalEquipes, 'name' => "equipes", 'equipes' => $listeEquipes, 'form' => $form->createView()));
         }
     }
 

@@ -38,7 +38,7 @@ admin_liste:
     pattern: /{name}/{edition}
     defaults: { _controller: RotisCourseMakerBundle:Admin:liste, edition: null }
     requirements:
-      name: course|equipe
+      name: courses|equipes
       edition: \d+
 
 admin_par_course:
