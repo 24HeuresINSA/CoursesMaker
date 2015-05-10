@@ -92,6 +92,18 @@ class JoueurRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+    public function findCoureurs($edition = null)
+    {
+        $qb = $this->createQueryBuilder('j');
+        if($edition){
+            $qb->join('j.equipe','e')
+                ->join('e.course','c')
+                ->join('c.edition','ed','WITH','ed.numero =:edition')
+                ->setParameter('edition',$edition);
+        }
+        return $qb->getQuery()->getResult();
+    }
+
     public function countCoureursByCourse($course)
     {
         $qb = $this->createQueryBuilder('j');

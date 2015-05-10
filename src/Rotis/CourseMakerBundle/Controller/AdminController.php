@@ -182,33 +182,13 @@ class AdminController extends Controller
     {
         if($edition === null)
         {
-            $listeCourses = $this->getDoctrine()
-                ->getManager()
-                ->getRepository('RotisCourseMakerBundle:Course')
-                ->findAll();
-            $tousJoueurs = $this->getDoctrine()
-                ->getManager()
-                ->getRepository('RotisCourseMakerBundle:Joueur')
-                ->findAll();
+            $edition = $this->getDoctrine()->getRepositovry('RotisCourseMakerBundle:Edition')->findLast()->getNumero();
         }
-        else
-        {
             $listeCourses = $this->getDoctrine()
                 ->getManager()
                 ->getRepository('RotisCourseMakerBundle:Course')
                 ->findByEdition($edition);
-            $tousJoueurs = Array();
-            foreach($listeCourses as $course)
-            {
-                foreach($course->getEquipes() as $equipe)
-                {
-                    foreach($equipe->getJoueurs() as $joueur)
-                    {
-                        $tousJoueurs[] = $joueur;
-                    }
-                }
-            }
-        }
+            $tousJoueurs = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Joueur')->findCoureurs($edition);
         return $this->render('RotisCourseMakerBundle:Admin:mailing.html.twig', array('tousJoueurs' => $tousJoueurs, 'listeCourses' => $listeCourses));
     }
 
