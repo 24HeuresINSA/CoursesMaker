@@ -26,17 +26,17 @@
                     <td>{{ line.course }}</td>
                     <td>
                         {% if line.certif %}
-                        <i class="icon-ok-circle"></i>
+                        <i class="icon-ok-circle"></i><p style="display: none">OK</p>
                         {% else %}
-                            <i class="icon-remove-circle"></i>
+                            <i class="icon-remove-circle"></i><p style="display: none">KO</p>
                         {% endif %}
                     </td>
                     <td>
                         {% if line.etudiant %}
                             {% if line.carte %}
-                                <h1><i class="icon-ok-circle"></i>
+                                <i class="icon-ok-circle"></i><p style="display: none">OK</p>
                             {% else %}
-                                <i class="icon-remove-circle"></i>
+                                <i class="icon-remove-circle"></i><p style="display: none">KO</p>
                             {% endif %}
                         {% else %}
                             Pas étudiant
@@ -44,9 +44,9 @@
                     </td>
                     <td>
                         {% if line.paiement %}
-                            <i class="icon-ok-circle"></i>
+                            <i class="icon-ok-circle"></i><p style="display: none">OK</p>
                         {% else %}
-                            <i class="icon-remove-circle"></i>
+                            <i class="icon-remove-circle"></i><p style="display: none">KO</p>
                         {% endif %}
                     </td>
                 </tr>
@@ -66,13 +66,18 @@
                 "oLanguage": {
                     "sLengthMenu": "_MENU_ éléments"
                 },
-                "tableTools": {
-                    "sSwfPath": "/swf/copy_csv_xls_pdf.swf"
-                }
             });
-            var tt = new $.fn.dataTable.TableTools( table );
+            var tt = new $.fn.dataTable.TableTools( table, {
+                "sSwfPath" : "http://cdn.datatables.net/tabletools/2.2.4/swf/copy_csv_xls_pdf.swf",
+                "aButtons": [
+                        {"sExtends": "xls", "sButtonText": "Export Excel", "sFileName": "*.xls"},
+                        {"sExtends": "pdf", "sButtonText": "Export PDF", "sFileName": "*.pdf"},
+                        { "sExtends": "print", "sButtonText": "Imprimer" }
+                ]
+            } );
 
             $( tt.fnContainer() ).insertBefore('div.dataTables_wrapper');
+            $("div.toolbar").html('<span class="label label-info">NB : Les tris sont appliqués sur les exports</span>')
         });
     </script>
 {% endblock document_ready %}
