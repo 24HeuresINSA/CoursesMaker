@@ -184,12 +184,13 @@ class AdminController extends Controller
         {
             $edition = $this->getDoctrine()->getRepositovry('RotisCourseMakerBundle:Edition')->findLast()->getNumero();
         }
-            $listeCourses = $this->getDoctrine()
-                ->getManager()
-                ->getRepository('RotisCourseMakerBundle:Course')
-                ->findByEdition($edition);
-            $tousJoueurs = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Joueur')->findCoureurs($edition);
-        return $this->render('RotisCourseMakerBundle:Admin:mailing.html.twig', array('tousJoueurs' => $tousJoueurs, 'listeCourses' => $listeCourses));
+        $listeCourses = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('RotisCourseMakerBundle:Course')
+            ->findByEdition($edition);
+        $tousJoueurs = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Joueur')->findCoureurs($edition);
+        $invalides = $this->getDoctrine()->getRepository('RotisCourseMakerBundle:Joueur')->findInvalides($edition);
+        return $this->render('RotisCourseMakerBundle:Admin:mailing.html.twig', array('tousJoueurs' => $tousJoueurs, 'listeCourses' => $listeCourses, 'invalides' => $invalides ));
     }
 
     public function dashboardAction()

@@ -104,6 +104,24 @@ class JoueurRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findInvalides($edition = null)
+    {
+        $qb = $this->createQueryBuilder('j');
+        if($edition){
+            $qb->join('j.equipe','e')
+                ->join('e.course','c')
+                ->join('c.edition','ed','WITH','ed.numero =:edition')
+                ->where($qb->expr()->neq('j.papiers_ok','true'))
+                ->orWhere($qb->expr()->andX(
+                    $qb->expr()->eq('j.etudiant','true'),
+                    $qb->expr()->neq('j.carte_ok','true')
+                ))
+                ->orWhere($qb->expr()->neq('j.paiement_ok','true'))
+                ->setParameter('edition',$edition);
+        }
+        return $qb->getQuery()->getResult();
+    }
+
     public function countCoureursByCourse($course)
     {
         $qb = $this->createQueryBuilder('j');

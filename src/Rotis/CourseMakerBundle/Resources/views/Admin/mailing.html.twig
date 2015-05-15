@@ -8,18 +8,82 @@
 
 
     <h3>Mailing de tous les joueurs</h3>
-    {% for joueur in tousJoueurs %}
-        {% if joueur.getEmail() | length > 0 %}{{ joueur.email }},{% endif %}
-    {% endfor %}
+    <table class="table table-bordered table-hover table-condensed">
+        <tbody>
+            <tr>
+                <td><strong>Tous</strong></td>
+                <td>
+                    {% for joueur in tousJoueurs %}
+                        {% if joueur.getEmail() | length > 0 %}{{ joueur.email }},{% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
+    <h3>Mailing des invalides</h3>
+    <table class="table table-bordered table-hover table-condensed">
+        <tbody>
+            <tr>
+                <td>
+                    <strong>Tous</strong>
+                </td>
+                <td>
+                    {% for joueur in invalides %}
+                        {% if joueur.getEmail() | length > 0 %}{{ joueur.getEmail()  }},{% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Carte</strong>
+                </td>
+                <td>
+                    {% for joueur in invalides if not joueur.getCarteOk() %}
+                        {% if joueur.getEmail() | length > 0 %}{{ joueur.getEmail()  }},{% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Certif</strong>
+                </td>
+                <td>
+                    {% for joueur in invalides if not joueur.getPapiersOk() %}
+                        {% if joueur.getEmail() | length > 0 %}{{ joueur.getEmail()  }},{% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Paiement</strong>
+                </td>
+                <td>
+                    {% for joueur in invalides if not joueur.getPaiementOk() %}
+                        {% if joueur.getEmail() | length > 0 %}{{ joueur.getEmail()  }},{% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <h3>Mailing par course</h3>
-    {% for course in listeCourses %}
-        <h5>{{ course.getNom() }}</h5>
-        {% for equipe in course.getEquipes() %}
-            {% for joueur in equipe.getJoueurs() %}
-                {% if joueur.getEmail() | length > 0 %}{{ joueur.getEmail()  }},{% endif %}
-            {% endfor %}
+    <table class="table table-bordered table-hover table-condensed">
+        <tbody>
+        {% for course in listeCourses %}
+            <tr>
+                <td>
+                    <h5>{{ course.getNom() }}</h5>
+                </td>
+                <td>
+                    {% for equipe in course.getEquipes() %}
+                        {% for joueur in equipe.getJoueurs() %}
+                            {% if joueur.getEmail() | length > 0 %}{{ joueur.getEmail()  }},{% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </td>
+            </tr>
         {% endfor %}
-    {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}
