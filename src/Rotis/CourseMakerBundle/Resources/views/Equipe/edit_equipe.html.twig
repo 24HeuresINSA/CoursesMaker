@@ -63,10 +63,10 @@
                                onclick="return(confirm('Voulez-vous vraiment supprimer l\'équipe?'));">Supprimer
                                 l'équipe &raquo;</a>
                         {% endif %}
-                        {% if validable or equipe.getValide() %}<p><a class="btn"
+                        {% if validable or equipe.getValide() %}<a class="btn"
                                                                       href="{{ path('admin_team_valid', { 'id':equipe.id,'status':equipe.valide }) }}"
                                                                       onclick="return(confirm('Êtes-vous sûr?'));">{% if not equipe.getValide() %}Valider l'équipe{% else %}Invalider l'équipe{% endif %} &raquo;</a>
-                            </p>{% endif %}
+                        {% endif %}
                     {% endif %}
                     <a class="btn btn-success" href="{{ path('team_pay_check', { 'equipe': equipe.id }) }}">Vérifier les
                         paiements &raquo;</a></p>
