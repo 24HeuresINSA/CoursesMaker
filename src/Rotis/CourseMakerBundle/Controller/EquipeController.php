@@ -114,7 +114,7 @@ class EquipeController extends Controller
                 $joueur = $registration->getJoueur();
                 $joueur->setPapiersOk(false)
                     ->setCarteOk(false)
-                    ->setTailleTshirt('NA');
+               /*     ->setTailleTshirt('NA')*/;
                 $tarifrepo = $this->getDoctrine()
                     ->getManager()
                     ->getRepository('RotisCourseMakerBundle:Tarif');
@@ -197,7 +197,7 @@ class EquipeController extends Controller
                 $joueur->setPapiersOk(false)
                     ->setCarteOk(false)
                     ->setPaiementOk(false);
-                $joueur->setTailleTshirt('NA');
+             /*   $joueur->setTailleTshirt('NA')*/;
                 $tarif = $tarifrepo->findTarifByCourseCate($equipe->getCourse(),$equipe->getCategorie());
                 $repository = $this->getDoctrine()
                     ->getManager()
@@ -288,6 +288,16 @@ class EquipeController extends Controller
                         $joueur->setTelephone(null);
                     }
                 }
+                if(property_exists($content, 'taille_tshirt'))
+                {
+                   $taille_tshirt=$content->taille-tshirt;
+                   $joueur->setTailleTshirt($taille_tshirt);
+                   if(count($validator->validate($joueur)) > 0)
+                   {
+                       $joueur->setTailleTshirt('NA');
+                   }
+                }
+
                 $this->getDoctrine()->getManager()->flush();
                 $serializer = $this->get('jms_serializer');
                 $jsoncontent = $serializer->serialize($joueur, 'json');

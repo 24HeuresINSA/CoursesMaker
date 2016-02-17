@@ -34,7 +34,7 @@ class CourseType extends AbstractType
         ->add('datetime_debut','datetime',array(
             'input' => 'datetime',
             'required' => true,
-            'label' => 'Debut',
+            'label' => 'Début',
         ))
         ->add('datetime_fin','datetime',array(
             'input' => 'datetime',

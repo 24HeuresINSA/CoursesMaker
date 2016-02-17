@@ -8,13 +8,13 @@
 {% endblock %}
 
 {% block content %}
-    {% if error is defined %}
-        <div>{{ error }}</div>
-    {% endif %}
-
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="offset3 span6">
+                {% if error is defined %}
+                    <div>{{ error }}</div>
+                {% endif %}
+
                 <form class="well form-horizontal" action="{{ path('login_check') }}" method="post">
                     <fieldset>
                         <legend>Connectez-vous</legend>

@@ -23,7 +23,7 @@
                 <td>{{ edition.courses | length }}</td>
                 <td>{% if edition.hasResults %}Affichés{% else %}Pas affichés{% endif %}</td>
                 <td><a href="{{ path('edition_edit',{ 'id' : edition.id}) }}"><i class="icon-edit"></i></a></td>
-                <td><a href="{{ path('edition_remove', { 'id' : edition.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
+                <td><a href="{{ path('edition_remove', { 'id' : edition.id}) }}" onclick="return(confirm('Etes-vous sûr ?'));"><i class="icon-remove"></i></a></td>
             </tr>
         {% endfor %}
         {#<tr>

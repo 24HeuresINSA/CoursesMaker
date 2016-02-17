@@ -3,7 +3,7 @@
 {% block title %}CoursesMaker - Accueil{% endblock %}
 
 {% block div %}
-    <h1>23 et 24 mai 2015</h1>
+    <h1>14 et 15  mai 2016</h1>
     <p>Inscriptions aux courses des 24 heures de l'INSA</p>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     {% else %}
@@ -24,6 +24,21 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span12">
+                <div class="row-fluid">
+                    <div class="span15">
+                        <h3>Changements par rapport à l'année dernière !</h3>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--row-->
+                <div classe="row-fluid">
+                    <div class="span3">
+                        <p>Attention aux habitués : pensez à lire le nouveau réglement ! <br/>
+                        De plus il est désormais possible de s'inscrire pour une course carritative.<br/><br/></p>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--row-->
                 <div class="row-fluid">
                     <div class="span15">
                         <h2>Types de Courses :</h2>
@@ -60,6 +75,8 @@
                         
                     </div>
                     <!--/span-->
+                    {#pas de natation cette annee #}
+                    {#
                     <div class="span3">
                         <h2>Natation</h2>
 
@@ -68,6 +85,7 @@
 
                         
                     </div>
+                    #}
                     <!--/span-->
                 </div>
                 <!--/row-->
@@ -92,19 +110,21 @@
                         <h2>Equipe</h2>
 
                         <p>Pour les coureurs qui cherchent la performance. <strong>Des équipes de 2 à 3
-                                coureurs</strong> entrainés pour une catégorie où le niveau augmente chaque année. </p>
+                                coureurs</strong> entrainés pour une course de haut niveau. Notre volonté de proposer une catégorie compétitive amène chaque année les coureurs à se dépasser et à réaliser de véritables prouesses.</p>
 
                     </div>
                     <!--/span-->
                     <div class="span3">
                         <h2>Loisir</h2>
 
-                        <p>Une catégorie qui s'adresse aux plus nombreux. <strong>Des équipes de 4 à 12
+                        <p>Une catégorie qui s'adresse aux plus nombreux. <strong>Des équipes de maximum 12
                                 coureurs</strong> pour une épreuve détente où amusement et bonne ambiance sont les
                             maîtres mots. </p>
 
                     </div>
                     <!--/span-->
+{# cette annee on passe les hors categorie comme Loisirs #}
+{#
                     <div class="span3">
                         <h2>Hors Catégorie</h2>
 
@@ -113,6 +133,15 @@
                             coureurs. </p>
 
                         
+                    </div>
+                    <!--/span-->
+#}
+                   
+                    <div class="span3">
+                        <h2>Course Folklo</h2>
+               
+                        <p>Une course où la bonne humeur et la bonne ambiance sont au rendez-vous. Le but est de s'amuser et d'être le plus original ! <br/>
+                            Que vous soyez déguisés ou que vous veniez avec votre vélo décoré et stylisé cette course est pour vous. Elle se déroule sur une courte durée, et un classement des vélos le plus originaux sera organisé.<br/>Vous pouvez venir seul ou à plusieurs pour cette course se déroulant le samedi après-midi. </p>
                     </div>
                     <!--/span-->
                 </div>

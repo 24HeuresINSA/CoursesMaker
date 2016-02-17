@@ -21,8 +21,8 @@
                             </tr>
                             <tr>
                                 <td>{{ form_label(form.user.categorie) }}{{ form_widget(form.user.categorie) }}{{ form_errors(form.user.categorie) }}</td>
-                                {# Pas de Tshirt cette annee #}{# <td>{{ form_label(form.joueur.taille_tshirt) }}</td> #}
-                               {# Pas de Tshirt cette annee #} {# <td>{{ form_widget(form.joueur.taille_tshirt) }}</td> #}
+                                {# On triche, les TShirts sont la course carri #} <td>{{ form_label(form.joueur.taille_tshirt) }}</td> 
+                                <td>{{ form_widget(form.joueur.taille_tshirt) }}</td> 
                             </tr>
                             <tr>
                                 <td>{{ form_label(form.user.course) }}{{ form_widget(form.user.course) }}{{ form_errors(form.user.course) }}</td>

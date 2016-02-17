@@ -8,7 +8,7 @@ class PlayerAdditionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('joueur',new aJoueurType(),array('label' => 'Creation d\'un nouveau coureur'));
+        $builder->add('joueur',new aJoueurType(),array('label' => 'Création d\'un nouveau coureur'));
     }
 
     public function getName()

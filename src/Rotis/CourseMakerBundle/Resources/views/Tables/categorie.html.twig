@@ -21,7 +21,7 @@
                 <td>{{ categorie.equipes | length }}</td>
                 <td>{{ categorie.courses | length }}</td>
                 <td><a href="{{ path('categorie_edit',{ 'id' : categorie.id}) }}"><i class="icon-edit"></i></a></td>
-                <td><a href="{{ path('categorie_remove', { 'id' : categorie.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
+                <td><a href="{{ path('categorie_remove', { 'id' : categorie.id}) }}" onclick="return(confirm('Etes-vous sûr ?'));"><i class="icon-remove"></i></a></td>
             </tr>
         {% endfor %}
         {# <tr>

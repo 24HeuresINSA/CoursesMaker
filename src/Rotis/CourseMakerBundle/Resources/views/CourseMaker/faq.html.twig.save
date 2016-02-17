@@ -1,4 +1,4 @@
-{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
+-->-->{% extends 'RotisCourseMakerBundle::layout.html.twig' %}
 
 {% block title %}CoursesMaker - FAQ{% endblock %}
 
@@ -21,12 +21,12 @@
                     terminer sur 6h de course à pied</li>
                 <li>Folklo</li>
             </ul>
-            {# pas de natation cette année #} {#<p>La dernière épreuve est un défi natation de 4h dans la 
-piscine de l'INSA le samedi.                Il est réalisé en ligne d'eau avec plusieurs équipes nageant par ligne d'eau.</p>
-#}
+            <p>La dernière épreuve est un défi natation de 4h dans la piscine de l'INSA le samedi.
+                Il est réalisé en ligne d'eau avec plusieurs équipes nageant par ligne d'eau.</p>
+
             <h2>Comment je m'inscris?</h2>
             <p>Pour cela il faut aller dans l'onglet inscription du site et renseigner les champs obligatoires
-                et optionnels, les informations optionnelles nous facilitent grandement la communication avec les coureurs.</p>
+                et optionnels,les information optionnelles nous facilitent grandement la communication avec les coureurs.</p>
 
             <h3>Documents nécessaires à la validation de l'inscription:</h3>
             <ul>
@@ -43,7 +43,7 @@ piscine de l'INSA le samedi.                Il est réalisé en ligne d'eau avec
             <h2>Comment fonctionnent les catégories?</h2>
             <ul>
                 {% for tarif in tarifs %}
-                    <li><strong>Catégorie {{ tarif.course.nom }}</strong> :<strong> {{ tarif.categorie.nbMaxCoureurs }}</strong> participants</li>
+                    <li>Catégorie {{ tarif.categorie.nom }} : {{ tarif.categorie.nbMaxCoureurs }} participants</li>
                 {% endfor %}
                 <li>Pour les courses en équipes, un seul participant court à la fois sur le circuit</li>
                 <li>Nous fournissons un dossard par coureur pour les courses "pro" et un dossard par équipe pour les courses "loisir"</li>
@@ -52,7 +52,7 @@ piscine de l'INSA le samedi.                Il est réalisé en ligne d'eau avec
             <h2>Combien ça coûte?</h2>
             <ul>
                 {% for tarif in tarifs%}
-                    <li><strong>{{ tarif.course.nom }}</strong> : <strong>{{ tarif.prixEtudiant }}€</strong> pour les étudiants, <strong>{{ tarif.prix }}€</strong> pour les autres</li>
+                    <li><strong>Course {{ tarif.course.nom }}</strong> : <strong>{{ tarif.prixEtudiant }}€</strong> pour les étudiants, <strong>{{ tarif.prix }}€</strong> pour les autres</li>
                 {% endfor %}
             </ul>
 
@@ -61,21 +61,21 @@ piscine de l'INSA le samedi.                Il est réalisé en ligne d'eau avec
                 Vous pourrez venir avec votre voiture, votre tente, votre chien, votre tipis ou encore votre camping car.</p>
 
 
-            <h2>Quel est le parcours ?</h2>
-            <h3><a href="{{ path('parcours') }}">Tadam !</a></h3>
+            <h2>Quel est le parcours?</h2>
+            <h3><a href="{{ path('parcours') }}">Tadam!</a></h3>
 
-            <h2>La course Folklo c'est quoi ?</h2>
-            <p>Faire la course en folklo ça sert à mettre l'ambiance !<br/>
+            <h2>Les Folklo c'est quoi ?</h2>
+            <p>Faire la course en folklo ça sert à mettre l'ambiance!<br/>
                Viens avec ton vélo déguisé ou toi déguisé sur ton vélo, si tu es un pro du bricolage, tu peux même
                 faire un véhicule pour plusieurs personnes, décoré, stylisé, bonne ambiance assurée.
-                La course folklo dure quant à elle moins d'une journée.</p>
+                Pour les véhicules folklos, un parcours alternatif (beaucoup plus court) sera mis en place.</p>
 
             <h2>Moi j'ai un vélo mais c'est pas vraiment un vélo, je fais quoi ?</h2>
-            <p>Ceci s'adresse à toi propriétaire d'un vélo couché, run bike ou autre. La catégorie loisir
-                est faite pour toi ! Grace à cette catégorie tu pourras participer à la course vélo et au triathlon
-                et compétiter au sein d'un classement à part !</p>
+            <p>Ceci s'adresse à toi propriétaire d'un vélo couché, run bike ou autre. La catégorie hors catégorie
+                est faite pour toi ! Grace à cette catégorie tu pourra participer à la course vélo et au triathlon
+                et compétiter au sein d'un classement à part!</p>
 
-            <h2><a href="{{ asset('bundles/rotiscoursemaker/pdf/reglement_42.pdf') }}">Règlement des courses</a></h2>
+            <h2><a href="{{ asset('bundles/rotiscoursemaker/pdf/rules.pdf') }}">Règlement des courses</a></h2>
         </div>
     </div>
 </div>

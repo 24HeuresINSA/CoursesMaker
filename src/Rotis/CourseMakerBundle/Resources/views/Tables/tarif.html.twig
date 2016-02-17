@@ -21,7 +21,7 @@
                 <td>{{ tarif.course.nom }}</td>
                 <td>{{ tarif.categorie.nom }}</td>
                 <td><a href="{{ path('tarif_edit',{ 'id' : tarif.id}) }}"><i class="icon-edit"></i></a></td>
-                <td><a href="{{ path('tarif_remove', { 'id' : tarif.id}) }}" onclick="return(confirm('Etes-vous sur?'));"><i class="icon-remove"></i></a></td>
+                <td><a href="{{ path('tarif_remove', { 'id' : tarif.id}) }}" onclick="return(confirm('Etes-vous sûr ?'));"><i class="icon-remove"></i></a></td>
             </tr>
         {% endfor %}
         {#<tr>

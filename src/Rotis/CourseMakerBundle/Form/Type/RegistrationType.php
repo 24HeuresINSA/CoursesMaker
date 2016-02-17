@@ -11,7 +11,7 @@ class RegistrationType extends AbstractType
 
         $builder->add('user', new UserType(),array('label' => 'Création de l\'équipe (* = obligatoire)'));
 
-        $builder->add('joueur',new aJoueurType(),array('label' => 'Creation du chef d\'équipe (* = obligatoire)'));
+        $builder->add('joueur',new aJoueurType(),array('label' => 'Création du chef d\'équipe '));
     }
 
     public function getName()

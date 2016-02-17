@@ -22,19 +22,22 @@ class aJoueurType extends AbstractType
             'label' => 'Prénom *',
             'required' => true,
         ));
-     /*   $builder->add('taille_tshirt', 'choice', array(
+        $builder->add('taille_tshirt', 'choice', array(
             'choices'   => array(
-                'S'   => 'S',
+          /* on triche cette annee pour la course carritative */
+          /*      'S'   => 'S',
                 'M' => 'M',
                 'L'   => 'L',
                 'XL' => 'XL',
-                'NA' => 'NA'
+                'NA' => 'NA'  */
+                'Non' => 'Je ne désire pas participer à la course caritative',
+                'Oui' => 'J\'accepterais de me faire sponsoriser par une entreprise pour la course caritative'
             ),
-            'label' => 'Taille de votre t-shirt',
+            'label' => 'Course caritative',
             'preferred_choices' => array('medium'),
             'required' => 'true'
         )
-        );*/
+        );
 
         $builder->add('telephone','text', array(
             'label' => 'Téléphone',
