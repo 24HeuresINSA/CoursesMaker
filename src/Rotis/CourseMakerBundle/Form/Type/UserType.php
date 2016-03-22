@@ -16,7 +16,7 @@ class UserType extends AbstractType
         $builder->add('username','text',array(
             'label' => 'Login / Nom de l\'équipe *',
             'required' => true,
-			'maxlength'=24, 
+			'maxlength'=>24, 
         ));
         $builder->add('password', 'repeated', array(
            'first_name'  => 'mot_de_passe',
