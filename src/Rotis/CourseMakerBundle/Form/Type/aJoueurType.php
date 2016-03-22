@@ -21,6 +21,7 @@ class aJoueurType extends AbstractType
         $builder->add('prenom','text',array(
             'label' => 'Prénom *',
             'required' => true,
+			'maxlength'=24, 
         ));
         $builder->add('taille_tshirt', 'choice', array(
             'choices'   => array(
