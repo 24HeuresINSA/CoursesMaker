@@ -3,7 +3,7 @@
 {% block title %}CoursesMaker - Accueil{% endblock %}
 
 {% block div %}
-    <h1>14 et 15  mai 2016</h1>
+    <h1>20 et 21  mai 2017</h1>
     <p>Inscriptions aux courses des 24 heures de l'INSA</p>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     {% else %}
@@ -11,7 +11,8 @@
             class="btn btn-success btn-large" href="{{ path('login') }}">Connexion &raquo;</a> <br/></p>
     {% endif %}
     <div>
-        {% render "RotisCourseMakerBundle:Edition:linkResults" %}
+        <!--{% render "RotisCourseMakerBundle:Edition:linkResults" %} -->
+		<a href="http://chronospheres.fr/evenements/detail/24H-INSA-59">Résultats de la 42ème édition</a>
     </div>
     {% if app.session.hasFlash('notice') %}
         <div class="flash-notice">
@@ -34,7 +35,7 @@
                 <div classe="row-fluid">
                     <div class="span3">
                         <p>Attention aux habitués : pensez à lire le nouveau réglement ! <br/>
-                        De plus il est désormais possible de s'inscrire pour une course caritative.<br/><br/></p>
+                        La course caritative est mieux définie.<br/><br/></p>
                     </div>
                     <!--/span-->
                 </div>
