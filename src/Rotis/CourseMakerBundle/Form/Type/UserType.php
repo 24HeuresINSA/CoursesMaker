@@ -14,7 +14,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('username','text',array(
-            'label' => 'Login / Nom de l\'équipe *',
+            'label' => 'Login / Nom de l\'équipe (24 charactères max) *',
             'required' => true,
 			/*'maxlength'=>24, */
         ));
