@@ -29,12 +29,12 @@ class aJoueurType extends AbstractType
           /*      'S'   => 'S',
                 'M' => 'M',
                 'L'   => 'L',
-                'XL' => 'XL',
-                'NA' => 'NA'  */
-                'Non' => 'Je ne désire pas participer à la course caritative',
-                'Oui' => 'J\'accepterais de me faire sponsoriser par une entreprise pour la course caritative'
+                'XL' => 'XL',*/
+                'Oui' => 'Le défi caritatif m\'intéresse' ,
+                'Non' => 'Ca ne m\'intéresse pas',
+                'NA' => 'Je ne sais pas'
             ),
-            'label' => 'Course caritative',
+            'label' => 'Défi caritatif',
             'preferred_choices' => array('medium'),
             'required' => 'true'
         )
