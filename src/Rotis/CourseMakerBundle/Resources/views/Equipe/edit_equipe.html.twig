@@ -82,7 +82,7 @@
                                 <th>Email</th>
                                 <th>Téléphone</th>
                                 <th>Statut</th>
-                                {# Case adaptee pour les TShirts normalement #} <th>Course caritative</th>{# <th>T-Shirt</th> #}
+                                {# Case adaptee pour les TShirts #} {# <th>T-Shirt</th> #}
                                 <th>Certificat</th>
                                 <th>Paiement</th>
                                 {% if is_granted('ROLE_ADMIN') %}
@@ -167,7 +167,7 @@
                                     {% else %}
                                         <td><p>Pas Etudiant</p></td>
                                     {% endif %}
-                                    {#Pas de Tshirt cette annee / adapté en course caritative#}<td>{{ joueur.getTailleTshirt }}</td>
+                                    {#Pas de Tshirt cette annee#} {# <td>{{ joueur.getTailleTshirt }}</td> #}
                                     {% if joueur.getPapiersOk() %}
                                         <td><p>Certificat médical validé</p></td>
                                     {% else %}
