@@ -3,7 +3,7 @@
 {% block title %}CoursesMaker - Accueil{% endblock %}
 
 {% block div %}
-    <h1>20 et 21  mai 2017</h1>
+    <h1>19 et 20  mai 2018</h1>
     <p>Inscriptions aux courses des 24 heures de l'INSA</p>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     {% else %}
@@ -12,7 +12,7 @@
     {% endif %}
     <div>
         <!--{% render "RotisCourseMakerBundle:Edition:linkResults" %} -->
-		<a href="http://chronospheres.fr/evenements/detail/24H-INSA-59">Résultats de la 42ème édition</a>
+		<a href="http://chronospheres.fr/evenements/detail/24H-INSA-2017-132">Résultats de la 43ème édition</a>
     </div>
     {% if app.session.hasFlash('notice') %}
         <div class="flash-notice">
@@ -24,41 +24,31 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row-fluid">
-            <div class="span12">
-                <div class="row-fluid">
-                    <div class="span15">
-                        <h3>Nouveautés par rapport à l'année dernière !</h3>
-                    </div>
-                    <!--/span-->
-                </div>
-                <!--row-->
-                <div classe="row-fluid">
-                    <div class="span3">
-                        <p>Attention aux habitués : pensez à lire le nouveau réglement ! <br/>
-                        Mise en place du défi caritatif !<br/><br/></p>
-                    </div>
-                    <!--/span-->
-                </div>
-                </div>
                 <!--row-->
                 <div classe="row-fluid">
                     <div class="span6">
                         <h2>Défi caritatif</h2>
 						<p>
-							Cette année, associe ton <b>défi sportif</b> des 24h de l’INSA à un <b>défi caritatif</b> au profit de <b>Handicap International</b> !
+							Cette année, associe ton <b>défi sportif</b> des 24h de l’INSA à un <b>défi caritatif</b> au profit de <b>Make a Wish</b> !
 							<br/><br/>
-							<b>Handicap International</b> est une ONG Lyonnaise qui vient en aide aux populations vulnérables, notamment les personnes handicapées, partout dans le monde où cela est nécessaire.<br/>
-							Aujourd’hui, elle lutte contre l’usage des armes explosives en zones peuplées : <a href="http://focus.handicap-international.fr/bombardements-civils/">http://focus.handicap-international.fr/bombardements-civils/</a>
+							<b>Mais Make-a-Wish c’est qui ?</b><br/>
+							Make-a-Wish c’est une association internationale, qui réalise les rêves d'enfants atteints de maladies ou d’handicaps graves.
 							<br/><br/>
-							<b>Objectif :</b> en amont de l’événement des 24h de l’INSA, collecter des dons qui seront reversés directement à Handicap International !
+							<b>L’objectif de cette démarche :</b><br/>
+							Récolter des fonds qui seront directement reversés à Make a Wish, pour leur permettre d’aider un maximum de personnes.
 							<br/><br/>
 							<b>Comment ?</b><br/>
-							Inscris-toi aux courses des 24h via le formulaire.<br/>
-							Après ton inscription (quelle que soit ta catégorie), rends-toi sur la page du défi au profit de Handicap International. Lien de page : <a href="http://www.alvarum.com/handicapinternational24heuresinsa">http://www.alvarum.com/handicapinternational24heuresinsa</a>
+							Plusieurs possibilités s’offrent à toi :<br/>
+							Tu viens participer à la course en solo, en équipe, pour courir, nager ou rouler. Peu importe, inscris-toi normalement et partage autour de toi ce lien (mettre lien vers plateforme de don en assez gros : <a href="http://www.alvarum.com/course24heures">http://www.alvarum.com/course24heures </a><br/>
+Par contre le lien sera surment modifié dans les jours à venir)<br/>
+	Tous les dons sont déductibles des impôts à 75% et sont 100% sécurisés ! 
 							<br/><br/>
-							Ton don est déductible des impôts à 75% et est 100% sécurisé !
+							Tu aimerais en faire plus et te donner de la motivation pour parcourir une distance toujours plus grande. Cette année nous mettons en place un <b>système de parrainage par des entreprises</b>.
 							<br/><br/>
-							<b>Et c’est parti !</b> Partage et communique la collecte à ton entourage : amis, famille ...
+							Le principe est très simple : une entreprise parraine un coureur ou une équipe et s’engage en contrepartie à verser une somme d’argent en fonction des performances réalisées par le coureur/équipe qu’elle sponsorise (avec la possibilité de fournir des maillot pour son coureur/équipe aux couleur de l’entreprise)<br/><br/>
+							Pour mettre cela en place si tu es un participant il te faudra trouver une entreprise pour te parrainer.<br/><br/>
+							Si vous avez une entreprise et que vous souhaitez parrainer une équipe, vous pouvez vous même en créer une #teambuilding, ou bien nous contacter afin que l’on vous mette en relation avec un coureur ou une équipe participant à la course.<br/><br/>
+							Dans tous les cas il vous faudra vous inscrire normalement à la course et payer les frais d’inscription liée à la catégorie de la course à laquelle vous participez. 
 						</p>
 
                         
