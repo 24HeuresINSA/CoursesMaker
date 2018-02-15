@@ -134,7 +134,7 @@ class EquipeController extends Controller
                 $em->flush();
                 $this->get('session')->setFlash(
                     'notice',
-                    'Votre équipe à bien été créée. Rendez vous dans l\'onglet Connexion pour avoir accès à toutes vos informations'
+                    'Votre équipe a bien été créée. Rendez vous dans l\'onglet Connexion pour avoir accès à toutes vos informations'
                 );
                 if($joueur->getEmail())
                 {
