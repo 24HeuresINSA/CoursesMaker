@@ -82,6 +82,15 @@
                                 <li><a>Bonjour {{ app.user.username }}</a></li>
                                 <li class="active"><a href="{{ path('account', { 'id': app.user.id }) }}">Equipe</a></li>
                             {% endif %}
+			    <!-- Ajout de la payment en ligne-->
+			    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Payement en ligne<span class="caret"></span></a>
+       			 	  <ul class="dropdown-menu">
+          				<li><a href="https://www.helloasso.com/associations/24h-de-l-insa/evenements/courses-des-24h">Prix normalle</a></li>
+         			 	<li><a href="https://www.helloasso.com/associations/24h-de-l-insa/evenements/courses-des-24h-tarif-va">Prix VA</a></li>
+
+       				 </ul>
+     			   </li>
+			   <!-- Fin d'ajout de la payment en ligne-->
                             <li><a href="{{ path('infos_coureurs') }}">Informations</a></li>
                             <li><a href="{{ path('contact') }}">Contact</a></li>
                         </ul>
